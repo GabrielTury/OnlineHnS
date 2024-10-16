@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class NavMesh : MonoBehaviour
@@ -14,16 +15,12 @@ public class NavMesh : MonoBehaviour
     [SerializeField, Range(1, 8)]
     private int nodeSize = 1;
 
-    public Node[] allNodes {  get; private set; }
+    public static Node[] allNodes {  get; private set; }
 
     private int xAmount, yAmount, zAmount;
     private int minX, minY, minZ;
     private int maxX, maxY, maxZ;
 
-    private void Awake()
-    {
-        allNodes = data.mesh;
-    }
     private void SetLimits()
     {
         Vector3 size = limits.size;        
@@ -55,7 +52,7 @@ public class NavMesh : MonoBehaviour
             {
                 for(int k = 0; k < zAmount; k++)
                 {
-                    Node n = new Node(new Vector3(minX + i, minY + j, minZ + k), nodeSize);
+                    Node n = new Node(new Vector3(minX + (i * nodeSize), minY + (j * nodeSize), minZ + (k * nodeSize)), nodeSize, currentIndex);
                     Debug.Log(n.WorldPosition);
                     allNodes[currentIndex] = n;
                     currentIndex++;
@@ -63,18 +60,72 @@ public class NavMesh : MonoBehaviour
             }
         }
 
+        foreach (Node n in allNodes)
+        {
+            Node[] neighbors = GetNeighbors(n);
+            int[] ids = new int[neighbors.Length];
+            for(int i = 0; i < neighbors.Length; i++)
+            {
+                ids[i] = neighbors[i].id;
+            }
+            n.SetNeighbors(ids);
+
+        }
+
         data.mesh = allNodes;
+
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(data);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();        
+#endif
+    }
+
+    private Node[] GetNeighbors(Node checkNode)
+    {
+        List<Node> neighbors = new List<Node>();
+        int xNeighbors = 0;
+        int yNeighbors = 0;
+        int zNeighbors = 0;
+        foreach (Node t in allNodes)
+        {
+            float dx = Mathf.Abs(t.WorldPosition.x - checkNode.WorldPosition.x);
+            float dz = Mathf.Abs(t.WorldPosition.z - checkNode.WorldPosition.z);
+            float dy = Mathf.Abs(t.WorldPosition.y - checkNode.WorldPosition.y);
+            if ((dx <= nodeSize + 0.01f || dz <= nodeSize + 0.01f || dy <= nodeSize + 0.01f) && (dx < 2 && dz < 2 && dy < 2))
+            {
+                if (t != checkNode) // Exclude the Node itself
+                {
+                    neighbors.Add(t);
+                }
+
+                if (dx < nodeSize) xNeighbors++;
+                if (dy < nodeSize) yNeighbors++;
+                if (dz < nodeSize) zNeighbors++;
+            }
+        }
+
+        return neighbors.ToArray();
     }
 
     private void OnDrawGizmosSelected()
     {
         if (allNodes == null && data.mesh != null)
-            allNodes = data.mesh;
-        else if (allNodes == null)
-            return;
-
-        foreach(Node n in allNodes)
         {
+            allNodes = data.mesh;
+            Debug.Log("NavMeshSet");
+            Debug.Log(allNodes.Length);
+            Debug.Log(data.mesh.Length);
+        }
+        else if (allNodes == null)
+        {
+            Debug.Log("Return");
+            return;
+        }
+
+        foreach(Node n in data.mesh)
+        {
+            Debug.Log("Draw");
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(n.WorldPosition, n.size * Vector3.one);
         }

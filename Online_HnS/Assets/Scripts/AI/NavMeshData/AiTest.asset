@@ -12,3 +12,754 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e5d398b386f21049899178fe10115fc, type: 3}
   m_Name: AiTest
   m_EditorClassIdentifier: 
+  mesh:
+  - <WorldPosition>k__BackingField: {x: -18, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0100000005000000060000000f000000100000001400000015000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 0
+  - <WorldPosition>k__BackingField: {x: -18, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 00000000020000000500000006000000070000000f0000001000000011000000140000001500000016000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 1
+  - <WorldPosition>k__BackingField: {x: -18, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0100000003000000060000000700000008000000100000001100000012000000150000001600000017000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 2
+  - <WorldPosition>k__BackingField: {x: -18, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0200000004000000070000000800000009000000110000001200000013000000160000001700000018000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 3
+  - <WorldPosition>k__BackingField: {x: -18, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 03000000080000000900000012000000130000001700000018000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 4
+  - <WorldPosition>k__BackingField: {x: -18, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0000000001000000060000000a0000000b0000000f000000100000001400000015000000190000001a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 5
+  - <WorldPosition>k__BackingField: {x: -18, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 00000000010000000200000005000000070000000a0000000b0000000c0000000f0000001000000011000000140000001500000016000000190000001a0000001b000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 6
+  - <WorldPosition>k__BackingField: {x: -18, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 01000000020000000300000006000000080000000b0000000c0000000d0000001000000011000000120000001500000016000000170000001a0000001b0000001c000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 7
+  - <WorldPosition>k__BackingField: {x: -18, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 02000000030000000400000007000000090000000c0000000d0000000e0000001100000012000000130000001600000017000000180000001b0000001c0000001d000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 8
+  - <WorldPosition>k__BackingField: {x: -18, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0300000004000000080000000d0000000e000000120000001300000017000000180000001c0000001d000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 9
+  - <WorldPosition>k__BackingField: {x: -18, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 05000000060000000b0000001400000015000000190000001a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 10
+  - <WorldPosition>k__BackingField: {x: -18, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0500000006000000070000000a0000000c000000140000001500000016000000190000001a0000001b000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 11
+  - <WorldPosition>k__BackingField: {x: -18, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0600000007000000080000000b0000000d0000001500000016000000170000001a0000001b0000001c000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 12
+  - <WorldPosition>k__BackingField: {x: -18, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0700000008000000090000000c0000000e0000001600000017000000180000001b0000001c0000001d000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 13
+  - <WorldPosition>k__BackingField: {x: -18, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 08000000090000000d00000017000000180000001c0000001d000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 14
+  - <WorldPosition>k__BackingField: {x: -17, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 000000000100000005000000060000001000000014000000150000001e0000001f0000002300000024000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 15
+  - <WorldPosition>k__BackingField: {x: -17, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0000000001000000020000000500000006000000070000000f000000110000001400000015000000160000001e0000001f00000020000000230000002400000025000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 16
+  - <WorldPosition>k__BackingField: {x: -17, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 01000000020000000300000006000000070000000800000010000000120000001500000016000000170000001f0000002000000021000000240000002500000026000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 17
+  - <WorldPosition>k__BackingField: {x: -17, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0200000003000000040000000700000008000000090000001100000013000000160000001700000018000000200000002100000022000000250000002600000027000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 18
+  - <WorldPosition>k__BackingField: {x: -17, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0300000004000000080000000900000012000000170000001800000021000000220000002600000027000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 19
+  - <WorldPosition>k__BackingField: {x: -17, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 000000000100000005000000060000000a0000000b0000000f0000001000000015000000190000001a0000001e0000001f00000023000000240000002800000029000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 20
+  - <WorldPosition>k__BackingField: {x: -17, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0000000001000000020000000500000006000000070000000a0000000b0000000c0000000f00000010000000110000001400000016000000190000001a0000001b0000001e0000001f0000002000000023000000240000002500000028000000290000002a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 21
+  - <WorldPosition>k__BackingField: {x: -17, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0100000002000000030000000600000007000000080000000b0000000c0000000d00000010000000110000001200000015000000170000001a0000001b0000001c0000001f0000002000000021000000240000002500000026000000290000002a0000002b000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 22
+  - <WorldPosition>k__BackingField: {x: -17, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0200000003000000040000000700000008000000090000000c0000000d0000000e00000011000000120000001300000016000000180000001b0000001c0000001d0000002000000021000000220000002500000026000000270000002a0000002b0000002c000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 23
+  - <WorldPosition>k__BackingField: {x: -17, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 030000000400000008000000090000000d0000000e0000001200000013000000170000001c0000001d000000210000002200000026000000270000002b0000002c000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 24
+  - <WorldPosition>k__BackingField: {x: -17, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 05000000060000000a0000000b00000014000000150000001a00000023000000240000002800000029000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 25
+  - <WorldPosition>k__BackingField: {x: -17, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0500000006000000070000000a0000000b0000000c000000140000001500000016000000190000001b00000023000000240000002500000028000000290000002a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 26
+  - <WorldPosition>k__BackingField: {x: -17, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0600000007000000080000000b0000000c0000000d0000001500000016000000170000001a0000001c000000240000002500000026000000290000002a0000002b000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 27
+  - <WorldPosition>k__BackingField: {x: -17, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0700000008000000090000000c0000000d0000000e0000001600000017000000180000001b0000001d0000002500000026000000270000002a0000002b0000002c000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 28
+  - <WorldPosition>k__BackingField: {x: -17, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 08000000090000000d0000000e00000017000000180000001c00000026000000270000002b0000002c000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 29
+  - <WorldPosition>k__BackingField: {x: -16, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0f0000001000000014000000150000001f00000023000000240000002d0000002e0000003200000033000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 30
+  - <WorldPosition>k__BackingField: {x: -16, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0f00000010000000110000001400000015000000160000001e000000200000002300000024000000250000002d0000002e0000002f000000320000003300000034000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 31
+  - <WorldPosition>k__BackingField: {x: -16, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1000000011000000120000001500000016000000170000001f000000210000002400000025000000260000002e0000002f00000030000000330000003400000035000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 32
+  - <WorldPosition>k__BackingField: {x: -16, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 11000000120000001300000016000000170000001800000020000000220000002500000026000000270000002f0000003000000031000000340000003500000036000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 33
+  - <WorldPosition>k__BackingField: {x: -16, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1200000013000000170000001800000021000000260000002700000030000000310000003500000036000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 34
+  - <WorldPosition>k__BackingField: {x: -16, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0f000000100000001400000015000000190000001a0000001e0000001f0000002400000028000000290000002d0000002e00000032000000330000003700000038000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 35
+  - <WorldPosition>k__BackingField: {x: -16, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 0f0000001000000011000000140000001500000016000000190000001a0000001b0000001e0000001f00000020000000230000002500000028000000290000002a0000002d0000002e0000002f000000320000003300000034000000370000003800000039000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 36
+  - <WorldPosition>k__BackingField: {x: -16, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1000000011000000120000001500000016000000170000001a0000001b0000001c0000001f00000020000000210000002400000026000000290000002a0000002b0000002e0000002f0000003000000033000000340000003500000038000000390000003a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 37
+  - <WorldPosition>k__BackingField: {x: -16, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1100000012000000130000001600000017000000180000001b0000001c0000001d00000020000000210000002200000025000000270000002a0000002b0000002c0000002f0000003000000031000000340000003500000036000000390000003a0000003b000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 38
+  - <WorldPosition>k__BackingField: {x: -16, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 120000001300000017000000180000001c0000001d0000002100000022000000260000002b0000002c000000300000003100000035000000360000003a0000003b000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 39
+  - <WorldPosition>k__BackingField: {x: -16, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1400000015000000190000001a00000023000000240000002900000032000000330000003700000038000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 40
+  - <WorldPosition>k__BackingField: {x: -16, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 140000001500000016000000190000001a0000001b000000230000002400000025000000280000002a000000320000003300000034000000370000003800000039000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 41
+  - <WorldPosition>k__BackingField: {x: -16, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1500000016000000170000001a0000001b0000001c000000240000002500000026000000290000002b00000033000000340000003500000038000000390000003a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 42
+  - <WorldPosition>k__BackingField: {x: -16, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1600000017000000180000001b0000001c0000001d0000002500000026000000270000002a0000002c000000340000003500000036000000390000003a0000003b000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 43
+  - <WorldPosition>k__BackingField: {x: -16, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 17000000180000001c0000001d00000026000000270000002b00000035000000360000003a0000003b000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 44
+  - <WorldPosition>k__BackingField: {x: -15, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1e0000001f00000023000000240000002e00000032000000330000003c0000003d0000004100000042000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 45
+  - <WorldPosition>k__BackingField: {x: -15, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1e0000001f000000200000002300000024000000250000002d0000002f0000003200000033000000340000003c0000003d0000003e000000410000004200000043000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 46
+  - <WorldPosition>k__BackingField: {x: -15, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1f00000020000000210000002400000025000000260000002e000000300000003300000034000000350000003d0000003e0000003f000000420000004300000044000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 47
+  - <WorldPosition>k__BackingField: {x: -15, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2000000021000000220000002500000026000000270000002f000000310000003400000035000000360000003e0000003f00000040000000430000004400000045000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 48
+  - <WorldPosition>k__BackingField: {x: -15, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 210000002200000026000000270000003000000035000000360000003f000000400000004400000045000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 49
+  - <WorldPosition>k__BackingField: {x: -15, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1e0000001f000000230000002400000028000000290000002d0000002e0000003300000037000000380000003c0000003d00000041000000420000004600000047000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 50
+  - <WorldPosition>k__BackingField: {x: -15, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1e0000001f0000002000000023000000240000002500000028000000290000002a0000002d0000002e0000002f00000032000000340000003700000038000000390000003c0000003d0000003e000000410000004200000043000000460000004700000048000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 51
+  - <WorldPosition>k__BackingField: {x: -15, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 1f0000002000000021000000240000002500000026000000290000002a0000002b0000002e0000002f00000030000000330000003500000038000000390000003a0000003d0000003e0000003f000000420000004300000044000000470000004800000049000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 52
+  - <WorldPosition>k__BackingField: {x: -15, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2000000021000000220000002500000026000000270000002a0000002b0000002c0000002f00000030000000310000003400000036000000390000003a0000003b0000003e0000003f0000004000000043000000440000004500000048000000490000004a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 53
+  - <WorldPosition>k__BackingField: {x: -15, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 210000002200000026000000270000002b0000002c0000003000000031000000350000003a0000003b0000003f000000400000004400000045000000490000004a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 54
+  - <WorldPosition>k__BackingField: {x: -15, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2300000024000000280000002900000032000000330000003800000041000000420000004600000047000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 55
+  - <WorldPosition>k__BackingField: {x: -15, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 23000000240000002500000028000000290000002a0000003200000033000000340000003700000039000000410000004200000043000000460000004700000048000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 56
+  - <WorldPosition>k__BackingField: {x: -15, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 240000002500000026000000290000002a0000002b000000330000003400000035000000380000003a000000420000004300000044000000470000004800000049000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 57
+  - <WorldPosition>k__BackingField: {x: -15, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2500000026000000270000002a0000002b0000002c000000340000003500000036000000390000003b00000043000000440000004500000048000000490000004a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 58
+  - <WorldPosition>k__BackingField: {x: -15, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 26000000270000002b0000002c00000035000000360000003a0000004400000045000000490000004a000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 59
+  - <WorldPosition>k__BackingField: {x: -14, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2d0000002e00000032000000330000003d00000041000000420000004b0000004c0000005000000051000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 60
+  - <WorldPosition>k__BackingField: {x: -14, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2d0000002e0000002f0000003200000033000000340000003c0000003e0000004100000042000000430000004b0000004c0000004d000000500000005100000052000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 61
+  - <WorldPosition>k__BackingField: {x: -14, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2e0000002f000000300000003300000034000000350000003d0000003f0000004200000043000000440000004c0000004d0000004e000000510000005200000053000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 62
+  - <WorldPosition>k__BackingField: {x: -14, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2f00000030000000310000003400000035000000360000003e000000400000004300000044000000450000004d0000004e0000004f000000520000005300000054000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 63
+  - <WorldPosition>k__BackingField: {x: -14, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 300000003100000035000000360000003f00000044000000450000004e0000004f0000005300000054000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 64
+  - <WorldPosition>k__BackingField: {x: -14, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2d0000002e000000320000003300000037000000380000003c0000003d0000004200000046000000470000004b0000004c00000050000000510000005500000056000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 65
+  - <WorldPosition>k__BackingField: {x: -14, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2d0000002e0000002f0000003200000033000000340000003700000038000000390000003c0000003d0000003e00000041000000430000004600000047000000480000004b0000004c0000004d000000500000005100000052000000550000005600000057000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 66
+  - <WorldPosition>k__BackingField: {x: -14, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2e0000002f0000003000000033000000340000003500000038000000390000003a0000003d0000003e0000003f00000042000000440000004700000048000000490000004c0000004d0000004e000000510000005200000053000000560000005700000058000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 67
+  - <WorldPosition>k__BackingField: {x: -14, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 2f0000003000000031000000340000003500000036000000390000003a0000003b0000003e0000003f00000040000000430000004500000048000000490000004a0000004d0000004e0000004f000000520000005300000054000000570000005800000059000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 68
+  - <WorldPosition>k__BackingField: {x: -14, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 300000003100000035000000360000003a0000003b0000003f0000004000000044000000490000004a0000004e0000004f00000053000000540000005800000059000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 69
+  - <WorldPosition>k__BackingField: {x: -14, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3200000033000000370000003800000041000000420000004700000050000000510000005500000056000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 70
+  - <WorldPosition>k__BackingField: {x: -14, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3200000033000000340000003700000038000000390000004100000042000000430000004600000048000000500000005100000052000000550000005600000057000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 71
+  - <WorldPosition>k__BackingField: {x: -14, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 33000000340000003500000038000000390000003a0000004200000043000000440000004700000049000000510000005200000053000000560000005700000058000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 72
+  - <WorldPosition>k__BackingField: {x: -14, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 340000003500000036000000390000003a0000003b000000430000004400000045000000480000004a000000520000005300000054000000570000005800000059000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 73
+  - <WorldPosition>k__BackingField: {x: -14, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 35000000360000003a0000003b00000044000000450000004900000053000000540000005800000059000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 74
+  - <WorldPosition>k__BackingField: {x: -13, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3c0000003d00000041000000420000004c00000050000000510000005a0000005b0000005f00000060000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 75
+  - <WorldPosition>k__BackingField: {x: -13, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3c0000003d0000003e0000004100000042000000430000004b0000004d0000005000000051000000520000005a0000005b0000005c0000005f0000006000000061000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 76
+  - <WorldPosition>k__BackingField: {x: -13, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3d0000003e0000003f0000004200000043000000440000004c0000004e0000005100000052000000530000005b0000005c0000005d000000600000006100000062000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 77
+  - <WorldPosition>k__BackingField: {x: -13, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3e0000003f000000400000004300000044000000450000004d0000004f0000005200000053000000540000005c0000005d0000005e000000610000006200000063000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 78
+  - <WorldPosition>k__BackingField: {x: -13, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3f0000004000000044000000450000004e00000053000000540000005d0000005e0000006200000063000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 79
+  - <WorldPosition>k__BackingField: {x: -13, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3c0000003d000000410000004200000046000000470000004b0000004c0000005100000055000000560000005a0000005b0000005f000000600000006400000065000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 80
+  - <WorldPosition>k__BackingField: {x: -13, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3c0000003d0000003e0000004100000042000000430000004600000047000000480000004b0000004c0000004d00000050000000520000005500000056000000570000005a0000005b0000005c0000005f0000006000000061000000640000006500000066000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 81
+  - <WorldPosition>k__BackingField: {x: -13, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3d0000003e0000003f0000004200000043000000440000004700000048000000490000004c0000004d0000004e00000051000000530000005600000057000000580000005b0000005c0000005d000000600000006100000062000000650000006600000067000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 82
+  - <WorldPosition>k__BackingField: {x: -13, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3e0000003f0000004000000043000000440000004500000048000000490000004a0000004d0000004e0000004f00000052000000540000005700000058000000590000005c0000005d0000005e000000610000006200000063000000660000006700000068000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 83
+  - <WorldPosition>k__BackingField: {x: -13, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 3f000000400000004400000045000000490000004a0000004e0000004f0000005300000058000000590000005d0000005e00000062000000630000006700000068000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 84
+  - <WorldPosition>k__BackingField: {x: -13, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 410000004200000046000000470000005000000051000000560000005f000000600000006400000065000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 85
+  - <WorldPosition>k__BackingField: {x: -13, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 41000000420000004300000046000000470000004800000050000000510000005200000055000000570000005f0000006000000061000000640000006500000066000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 86
+  - <WorldPosition>k__BackingField: {x: -13, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4200000043000000440000004700000048000000490000005100000052000000530000005600000058000000600000006100000062000000650000006600000067000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 87
+  - <WorldPosition>k__BackingField: {x: -13, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 43000000440000004500000048000000490000004a0000005200000053000000540000005700000059000000610000006200000063000000660000006700000068000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 88
+  - <WorldPosition>k__BackingField: {x: -13, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4400000045000000490000004a00000053000000540000005800000062000000630000006700000068000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 89
+  - <WorldPosition>k__BackingField: {x: -12, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4b0000004c00000050000000510000005b0000005f00000060000000690000006a0000006e0000006f000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 90
+  - <WorldPosition>k__BackingField: {x: -12, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4b0000004c0000004d0000005000000051000000520000005a0000005c0000005f0000006000000061000000690000006a0000006b0000006e0000006f00000070000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 91
+  - <WorldPosition>k__BackingField: {x: -12, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4c0000004d0000004e0000005100000052000000530000005b0000005d0000006000000061000000620000006a0000006b0000006c0000006f0000007000000071000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 92
+  - <WorldPosition>k__BackingField: {x: -12, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4d0000004e0000004f0000005200000053000000540000005c0000005e0000006100000062000000630000006b0000006c0000006d000000700000007100000072000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 93
+  - <WorldPosition>k__BackingField: {x: -12, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4e0000004f00000053000000540000005d00000062000000630000006c0000006d0000007100000072000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 94
+  - <WorldPosition>k__BackingField: {x: -12, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4b0000004c000000500000005100000055000000560000005a0000005b000000600000006400000065000000690000006a0000006e0000006f0000007300000074000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 95
+  - <WorldPosition>k__BackingField: {x: -12, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4b0000004c0000004d0000005000000051000000520000005500000056000000570000005a0000005b0000005c0000005f00000061000000640000006500000066000000690000006a0000006b0000006e0000006f00000070000000730000007400000075000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 96
+  - <WorldPosition>k__BackingField: {x: -12, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4c0000004d0000004e0000005100000052000000530000005600000057000000580000005b0000005c0000005d00000060000000620000006500000066000000670000006a0000006b0000006c0000006f0000007000000071000000740000007500000076000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 97
+  - <WorldPosition>k__BackingField: {x: -12, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4d0000004e0000004f0000005200000053000000540000005700000058000000590000005c0000005d0000005e00000061000000630000006600000067000000680000006b0000006c0000006d000000700000007100000072000000750000007600000077000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 98
+  - <WorldPosition>k__BackingField: {x: -12, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 4e0000004f000000530000005400000058000000590000005d0000005e0000006200000067000000680000006c0000006d00000071000000720000007600000077000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 99
+  - <WorldPosition>k__BackingField: {x: -12, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 500000005100000055000000560000005f00000060000000650000006e0000006f0000007300000074000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 100
+  - <WorldPosition>k__BackingField: {x: -12, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5000000051000000520000005500000056000000570000005f000000600000006100000064000000660000006e0000006f00000070000000730000007400000075000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 101
+  - <WorldPosition>k__BackingField: {x: -12, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 51000000520000005300000056000000570000005800000060000000610000006200000065000000670000006f0000007000000071000000740000007500000076000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 102
+  - <WorldPosition>k__BackingField: {x: -12, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5200000053000000540000005700000058000000590000006100000062000000630000006600000068000000700000007100000072000000750000007600000077000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 103
+  - <WorldPosition>k__BackingField: {x: -12, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5300000054000000580000005900000062000000630000006700000071000000720000007600000077000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 104
+  - <WorldPosition>k__BackingField: {x: -11, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5a0000005b0000005f000000600000006a0000006e0000006f00000078000000790000007d0000007e000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 105
+  - <WorldPosition>k__BackingField: {x: -11, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5a0000005b0000005c0000005f0000006000000061000000690000006b0000006e0000006f0000007000000078000000790000007a0000007d0000007e0000007f000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 106
+  - <WorldPosition>k__BackingField: {x: -11, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5b0000005c0000005d0000006000000061000000620000006a0000006c0000006f0000007000000071000000790000007a0000007b0000007e0000007f00000080000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 107
+  - <WorldPosition>k__BackingField: {x: -11, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5c0000005d0000005e0000006100000062000000630000006b0000006d0000007000000071000000720000007a0000007b0000007c0000007f0000008000000081000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 108
+  - <WorldPosition>k__BackingField: {x: -11, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5d0000005e00000062000000630000006c00000071000000720000007b0000007c0000008000000081000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 109
+  - <WorldPosition>k__BackingField: {x: -11, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5a0000005b0000005f000000600000006400000065000000690000006a0000006f000000730000007400000078000000790000007d0000007e0000008200000083000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 110
+  - <WorldPosition>k__BackingField: {x: -11, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5a0000005b0000005c0000005f0000006000000061000000640000006500000066000000690000006a0000006b0000006e0000007000000073000000740000007500000078000000790000007a0000007d0000007e0000007f000000820000008300000084000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 111
+  - <WorldPosition>k__BackingField: {x: -11, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5b0000005c0000005d0000006000000061000000620000006500000066000000670000006a0000006b0000006c0000006f00000071000000740000007500000076000000790000007a0000007b0000007e0000007f00000080000000830000008400000085000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 112
+  - <WorldPosition>k__BackingField: {x: -11, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5c0000005d0000005e0000006100000062000000630000006600000067000000680000006b0000006c0000006d00000070000000720000007500000076000000770000007a0000007b0000007c0000007f0000008000000081000000840000008500000086000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 113
+  - <WorldPosition>k__BackingField: {x: -11, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5d0000005e000000620000006300000067000000680000006c0000006d0000007100000076000000770000007b0000007c00000080000000810000008500000086000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 114
+  - <WorldPosition>k__BackingField: {x: -11, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5f0000006000000064000000650000006e0000006f000000740000007d0000007e0000008200000083000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 115
+  - <WorldPosition>k__BackingField: {x: -11, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 5f00000060000000610000006400000065000000660000006e0000006f0000007000000073000000750000007d0000007e0000007f000000820000008300000084000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 116
+  - <WorldPosition>k__BackingField: {x: -11, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6000000061000000620000006500000066000000670000006f000000700000007100000074000000760000007e0000007f00000080000000830000008400000085000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 117
+  - <WorldPosition>k__BackingField: {x: -11, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 61000000620000006300000066000000670000006800000070000000710000007200000075000000770000007f0000008000000081000000840000008500000086000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 118
+  - <WorldPosition>k__BackingField: {x: -11, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6200000063000000670000006800000071000000720000007600000080000000810000008500000086000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 119
+  - <WorldPosition>k__BackingField: {x: -10, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 690000006a0000006e0000006f000000790000007d0000007e00000087000000880000008c0000008d000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 120
+  - <WorldPosition>k__BackingField: {x: -10, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 690000006a0000006b0000006e0000006f00000070000000780000007a0000007d0000007e0000007f0000008700000088000000890000008c0000008d0000008e000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 121
+  - <WorldPosition>k__BackingField: {x: -10, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6a0000006b0000006c0000006f0000007000000071000000790000007b0000007e0000007f0000008000000088000000890000008a0000008d0000008e0000008f000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 122
+  - <WorldPosition>k__BackingField: {x: -10, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6b0000006c0000006d0000007000000071000000720000007a0000007c0000007f0000008000000081000000890000008a0000008b0000008e0000008f00000090000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 123
+  - <WorldPosition>k__BackingField: {x: -10, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6c0000006d00000071000000720000007b00000080000000810000008a0000008b0000008f00000090000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 124
+  - <WorldPosition>k__BackingField: {x: -10, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 690000006a0000006e0000006f000000730000007400000078000000790000007e000000820000008300000087000000880000008c0000008d0000009100000092000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 125
+  - <WorldPosition>k__BackingField: {x: -10, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 690000006a0000006b0000006e0000006f0000007000000073000000740000007500000078000000790000007a0000007d0000007f0000008200000083000000840000008700000088000000890000008c0000008d0000008e000000910000009200000093000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 126
+  - <WorldPosition>k__BackingField: {x: -10, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6a0000006b0000006c0000006f0000007000000071000000740000007500000076000000790000007a0000007b0000007e0000008000000083000000840000008500000088000000890000008a0000008d0000008e0000008f000000920000009300000094000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 127
+  - <WorldPosition>k__BackingField: {x: -10, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6b0000006c0000006d0000007000000071000000720000007500000076000000770000007a0000007b0000007c0000007f00000081000000840000008500000086000000890000008a0000008b0000008e0000008f00000090000000930000009400000095000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 128
+  - <WorldPosition>k__BackingField: {x: -10, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6c0000006d000000710000007200000076000000770000007b0000007c0000008000000085000000860000008a0000008b0000008f000000900000009400000095000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 129
+  - <WorldPosition>k__BackingField: {x: -10, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6e0000006f00000073000000740000007d0000007e000000830000008c0000008d0000009100000092000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 130
+  - <WorldPosition>k__BackingField: {x: -10, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6e0000006f000000700000007300000074000000750000007d0000007e0000007f00000082000000840000008c0000008d0000008e000000910000009200000093000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 131
+  - <WorldPosition>k__BackingField: {x: -10, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 6f00000070000000710000007400000075000000760000007e0000007f0000008000000083000000850000008d0000008e0000008f000000920000009300000094000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 132
+  - <WorldPosition>k__BackingField: {x: -10, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7000000071000000720000007500000076000000770000007f000000800000008100000084000000860000008e0000008f00000090000000930000009400000095000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 133
+  - <WorldPosition>k__BackingField: {x: -10, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 710000007200000076000000770000008000000081000000850000008f000000900000009400000095000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 134
+  - <WorldPosition>k__BackingField: {x: -9, y: 3, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 78000000790000007d0000007e000000880000008c0000008d000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 135
+  - <WorldPosition>k__BackingField: {x: -9, y: 3, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 78000000790000007a0000007d0000007e0000007f00000087000000890000008c0000008d0000008e000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 136
+  - <WorldPosition>k__BackingField: {x: -9, y: 3, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 790000007a0000007b0000007e0000007f00000080000000880000008a0000008d0000008e0000008f000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 137
+  - <WorldPosition>k__BackingField: {x: -9, y: 3, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7a0000007b0000007c0000007f0000008000000081000000890000008b0000008e0000008f00000090000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 138
+  - <WorldPosition>k__BackingField: {x: -9, y: 3, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7b0000007c00000080000000810000008a0000008f00000090000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 139
+  - <WorldPosition>k__BackingField: {x: -9, y: 4, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 78000000790000007d0000007e000000820000008300000087000000880000008d0000009100000092000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 140
+  - <WorldPosition>k__BackingField: {x: -9, y: 4, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 78000000790000007a0000007d0000007e0000007f0000008200000083000000840000008700000088000000890000008c0000008e000000910000009200000093000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 141
+  - <WorldPosition>k__BackingField: {x: -9, y: 4, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 790000007a0000007b0000007e0000007f0000008000000083000000840000008500000088000000890000008a0000008d0000008f000000920000009300000094000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 142
+  - <WorldPosition>k__BackingField: {x: -9, y: 4, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7a0000007b0000007c0000007f0000008000000081000000840000008500000086000000890000008a0000008b0000008e00000090000000930000009400000095000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 143
+  - <WorldPosition>k__BackingField: {x: -9, y: 4, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7b0000007c000000800000008100000085000000860000008a0000008b0000008f0000009400000095000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 144
+  - <WorldPosition>k__BackingField: {x: -9, y: 5, z: 2}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7d0000007e00000082000000830000008c0000008d00000092000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 145
+  - <WorldPosition>k__BackingField: {x: -9, y: 5, z: 3}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7d0000007e0000007f0000008200000083000000840000008c0000008d0000008e0000009100000093000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 146
+  - <WorldPosition>k__BackingField: {x: -9, y: 5, z: 4}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7e0000007f000000800000008300000084000000850000008d0000008e0000008f0000009200000094000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 147
+  - <WorldPosition>k__BackingField: {x: -9, y: 5, z: 5}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 7f00000080000000810000008400000085000000860000008e0000008f000000900000009300000095000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 148
+  - <WorldPosition>k__BackingField: {x: -9, y: 5, z: 6}
+    <parentId>k__BackingField: 0
+    <neighborsIds>k__BackingField: 800000008100000085000000860000008f0000009000000094000000
+    <size>k__BackingField: 1
+    <id>k__BackingField: 149

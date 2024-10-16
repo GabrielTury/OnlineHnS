@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Node 
 {
-    public Vector3 WorldPosition { get; private set; }
+    [field: SerializeField] public Vector3 WorldPosition { get; private set; }
 
-    public Node parent { get; private set; }
+    [field: SerializeField] public int parentId { get; private set; }
 
-    public Node[] neighbors { get; private set; }
+    [field: SerializeField] public int[] neighborsIds { get; private set; }
 
-    public int size { get; private set; }
+    [field: SerializeField] public int size { get; private set; }
+
+    [field: SerializeField] public int id {  get; private set; }
+
+    [field: SerializeField] public int originId { get; private set; }
+
+    [field: SerializeField] public bool isBlocked { get; private set; }
 
     #region Costs
     /// <summary>
@@ -27,10 +34,11 @@ public class Node
     public int fCost { get => gCost + hCost;}
     #endregion
 
-    public Node(Vector3 pos, int s)
+    public Node(Vector3 pos, int s, int id)
     {
         WorldPosition = pos;
         size = s;
+        this.id = id;
     }
 
     public void SetHCost(int cost)
@@ -43,13 +51,18 @@ public class Node
         gCost = cost;
     }
 
-    public void SetParent(Node p)
+    public void SetParent(int pId)
     {
-        parent = p;
+        parentId = pId;
     }
 
-    public void SetNeighbors(Node[] n)
+    public void SetNeighbors(int[] nId)
     {
-        neighbors = n;
+        neighborsIds = nId;
+    }
+
+    public void SetOriginNode(int id)
+    {
+        originId = id;
     }
 }
