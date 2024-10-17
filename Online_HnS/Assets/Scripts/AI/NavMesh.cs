@@ -21,6 +21,11 @@ public class NavMesh : MonoBehaviour
     private int minX, minY, minZ;
     private int maxX, maxY, maxZ;
 
+    private void Awake()
+    {
+        allNodes = data.mesh;
+    }
+
     private void SetLimits()
     {
         Vector3 size = limits.size;        
@@ -77,7 +82,8 @@ public class NavMesh : MonoBehaviour
 #if UNITY_EDITOR
         EditorUtility.SetDirty(data);
         AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();        
+        AssetDatabase.Refresh();
+        //once = false;
 #endif
     }
 
@@ -108,8 +114,13 @@ public class NavMesh : MonoBehaviour
         return neighbors.ToArray();
     }
 
+#if UNITY_EDITOR
+   // bool once = false;
+#endif
     private void OnDrawGizmosSelected()
     {
+        //if (once) return;
+
         if (allNodes == null && data.mesh != null)
         {
             allNodes = data.mesh;
@@ -122,12 +133,13 @@ public class NavMesh : MonoBehaviour
             Debug.Log("Return");
             return;
         }
-
+        
         foreach(Node n in data.mesh)
         {
-            Debug.Log("Draw");
+            //Debug.Log("Draw");
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(n.WorldPosition, n.size * Vector3.one);
         }
+        //once = true;
     }
 }

@@ -51,8 +51,8 @@ public class NavOperations
 
             List<Node> neighbors = new List<Node>();
 
-            foreach(int i in checkNode.neighborsIds)
-            {
+            for(int i =0;i < checkNode.neighborsIds.Length;i++)
+            {                
                 neighbors.Add(navMesh[checkNode.neighborsIds[i]]);
             }
             
@@ -63,14 +63,16 @@ public class NavOperations
                 {
                     continue;
                 }
+                if (closedNodeList.Contains(n))
+                    continue;
                 if (!closedNodeList.Contains(n))
                 {
                     // Calculate tentative gCost (cost from start to this tile)
-                    int tentativeFCost = checkNode.gCost - checkNode.hCost + 1;
+                    int tentativeGCost = checkNode.gCost+ 1;
 
-                    if (!openNodeList.Contains(n) || tentativeFCost < n.gCost - n.hCost)
+                    if (!openNodeList.Contains(n) || tentativeGCost < n.gCost)
                     {
-                        n.SetGCost(tentativeFCost + n.hCost);
+                        n.SetGCost(tentativeGCost + n.hCost);
                         n.SetOriginNode(checkNode.id);
 
                         if (!openNodeList.Contains(n))
@@ -99,6 +101,22 @@ public class NavOperations
         //Debug.Log("Path successfully reconstructed");
 
         return path;
+    }
+
+    public static Node GetNearestNode(Vector3 pos, Node[] mesh)
+    {
+        Node nearest = null;
+        float distance = 100;
+        foreach (Node node in mesh)
+        {
+            float currentDistance = Vector3.Distance(pos, node.WorldPosition);
+            if (currentDistance < distance)
+            {
+                distance = currentDistance;
+                nearest = node;
+            }
+        }
+        return nearest;
     }
 
     private static void CalculateListHeuristicCost(Vector3 target, Node node)
