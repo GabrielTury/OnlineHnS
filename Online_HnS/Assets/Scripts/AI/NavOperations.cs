@@ -91,8 +91,9 @@ public class NavOperations
     {
         List<Node> path = new List<Node>();
         while (current != null)
-        {
-            path.Add(current);            
+        {            
+            path.Add(current);
+            if (current.originId == 0) break;
             current = checkMesh[current.originId];
         }
         path.Reverse(); // Reverse the path to get it from start to end

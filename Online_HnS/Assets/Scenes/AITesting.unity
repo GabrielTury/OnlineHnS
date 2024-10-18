@@ -1484,6 +1484,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1240040449}
+  debugCube: {fileID: 4538212446667195825, guid: 1ea39f8e4a716f24d941f6090fd95bec,
+    type: 3}
 --- !u!1001 &5017966968685590414
 PrefabInstance:
   m_ObjectHideFlags: 0
