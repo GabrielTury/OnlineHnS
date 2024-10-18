@@ -9,6 +9,8 @@ public class FlyingEnemy : EnemyBase
 
     private Vector3[] path;
 
+    public GameObject debugCube;
+
     private int currentPathIndex;
     [Button("CheckNavMesh")]
     protected override void CalculatePath()
@@ -21,7 +23,11 @@ public class FlyingEnemy : EnemyBase
         {
             StartCoroutine(Move(path[0]));
         }
-    }
+        foreach( Vector3 node in path )
+        {
+            Instantiate(debugCube, node, Quaternion.identity);
+        }
+     }
 
     protected override IEnumerator Move(Vector3 target)
     {
