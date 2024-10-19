@@ -40,42 +40,57 @@ public class PauseManager : MonoBehaviour
     #region Animations (Coroutines)
     private Coroutine[] scrollersCoroutines = new Coroutine[2];
     private Coroutine backdropCoroutine;
-
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         ResetPauseMenu();
+        PositionButtons();
         PopInAnimate();
-        Debug.Log(buttons.Count.ToString());
-        for (int i = 0; i < buttons.Count; i++)
-        {
-            Debug.Log(i.ToString());
-            buttonsRects.Add(buttons[i].GetComponent<RectTransform>());
-        }
 
-        int buttonCount = buttons.Count;
-        int middleIndex = buttonCount / 2; // Índice do botão central
-
-        for (int i = 0; i < buttonCount; i++)
-        {
-            float currentAngle = (middleIndex - i) * angleOffset; // Distribui os botões simetricamente
-            float radians = currentAngle * Mathf.Deg2Rad;
-
-            // Calcula a posição usando seno e cosseno
-            Vector2 position = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * radius;
-
-            // Atualiza a posição do botão
-            buttonsRects[i].anchoredPosition = position;
-            buttonsRects[i].localEulerAngles = new Vector3(0, 0, currentAngle);
-        }
+        //Debug.Log(buttons.Count.ToString());
     }
 
     // Update is called once per frame
     void Update()
     {
         ScrollScrollers();
+        UpdateControllerIcons();
+    }
+
+    /// <summary>
+    /// Calculates the amount of buttons to order and positions them symmetrically in specified angle and offset
+    /// </summary>
+    private void PositionButtons()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            //Debug.Log(i.ToString());
+            buttonsRects.Add(buttons[i].GetComponent<RectTransform>());
+        }
+
+        int buttonCount = buttons.Count;
+        int middleIndex = buttonCount / 2;
+
+        for (int i = 0; i < buttonCount; i++)
+        {
+            float currentAngle = (middleIndex - i) * angleOffset;
+            float radians = currentAngle * Mathf.Deg2Rad;
+
+            Vector2 position = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * radius;
+
+            buttonsRects[i].anchoredPosition = position;
+            buttonsRects[i].localEulerAngles = new Vector3(0, 0, currentAngle);
+        }
+    }
+
+    /// <summary>
+    /// Sets the controller input guide icons based on the current controller scheme.
+    /// </summary>
+    private void UpdateControllerIcons()
+    {
+
     }
 
     /// <summary>
@@ -100,8 +115,8 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     private void ScrollScrollers()
     {
-        scrollers[0].uvRect = new Rect(scrollers[0].uvRect.x - (0.001f * Time.deltaTime), 0, 1, 1);
-        scrollers[1].uvRect = new Rect(scrollers[1].uvRect.x - (0.001f * Time.deltaTime), 0, 1, 1);
+        scrollers[0].uvRect = new Rect(scrollers[0].uvRect.x - (0.001f * Time.unscaledDeltaTime), 0, 1, 1);
+        scrollers[1].uvRect = new Rect(scrollers[1].uvRect.x - (0.001f * Time.unscaledDeltaTime), 0, 1, 1);
     }
 
     /// <summary>

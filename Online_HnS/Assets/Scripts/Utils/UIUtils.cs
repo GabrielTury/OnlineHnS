@@ -20,7 +20,7 @@ public class UIUtils : MonoBehaviour
         while (elapsedTime < seconds)
         {
             imageToMove.rectTransform.anchoredPosition = Vector3.Lerp(startingPos, end, (elapsedTime / seconds));
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             yield return new WaitForEndOfFrame();
         }
         imageToMove.rectTransform.anchoredPosition = end;
@@ -36,7 +36,7 @@ public class UIUtils : MonoBehaviour
     public static IEnumerator FadeColor(Image imageToFade, Color end, float duration)
     {
         Color startColor = imageToFade.color;
-        for (float t = 0f; t < duration; t += Time.deltaTime)
+        for (float t = 0f; t < duration; t += Time.unscaledDeltaTime)
         {
             float normalizedTime = t / duration;
             imageToFade.color = Color.Lerp(startColor, end, normalizedTime);
