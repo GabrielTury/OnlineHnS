@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206faae04812dab48b2a58058a339065, type: 3}
+  m_Name: ControllerIconsKB
+  m_EditorClassIdentifier: 
+  up: {fileID: 21300000, guid: f48c90a9b86263c40832fdbeb25a4dcf, type: 3}
+  down: {fileID: 21300000, guid: 7e4ee84adda347042b8c5a61c4c99cc9, type: 3}
+  left: {fileID: 21300000, guid: adfef54596a870c43824c704997cc754, type: 3}
+  right: {fileID: 21300000, guid: 788de3c7b8e159a42ad7c719a5308bf0, type: 3}
+  leftright: {fileID: 21300000, guid: 7af875669d1b009409a0907926fc3c70, type: 3}
+  updown: {fileID: 21300000, guid: 7bb79c4ed80b58749bdbccd8341e07e4, type: 3}
+  up2: {fileID: 0}
+  down2: {fileID: 0}
+  left2: {fileID: 0}
+  right2: {fileID: 0}
+  leftright2: {fileID: 0}
+  updown2: {fileID: 0}
+  a: {fileID: 21300000, guid: 35d5953f45403654bbe24e623be72f1b, type: 3}
+  b: {fileID: 21300000, guid: 32326430874520047baf4e47830efe77, type: 3}
+  x: {fileID: 0}
+  y: {fileID: 0}
+  escape: {fileID: 0}
+  start: {fileID: 0}
+  dPadUp: {fileID: 0}
+  dPadDown: {fileID: 0}
+  dPadLeft: {fileID: 0}
+  dPadRight: {fileID: 0}
+  rb: {fileID: 0}
+  rt: {fileID: 0}
+  lb: {fileID: 0}
+  lt: {fileID: 0}
+  lm: {fileID: 0}
+  rm: {fileID: 0}

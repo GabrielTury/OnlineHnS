@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206faae04812dab48b2a58058a339065, type: 3}
+  m_Name: ControllerIconsPS
+  m_EditorClassIdentifier: 
+  up: {fileID: 21300000, guid: 1a60b97748c97e84f92b6bc222f443f1, type: 3}
+  down: {fileID: 21300000, guid: 96fd8410858bcde4480edffe7b996a38, type: 3}
+  left: {fileID: 21300000, guid: 042ebe86be758394595312d08bde4231, type: 3}
+  right: {fileID: 21300000, guid: f69df6d86de73b54c85c3b84e85b6739, type: 3}
+  leftright: {fileID: 21300000, guid: cb391dfcde376174e9bcd5a98f203db6, type: 3}
+  updown: {fileID: 21300000, guid: 9fa77a94ade712a409a370cb08bead21, type: 3}
+  up2: {fileID: 21300000, guid: b2f63b72c1e62124db62a0bf9f3b8df6, type: 3}
+  down2: {fileID: 21300000, guid: 0961831d556cfaa49b018d90b39e1999, type: 3}
+  left2: {fileID: 21300000, guid: 6d507fd35d1daaf48b2bdc04f4b38216, type: 3}
+  right2: {fileID: 21300000, guid: 9dfb8ec08bdee0a4fac850f422325856, type: 3}
+  leftright2: {fileID: 21300000, guid: 9e986b44834e6d343a2a44b674ff1adb, type: 3}
+  updown2: {fileID: 21300000, guid: 07dda724cb7f6b74bbf07578231e315c, type: 3}
+  a: {fileID: 21300000, guid: 4625fb00f14b0374c969407c493d8e24, type: 3}
+  b: {fileID: 21300000, guid: c1890fc1629c428428f5ee7f434553b5, type: 3}
+  x: {fileID: 21300000, guid: 815c090d6e4df7042b93bf7c52cf2991, type: 3}
+  y: {fileID: 21300000, guid: 63af9e83dfdf7ce4381e8352e54ca4a8, type: 3}
+  escape: {fileID: 21300000, guid: 7e4e8558bb3ed4b49a94e4708899017a, type: 3}
+  start: {fileID: 21300000, guid: 65b5ac2f4c630cd4bb2def68a8e00344, type: 3}
+  dPadUp: {fileID: 21300000, guid: a254bb6373aa2f94487deb9b9f56b0a7, type: 3}
+  dPadDown: {fileID: 21300000, guid: 8bb41435c384dea4ba71da69f370f881, type: 3}
+  dPadLeft: {fileID: 21300000, guid: 3275bd1621faf774ea83655c4be59dbb, type: 3}
+  dPadRight: {fileID: 21300000, guid: fdf63eaa88a8142479e3dab9603956b7, type: 3}
+  rb: {fileID: 21300000, guid: 7d0f42ce1bce03d4db5c1668e81e9908, type: 3}
+  rt: {fileID: 21300000, guid: 2376e7887cc0617429fde0e9ccd3363d, type: 3}
+  lb: {fileID: 21300000, guid: b8e26acefbab75f4092861c45e09a75e, type: 3}
+  lt: {fileID: 21300000, guid: af0d32a58e0b21f488be491231911f46, type: 3}
+  lm: {fileID: 21300000, guid: e1ecc3ea2d80a9249bb05d6b0373a0d1, type: 3}
+  rm: {fileID: 21300000, guid: ea7214596f3a13d46a73aa1f1ec41fb9, type: 3}

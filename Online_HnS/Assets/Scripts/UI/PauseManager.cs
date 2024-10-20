@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
-    #region Object References
+    #region Object and Asset References
     [Header("--- Object References")]
     [SerializeField]
     private RawImage[] scrollers; // The scrolling checkers in the top and bottom
 
     [SerializeField]
     private Image backdrop; // The black background
+
+    
 
     [SerializeField]
     private List<GameObject> buttons = new List<GameObject>(); // Interactible buttons

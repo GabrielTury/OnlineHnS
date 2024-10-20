@@ -40,7 +40,7 @@ public class InputUtils : MonoBehaviour
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="change"></param>
-    void ReportDevice(object obj, InputActionChange change)
+    public void ReportDevice(object obj, InputActionChange change)
     {
         if (obj != null && obj is InputAction action)
         { 
