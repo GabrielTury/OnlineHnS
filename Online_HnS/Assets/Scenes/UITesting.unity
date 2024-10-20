@@ -2165,6 +2165,14 @@ MonoBehaviour:
   - {fileID: 186085476}
   - {fileID: 37552676}
   - {fileID: 138165768}
+  inputIcons:
+  - {fileID: 11400000, guid: c898bafad30272c499123f41620eba7c, type: 2}
+  - {fileID: 11400000, guid: 71ec3cae07e32cd41ba568fd4b61b867, type: 2}
+  - {fileID: 11400000, guid: fe17f8312cd182741bea9cade578549f, type: 2}
+  inputGuideIcons:
+    navigateUpDown: {fileID: 1629417326}
+    confirm: {fileID: 967428520}
+    cancel: {fileID: 41277764}
   currentTimeline: 1
   mainColors:
   - {r: 0.8532221, g: 0.6, b: 1, a: 1}

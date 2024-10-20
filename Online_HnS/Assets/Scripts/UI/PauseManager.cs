@@ -1,23 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
     #region Object and Asset References
-    [Header("--- Object References")]
+    [Header("--- Object and Asset References")]
     [SerializeField]
     private RawImage[] scrollers; // The scrolling checkers in the top and bottom
 
     [SerializeField]
     private Image backdrop; // The black background
 
-    
-
     [SerializeField]
     private List<GameObject> buttons = new List<GameObject>(); // Interactible buttons
     private List<RectTransform> buttonsRects = new List<RectTransform>(); // RectTransforms of said buttons
+
+    [SerializeField]
+    private UIControllerIcons[] inputIcons; // The icons for each input type
+
+    [System.Serializable]
+    private struct InputGuideIcons
+    {
+        public Image navigateUpDown;
+        public Image confirm;
+        public Image cancel;
+    }
+
+    [SerializeField]
+    private InputGuideIcons inputGuideIcons;
     #endregion
 
     #region Timelines
@@ -44,6 +57,16 @@ public class PauseManager : MonoBehaviour
     private Coroutine backdropCoroutine;
     #endregion
 
+    private void OnEnable() // new
+    {
+        GameEvents.UIInputMade += UpdateControllerIcons;
+    }
+
+    private void OnDisable() // new
+    {
+        GameEvents.UIInputMade -= UpdateControllerIcons;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,17 +81,15 @@ public class PauseManager : MonoBehaviour
     void Update()
     {
         ScrollScrollers();
-        UpdateControllerIcons();
     }
 
     /// <summary>
-    /// Calculates the amount of buttons to order and positions them symmetrically in specified angle and offset
+    /// Calculates the amount of buttons to order and positions them symmetrically in specified angle and offset.
     /// </summary>
     private void PositionButtons()
     {
         for (int i = 0; i < buttons.Count; i++)
         {
-            //Debug.Log(i.ToString());
             buttonsRects.Add(buttons[i].GetComponent<RectTransform>());
         }
 
@@ -88,15 +109,34 @@ public class PauseManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the controller input guide icons based on the current controller scheme.
+    /// Sets the controller input guide icons based on the current controller scheme.<br></br>
+    /// Is subscribed to and gets input info from the OnUIInputMade event.
     /// </summary>
-    private void UpdateControllerIcons()
+    private void UpdateControllerIcons(InputDevice inputDevice)
     {
-
+        if (inputDevice.name.Contains("Keyboard"))
+        {
+            inputGuideIcons.navigateUpDown.sprite = inputIcons[0].updown;
+            inputGuideIcons.confirm.sprite = inputIcons[0].a;
+            inputGuideIcons.cancel.sprite = inputIcons[0].b;
+        }
+        else if (inputDevice.name.Contains("XInput"))
+        {
+            inputGuideIcons.navigateUpDown.sprite = inputIcons[1].updown;
+            inputGuideIcons.confirm.sprite = inputIcons[1].a;
+            inputGuideIcons.cancel.sprite = inputIcons[1].b;
+        }
+        else if (inputDevice.name.Contains("DualShock"))
+        {
+            inputGuideIcons.navigateUpDown.sprite = inputIcons[2].updown;
+            inputGuideIcons.confirm.sprite = inputIcons[2].a;
+            inputGuideIcons.cancel.sprite = inputIcons[2].b;
+        }
+        Debug.Log(inputDevice.name);
     }
 
     /// <summary>
-    /// Resets the pause menu back to its default state and refreshes the colors
+    /// Resets the pause menu back to its default state and refreshes the colors.
     /// </summary>
     private void ResetPauseMenu()
     {
