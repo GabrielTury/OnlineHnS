@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class InputUtils : MonoBehaviour
 {
     private UIControls inputActions;
-    public static InputDevice lastInputDevice;
+    //public static InputDevice lastInputDevice;
 
     private void OnEnable()
     {
@@ -48,7 +48,8 @@ public class InputUtils : MonoBehaviour
             InputDevice lastDevice = action.activeControl.device;
 
             //print(lastDevice.name);
-            lastInputDevice = lastDevice;
+            //lastInputDevice = lastDevice;
+            GameEvents.OnUIInputMade(lastDevice);
         }
     }
 }
