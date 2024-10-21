@@ -12,6 +12,12 @@ public class FlyingEnemy : EnemyBase
     public GameObject debugCube;
 
     private int currentPathIndex;
+
+    private void Start()
+    {
+        GameEvents.OnDamageableSpawned(transform);        
+    }
+
     [Button("CheckNavMesh")]
     protected override void CalculatePath()
     {
