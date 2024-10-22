@@ -1,11 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class UIUtils : MonoBehaviour
 {
+    /// <summary>
+    /// Wraps a given number variables between a min and max. Only includes the max.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="x_max"></param>
+    /// <param name="x_min"></param>
+    /// <returns></returns>
+    public static int Wrap(int x, int x_max, int x_min)
+    {
+        return (((x - x_min) % (x_max - x_min)) + (x_max - x_min)) % (x_max - x_min) + x_min;
+    }
+
     /// <summary>
     /// Moves a given raw image from one position to another over a certain amount of time
     /// </summary>
@@ -33,15 +48,30 @@ public class UIUtils : MonoBehaviour
     /// <param name="end"></param>
     /// <param name="duration"></param>
     /// <returns></returns>
-    public static IEnumerator FadeColor(Image imageToFade, Color end, float duration)
+    public static IEnumerator FadeColor(Image imageToFade, Color32 end, float duration)
     {
-        Color startColor = imageToFade.color;
+        Color32 startColor = imageToFade.color;
         for (float t = 0f; t < duration; t += Time.unscaledDeltaTime)
         {
             float normalizedTime = t / duration;
-            imageToFade.color = Color.Lerp(startColor, end, normalizedTime);
+            imageToFade.color = Color32.Lerp(startColor, end, normalizedTime);
             yield return null;
         }
         imageToFade.color = end;
+    }
+
+    public static IEnumerator FadeFloat(float variable, float end, float duration)
+    {
+        float time = 0;
+        float current = variable;
+        while (time < duration)
+        {
+            current = Mathf.Lerp(current, end, time / duration);
+            time += Time.deltaTime;
+            variable = current;
+            yield return null;
+        }
+        current = end;
+        variable = current;
     }
 }
