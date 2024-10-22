@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class EnemyBase : MonoBehaviour, IDamageable
 {
     public int health { get; private set; }
+
+    protected Coroutine moveRoutine;
     
     public void Damage(int damage)
     {
@@ -14,13 +16,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
             Death();
         }
     }
-
-    private void Death()
+    protected void Death()
     {
         Destroy(gameObject);
     }
 
-    protected abstract void CalculatePath();
+    protected abstract void CalculatePath(Vector3 pos);    
 
     protected abstract IEnumerator Move(Vector3 target);
     // Start is called before the first frame update
@@ -33,5 +34,15 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     void Update()
     {
         
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.Player_Move += CalculatePath;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.Player_Move -= CalculatePath;
     }
 }

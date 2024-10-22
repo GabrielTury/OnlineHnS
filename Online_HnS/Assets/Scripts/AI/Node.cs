@@ -1,15 +1,18 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Node 
+public class Node
 {
     [field: SerializeField] public Vector3 WorldPosition { get; private set; }
 
     [field: SerializeField] public int parentId { get; private set; }
 
     [field: SerializeField] public int[] neighborsIds { get; private set; }
+
+    [field: SerializeField] public int[] planarNeighborsIds {get; private set;}
 
     [field: SerializeField] public int size { get; private set; }
 
@@ -23,7 +26,7 @@ public class Node
     /// <summary>
     /// Acumulated cost
     /// </summary>
-    public int gCost {  get; private set; }
+    public float gCost {  get; private set; }
     /// <summary>
     /// Distance Cost
     /// </summary>
@@ -31,7 +34,7 @@ public class Node
     /// <summary>
     /// Total cost (sum of gCost + hCost)
     /// </summary>
-    public int fCost { get => gCost + hCost;}
+    public float fCost { get => gCost + hCost;}
     #endregion
 
     public Node(Vector3 pos, int s, int id)
@@ -46,7 +49,7 @@ public class Node
         hCost = cost;
     }
 
-    public void SetGCost(int cost)
+    public void SetGCost(float cost)
     {
         gCost = cost;
     }
@@ -59,6 +62,21 @@ public class Node
     public void SetNeighbors(int[] nId)
     {
         neighborsIds = nId;
+
+        List<int> tempNeighbors = new List<int>();
+        foreach(int n in neighborsIds)
+        {
+            if (NavMesh.allNodes[n].WorldPosition.y == WorldPosition.y)
+            {
+                tempNeighbors.Add(n);
+            }
+        }
+        planarNeighborsIds = tempNeighbors.ToArray();
+    }
+
+    public void SetObstacle(bool newValue)
+    {
+        isBlocked = newValue;
     }
 
     public void SetOriginNode(int id)

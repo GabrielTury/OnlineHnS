@@ -10,7 +10,7 @@ public class NavOperations
 #endif
 
     public static Node[] checkMesh;
-    public static Vector3[] CalculatePath(Node target, Node start, Node[] navMesh)
+    public static Vector3[] CalculatePath(Node target, Node start, Node[] navMesh, bool use3DMesh)
     {
         checkMesh = NavMesh.allNodes;
         List<Node> openNodeList = new List<Node>();
@@ -43,6 +43,18 @@ public class NavOperations
                 }
                 Debug.Log("Created Path");
                 Debug.LogWarning("Iterations: " + iterations);
+                foreach(Node n in openNodeList)
+                {
+                    n.SetOriginNode(0);
+                }
+                openNodeList.Clear();
+
+                foreach(Node n in closedNodeList)
+                {
+                    n.SetOriginNode(0);
+                }
+                closedNodeList.Clear();
+
                 return path.ToArray();
             }
 
@@ -50,10 +62,19 @@ public class NavOperations
             closedNodeList.Add(checkNode);
 
             List<Node> neighbors = new List<Node>();
-
-            for(int i =0;i < checkNode.neighborsIds.Length;i++)
-            {                
-                neighbors.Add(navMesh[checkNode.neighborsIds[i]]);
+            if(use3DMesh)
+            {
+                for(int i =0;i < checkNode.neighborsIds.Length;i++)
+                {                    
+                        neighbors.Add(navMesh[checkNode.neighborsIds[i]]);                                  
+                }
+            }
+            else if (!use3DMesh)
+            {
+                for (int i = 0; i < checkNode.planarNeighborsIds.Length; i++)
+                {
+                    neighbors.Add(navMesh[checkNode.planarNeighborsIds[i]]);
+                }
             }
             
 
@@ -68,7 +89,7 @@ public class NavOperations
                 if (!closedNodeList.Contains(n))
                 {
                     // Calculate tentative gCost (cost from start to this tile)
-                    int tentativeGCost = checkNode.gCost+ 1;
+                    float tentativeGCost = checkNode.gCost + Vector3.Distance(n.WorldPosition, checkNode.WorldPosition);
 
                     if (!openNodeList.Contains(n) || tentativeGCost < n.gCost)
                     {
@@ -120,11 +141,39 @@ public class NavOperations
         return nearest;
     }
 
+    public static Node GetNearestNodeInPlane(Vector3 pos, Node[] mesh, float y)
+    {
+        Node nearest = null;
+        float distance = 100;
+        foreach (Node node in mesh)
+        {
+            if (node.WorldPosition.y != y)
+                continue;
+
+            float currentDistance = Vector3.Distance(pos, node.WorldPosition);
+            if (currentDistance < distance)
+            {
+                distance = currentDistance;
+                nearest = node;
+            }
+        }
+        return nearest;
+    }
+
     private static void CalculateListHeuristicCost(Vector3 target, Node node)
     {
 
         float totalDistance = Mathf.Abs(target.x - node.WorldPosition.x) + Mathf.Abs(target.z - node.WorldPosition.z) + Mathf.Abs(target.y - node.WorldPosition.y);
         node.SetHCost((int)totalDistance);
 
+    }
+
+    public static bool CheckForPathDiff(Vector3[] path1, Vector3[] path2)
+    {
+        if (path1[path1.Length -1] != path2[path2.Length  - 1])
+        {
+            return true;
+        }
+        return false;
     }
 }
