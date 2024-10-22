@@ -74,7 +74,7 @@ public class NavMesh : MonoBehaviour
                 ids[i] = neighbors[i].id;
             }
             n.SetNeighbors(ids);
-
+            CheckForObstacle(n);
         }
 
         data.mesh = allNodes;
@@ -85,6 +85,24 @@ public class NavMesh : MonoBehaviour
         AssetDatabase.Refresh();
         //once = false;
 #endif
+    }
+
+    private bool CheckForObstacle(Node n)
+    {
+        Collider[] hit = Physics.OverlapBox(n.WorldPosition, Vector3.one * n.size/2);
+        if(hit != null)
+        {
+            foreach (Collider c in hit)
+            {
+                if (c.CompareTag("NavObstacle"))
+                {
+                    n.SetObstacle(true);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private Node[] GetNeighbors(Node checkNode)
@@ -138,6 +156,10 @@ public class NavMesh : MonoBehaviour
         {
             //Debug.Log("Draw");
             Gizmos.color = Color.yellow;
+
+            if (n.isBlocked)
+                Gizmos.color = Color.red;
+
             Gizmos.DrawWireCube(n.WorldPosition, n.size * Vector3.one);
         }
         //once = true;
