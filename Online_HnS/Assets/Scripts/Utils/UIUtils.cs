@@ -43,6 +43,44 @@ public class UIUtils : MonoBehaviour
     }
 
     /// <summary>
+    /// Rotates a given rect transform from one rotation to another over a certain amount of time.
+    /// </summary>
+    /// <param name="rect"></param>
+    /// <param name="end"></param>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
+    public static IEnumerator RotateOverSecondsRectTransform(RectTransform rect, Vector3 end, float seconds)
+    {
+        float elapsedTime = 0;
+        Vector3 startingAngle = rect.localEulerAngles;
+        while (elapsedTime < seconds)
+        {
+            float t = Mathf.SmoothStep(0, 1, elapsedTime / seconds);
+            rect.localEulerAngles = UIUtils.AngleLerp(startingAngle, end, t);
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        rect.localEulerAngles = end;
+    }
+
+    /// <summary>
+    /// Lerps a given Vector3 from one angle to another over a certain amount of time.<br></br>
+    /// This method is used in place of basic Vector3.Lerp() when lerping angles to avoid 360 degree jumps.
+    /// </summary>
+    /// <param name="startAngle"></param>
+    /// <param name="finishAngle"></param>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    public static Vector3 AngleLerp(Vector3 startAngle, Vector3 finishAngle, float t)
+    {
+        float xLerp = Mathf.LerpAngle(startAngle.x, finishAngle.x, t);
+        float yLerp = Mathf.LerpAngle(startAngle.y, finishAngle.y, t);
+        float zLerp = Mathf.LerpAngle(startAngle.z, finishAngle.z, t);
+        Vector3 Lerped = new Vector3(xLerp, yLerp, zLerp);
+        return Lerped;
+    }
+
+    /// <summary>
     /// Scales a given rect transform from one scale to another over a certain amount of time.
     /// </summary>
     /// <param name="rect"></param>
@@ -119,7 +157,7 @@ public class UIUtils : MonoBehaviour
             current = Mathf.Lerp(current, end, time / duration);
             time += Time.deltaTime;
             variable = current;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
         current = end;
         variable = current;

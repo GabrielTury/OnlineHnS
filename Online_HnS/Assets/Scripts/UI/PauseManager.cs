@@ -26,6 +26,9 @@ public class PauseManager : MonoBehaviour
     private RectTransform clockMenuHolder;
 
     [SerializeField]
+    private RectTransform arrowPointer;
+
+    [SerializeField]
     private List<GameObject> buttons = new List<GameObject>(); // Interactible buttons
     private List<RectTransform> buttonsRects = new List<RectTransform>(); // RectTransforms of said buttons
     private List<SlicedFilledImage> buttonsHighlight = new List<SlicedFilledImage>(); // Highlights of said buttons
@@ -93,7 +96,12 @@ public class PauseManager : MonoBehaviour
     private Coroutine clockMenuCoroutine;
     private Coroutine inputGuideCoroutine;
     private Coroutine pauseTextCoroutine;
+    private Coroutine arrowPointerCoroutine;
     private Coroutine[] buttonsCoroutines;
+    private Coroutine[] buttonsOptionsCoroutines;
+    private Coroutine[] buttonsOptionsVideoCoroutines;
+    private Coroutine[] buttonsOptionsAudioCoroutines;
+    private Coroutine[] buttonsOptionsLanguageCoroutines;
     private bool[] buttonsCoroutinesRunning;
     private bool[] buttonsCoroutinesRunningHighlight;
     #endregion
@@ -121,6 +129,7 @@ public class PauseManager : MonoBehaviour
         ResetPauseMenu();
         InitializeButtons();
         PopInAnimate();
+        SelectButton(0);
         SelectButton(0);
     }
 
@@ -208,6 +217,10 @@ public class PauseManager : MonoBehaviour
             elapsedTime += Time.unscaledDeltaTime;
             yield return new WaitForEndOfFrame();
         }
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            buttonsRects[i].localEulerAngles = new Vector3(0, 0, buttonsAngle[i]);
+        }
         isAngleAnimationRunning = false;
     }
 
@@ -220,7 +233,9 @@ public class PauseManager : MonoBehaviour
     {
         currentButtonIndex = index;
 
-        //StopHighlightAnimations();
+        try { StopCoroutine(arrowPointerCoroutine); } catch { }
+
+        arrowPointerCoroutine = StartCoroutine(UIUtils.RotateOverSecondsRectTransform(arrowPointer, new Vector3(0, 0, buttonsAngle[index]), 0.10f));
 
         for (int i = 0; i < buttons.Count; i++) // Do for all buttons
         {
@@ -423,6 +438,8 @@ public class PauseManager : MonoBehaviour
         try { StopCoroutine(backdropCoroutine); } catch { }
         try { StopCoroutine(inputGuideCoroutine); } catch { }
         try { StopCoroutine(clockMenuCoroutine); } catch { }
+        try { StopCoroutine(pauseTextCoroutine); } catch { }
+        try { StopCoroutine(arrowPointerCoroutine); } catch { }
     }
 
     /// <summary>
@@ -437,6 +454,10 @@ public class PauseManager : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Attemps to stop a button's highlight animation at the specified index.
+    /// </summary>
+    /// <param name="index"></param>
     private void StopHighlightAnimationAtIndex(int index)
     {
         try { StopCoroutine(buttonsCoroutines[index]); } catch { }
