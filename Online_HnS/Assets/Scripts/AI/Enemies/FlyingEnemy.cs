@@ -23,20 +23,16 @@ public class FlyingEnemy : EnemyBase
     }
 
     [Button("CheckNavMesh")]
-    protected override void CalculatePath(Vector3 playerPos)
+    protected override void CalculatePath(Node playerNode)
     {
         Vector3[] newPath;
         currentPathIndex = 0;
-        newPath = NavOperations.CalculatePath(NavOperations.GetNearestNode(playerPos, NavMesh.allNodes),
-                                    NavOperations.GetNearestNode(transform.position, NavMesh.allNodes),
+        newPath = NavOperations.CalculatePath(playerNode,
+                                    ownNode,
                                     NavMesh.allNodes, true);
 
-        if (path == null || NavOperations.CheckForPathDiff(newPath, path))
-        {
-            path = newPath;
-        }
-        else
-            return;
+        path = newPath;
+
 
 
         if (path.Length > 0 )
@@ -65,23 +61,31 @@ public class FlyingEnemy : EnemyBase
 
     protected override IEnumerator Move(Vector3 target)
     {
-        Debug.Log("Called Move");
-        while(path.Length > 0)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * 2);
+        goal = target;
 
-            if(Vector3.Distance(transform.position, target) < .1f )
+        while (path.Length > 0)
+        {
+            if (Vector3.Distance(transform.position, goal) < .1f)
             {
                 currentPathIndex++;
-                break;
+
+                if (currentPathIndex < path.Length)
+                {
+                    goal = path[currentPathIndex];
+                }
+                else
+                {
+                    path = new Vector3[0];
+                    break;
+                }
             }
             yield return new WaitForEndOfFrame();
         }
 
-        if(currentPathIndex < path.Length)
-        {
-            StartCoroutine(Move(path[currentPathIndex]));
-        }
     }
 
+    protected override void MoveToGoal()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 2);
+    }
 }

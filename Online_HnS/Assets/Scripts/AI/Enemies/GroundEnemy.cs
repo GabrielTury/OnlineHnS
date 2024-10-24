@@ -17,21 +17,14 @@ public class GroundEnemy : EnemyBase
     private int currentPathIndex;
 
     [Button("CheckNavMesh")]
-    protected override void CalculatePath(Vector3 playerPos)
+    protected override void CalculatePath(Node playerNode)
     {
         Vector3[] newPath;
-        Node ownNode = NavOperations.GetNearestNode(transform.position, NavMesh.allNodes);
         currentPathIndex = 0;
-        newPath = NavOperations.CalculatePath(NavOperations.GetNearestNodeInPlane(playerPos, NavMesh.allNodes, ownNode.WorldPosition.y),
+        newPath = NavOperations.CalculatePath(playerNode,
                                     ownNode,
                                     NavMesh.allNodes, false);
-
-        if (path == null || NavOperations.CheckForPathDiff(newPath, path))
-        {
-            path = newPath;
-        }
-        else
-            return;
+        path = newPath;
 
         if (path.Length > 0)
         {
@@ -53,25 +46,31 @@ public class GroundEnemy : EnemyBase
 
     protected override IEnumerator Move(Vector3 target)
     {
+        goal = target;
+
         while (path.Length > 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * 2);
-
-            if (Vector3.Distance(transform.position, target) < .1f)
+            if (Vector3.Distance(transform.position, goal) < .1f)
             {
                 currentPathIndex++;
-                break;
+
+                if (currentPathIndex < path.Length)
+                {
+                    goal = path[currentPathIndex];
+                }
+                else
+                {
+                    path = new Vector3[0];
+                    break;
+                }
             }
             yield return new WaitForEndOfFrame();
         }
 
-        if (currentPathIndex < path.Length)
-        {
-            StartCoroutine(Move(path[currentPathIndex]));
-        }
-        else 
-        {
-            path = new Vector3[0];
-        }
+    }
+
+    protected override void MoveToGoal()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 2);
     }
 }
