@@ -20,10 +20,19 @@ public class PauseManager : MonoBehaviour
     private Image backdrop; // The black background
 
     [SerializeField]
+    private RectTransform pauseText;
+
+    [SerializeField]
+    private RectTransform clockMenuHolder;
+
+    [SerializeField]
     private List<GameObject> buttons = new List<GameObject>(); // Interactible buttons
     private List<RectTransform> buttonsRects = new List<RectTransform>(); // RectTransforms of said buttons
     private List<SlicedFilledImage> buttonsHighlight = new List<SlicedFilledImage>(); // Highlights of said buttons
     private List<TextMeshProUGUI> buttonsTexts = new List<TextMeshProUGUI>(); // Texts of said buttons
+
+    [SerializeField]
+    private RectTransform inputGuideHolder;
 
     [SerializeField]
     private UIControllerIcons[] inputIcons; // The icons for each input type
@@ -81,6 +90,9 @@ public class PauseManager : MonoBehaviour
     #region Animations (Coroutines)
     private Coroutine[] scrollersCoroutines = new Coroutine[2];
     private Coroutine backdropCoroutine;
+    private Coroutine clockMenuCoroutine;
+    private Coroutine inputGuideCoroutine;
+    private Coroutine pauseTextCoroutine;
     private Coroutine[] buttonsCoroutines;
     private bool[] buttonsCoroutinesRunning;
     private bool[] buttonsCoroutinesRunningHighlight;
@@ -181,7 +193,9 @@ public class PauseManager : MonoBehaviour
         {
             for (int i = 0; i < buttons.Count; i++)
             {
-                float angle = Mathf.Lerp(0, buttonsAngle[i], (elapsedTime / angleAnimationSpeed));
+                float t = Mathf.SmoothStep(0, 1, elapsedTime / angleAnimationSpeed);
+
+                float angle = Mathf.Lerp(0, buttonsAngle[i], t);
 
                 buttonsRects[i].localEulerAngles = new Vector3(0, 0, angle);
 
@@ -192,7 +206,7 @@ public class PauseManager : MonoBehaviour
                 buttonsRects[i].anchoredPosition = position;
             }
             elapsedTime += Time.unscaledDeltaTime;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
         isAngleAnimationRunning = false;
     }
@@ -335,6 +349,12 @@ public class PauseManager : MonoBehaviour
 
         backdrop.color = new Color(0, 0, 0, 0);
 
+        clockMenuHolder.localScale = new Vector3(0, 0, 0);
+
+        inputGuideHolder.anchoredPosition = new Vector3(0, -150, 0);
+
+        pauseText.anchoredPosition = new Vector3(0, 600, 0);
+
         scrollers[0].rectTransform.anchoredPosition = new Vector3(0, -25.5f, 0);
         scrollers[1].rectTransform.anchoredPosition = new Vector3(0, 25.5f, 0);
         scrollers[0].color = mainColors[currentTimeline];
@@ -359,9 +379,37 @@ public class PauseManager : MonoBehaviour
     private void PopInAnimate()
     {
         StopAllMainAnimations();
-        scrollersCoroutines[0] = StartCoroutine(UIUtils.MoveOverSecondsRaw(scrollers[0], new Vector3(0, 25.5f, 0), 0.35f));
-        scrollersCoroutines[1] = StartCoroutine(UIUtils.MoveOverSecondsRaw(scrollers[1], new Vector3(0, -25.5f, 0), 0.35f));
+
+        scrollersCoroutines[0] = StartCoroutine(UIUtils.MoveOverSecondsRawImage(scrollers[0], new Vector3(0, 25.5f, 0), 0.35f));
+        scrollersCoroutines[1] = StartCoroutine(UIUtils.MoveOverSecondsRawImage(scrollers[1], new Vector3(0, -25.5f, 0), 0.35f));
+
+        pauseTextCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(pauseText, new Vector3(0, 300, 0), 0.35f));
+
         backdropCoroutine = StartCoroutine(UIUtils.FadeColor(backdrop, new Color32(0, 0, 0, 125), 0.5f));
+
+        inputGuideCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(inputGuideHolder, new Vector3(0, 0, 0), 0.35f));
+
+        clockMenuCoroutine = StartCoroutine(UIUtils.ScaleOverSecondsRectTransform(clockMenuHolder, new Vector3(1, 1, 1), 0.35f));
+    }
+
+    /// <summary>
+    /// Dials back the pause menu's animations.<br></br>
+    /// The StopAllMainAnimations() method will be called before the animation starts.
+    /// </summary>
+    private void PopOutAnimate()
+    {
+        StopAllMainAnimations();
+
+        scrollersCoroutines[0] = StartCoroutine(UIUtils.MoveOverSecondsRawImage(scrollers[0], new Vector3(0, -25.5f, 0), 0.35f));
+        scrollersCoroutines[1] = StartCoroutine(UIUtils.MoveOverSecondsRawImage(scrollers[1], new Vector3(0, 25.5f, 0), 0.35f));
+
+        pauseTextCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(pauseText, new Vector3(0, 600, 0), 0.35f));
+
+        backdropCoroutine = StartCoroutine(UIUtils.FadeColor(backdrop, new Color32(0, 0, 0, 0), 0.35f));
+
+        inputGuideCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(inputGuideHolder, new Vector3(0, -150, 0), 0.35f));
+
+        clockMenuCoroutine = StartCoroutine(UIUtils.ScaleOverSecondsRectTransform(clockMenuHolder, new Vector3(0, 0, 0), 0.35f));
     }
 
     /// <summary>
@@ -373,6 +421,8 @@ public class PauseManager : MonoBehaviour
         try { StopCoroutine(scrollersCoroutines[0]); } catch { }
         try { StopCoroutine(scrollersCoroutines[1]); } catch { }
         try { StopCoroutine(backdropCoroutine); } catch { }
+        try { StopCoroutine(inputGuideCoroutine); } catch { }
+        try { StopCoroutine(clockMenuCoroutine); } catch { }
     }
 
     /// <summary>
