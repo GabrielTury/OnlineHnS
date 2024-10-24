@@ -41,8 +41,8 @@ public class NavOperations
                 {
                     path.Add(node.WorldPosition);
                 }
-                Debug.Log("Created Path");
-                Debug.LogWarning("Iterations: " + iterations);
+                //Debug.Log("Created Path");
+                //Debug.LogWarning("Iterations: " + iterations);
                 foreach(Node n in openNodeList)
                 {
                     n.SetOriginNode(0);
@@ -118,7 +118,7 @@ public class NavOperations
             current = checkMesh[current.originId];
         }
         path.Reverse(); // Reverse the path to get it from start to end
-        Debug.Log("Reconstructed path size: " + path.Count);
+        //Debug.Log("Reconstructed path size: " + path.Count);
 
         //Debug.Log("Path successfully reconstructed");
 

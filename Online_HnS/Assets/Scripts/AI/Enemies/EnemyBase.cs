@@ -7,6 +7,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     public int health { get; private set; }
 
     protected Coroutine moveRoutine;
+
+    protected Node ownNode;
+
+    protected Node lastPlayerNode;
+
+    protected Vector3 goal;
     
     public void Damage(int damage)
     {
@@ -21,7 +27,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         Destroy(gameObject);
     }
 
-    protected abstract void CalculatePath(Vector3 pos);    
+    protected abstract void CalculatePath(Node playerNode);    
 
     protected abstract IEnumerator Move(Vector3 target);
     // Start is called before the first frame update
@@ -33,16 +39,23 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        
+        UpdatePath();
+
+        MoveToGoal();
     }
 
-    private void OnEnable()
+    protected void UpdatePath()
     {
-        GameEvents.Player_Move += CalculatePath;
+        Vector3 playerPos = PlayerManager.instance.player.transform.position;
+        ownNode = NavOperations.GetNearestNode(transform.position, NavMesh.allNodes);
+        Node playerNode = NavOperations.GetNearestNodeInPlane(playerPos, NavMesh.allNodes, ownNode.WorldPosition.y);
+
+        if(playerNode != lastPlayerNode || lastPlayerNode == null)
+        {
+            lastPlayerNode = playerNode;
+            CalculatePath(playerNode);
+        }
     }
 
-    private void OnDisable()
-    {
-        GameEvents.Player_Move -= CalculatePath;
-    }
+    protected abstract void MoveToGoal();
 }
