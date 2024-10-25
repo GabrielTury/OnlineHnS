@@ -28,14 +28,12 @@ public class FlyingEnemy : EnemyBase
 
         path = newPath;
 
-
-
         if (path.Length > 0 )
         {
             if (moveRoutine != null)
                 StopCoroutine(moveRoutine);
 
-            moveRoutine = StartCoroutine(Move(path[0]));
+            moveRoutine = StartCoroutine(Move(path[1]));
         }
 #if UNITY_EDITOR
         if(debugPath)
@@ -56,7 +54,8 @@ public class FlyingEnemy : EnemyBase
 
     protected override IEnumerator Move(Vector3 target)
     {
-        goal = target;
+        if (goal == null)
+            goal = target;
 
         while (path.Length > 0)
         {
@@ -81,6 +80,6 @@ public class FlyingEnemy : EnemyBase
 
     protected override void MoveToGoal()
     {
-        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 2);
+        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 5);
     }
 }

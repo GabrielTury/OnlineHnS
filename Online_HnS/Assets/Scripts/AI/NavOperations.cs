@@ -87,7 +87,7 @@ public class NavOperations
                 if (closedNodeList.Contains(n))
                     continue;
                     // Calculate tentative gCost (cost from start to this tile)
-                    float tentativegCost = checkNode.gCost + Vector3.Distance(n.WorldPosition, checkNode.WorldPosition);
+                    float tentativegCost = checkNode.gCost + 1/*Vector3.Distance(n.WorldPosition, checkNode.WorldPosition)*/;
 
                 if(!openNodeList.Contains(n))
                 {

@@ -24,6 +24,7 @@ public class GroundEnemy : EnemyBase
         newPath = NavOperations.CalculatePath(playerNode,
                                     ownNode,
                                     NavMesh.allNodes, false);
+
         path = newPath;
 
         if (path.Length > 0)
@@ -31,7 +32,7 @@ public class GroundEnemy : EnemyBase
             if(moveRoutine != null)
                 StopCoroutine(moveRoutine);
 
-            moveRoutine = StartCoroutine(Move(path[0]));
+            moveRoutine = StartCoroutine(Move(path[1]));
         }
 #if UNITY_EDITOR
         if (debugPath)
@@ -46,7 +47,8 @@ public class GroundEnemy : EnemyBase
 
     protected override IEnumerator Move(Vector3 target)
     {
-        goal = target;
+        if(goal == null)
+            goal = target;
 
         while (path.Length > 0)
         {
