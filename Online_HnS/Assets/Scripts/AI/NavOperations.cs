@@ -86,23 +86,21 @@ public class NavOperations
                 }
                 if (closedNodeList.Contains(n))
                     continue;
-                if (!closedNodeList.Contains(n))
-                {
                     // Calculate tentative gCost (cost from start to this tile)
-                    float tentativeGCost = checkNode.gCost + Vector3.Distance(n.WorldPosition, checkNode.WorldPosition);
+                    float tentativegCost = checkNode.gCost + Vector3.Distance(n.WorldPosition, checkNode.WorldPosition);
 
-                    if (!openNodeList.Contains(n) || tentativeGCost < n.gCost)
-                    {
-                        n.SetGCost(tentativeGCost + n.hCost);
-                        n.SetOriginNode(checkNode.id);
-
-                        if (!openNodeList.Contains(n))
-                        {
-                            openNodeList.Add(n);
-                            CalculateListHeuristicCost(target.WorldPosition, n);
-                        }
-                    }
+                if(!openNodeList.Contains(n))
+                {
+                    n.SetGCost(tentativegCost + n.hCost);
+                    n.SetOriginNode(checkNode.id);
+                    openNodeList.Add(n);
+                    CalculateListHeuristicCost(target.WorldPosition, n);
                 }
+                else if (checkNode.fCost < n.fCost)
+                {
+                    n.SetGCost(tentativegCost + n.hCost);
+                    n.SetOriginNode(checkNode.id);
+                }            
             }
         }
         return null;

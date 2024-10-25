@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour, IDamageable
@@ -33,27 +34,33 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(UpdatePath());
+        GameEvents.OnDamageableSpawned(transform);
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdatePath();
-
         MoveToGoal();
     }
 
-    protected void UpdatePath()
+    protected IEnumerator UpdatePath()
     {
-        Vector3 playerPos = PlayerManager.instance.player.transform.position;
-        ownNode = NavOperations.GetNearestNode(transform.position, NavMesh.allNodes);
-        Node playerNode = NavOperations.GetNearestNodeInPlane(playerPos, NavMesh.allNodes, ownNode.WorldPosition.y);
-
-        if(playerNode != lastPlayerNode || lastPlayerNode == null)
+        while (true)
         {
-            lastPlayerNode = playerNode;
-            CalculatePath(playerNode);
+            Vector3 playerPos = PlayerManager.instance.player.transform.position;
+            ownNode = NavOperations.GetNearestNode(transform.position, NavMesh.allNodes);
+            Node playerNode = NavOperations.GetNearestNodeInPlane(playerPos, NavMesh.allNodes, ownNode.WorldPosition.y);
+
+            if (playerNode != lastPlayerNode || lastPlayerNode == null)
+            {
+                lastPlayerNode = playerNode;
+                CalculatePath(playerNode);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                yield return null;
+            }
         }
     }
 
