@@ -57,6 +57,10 @@ public class NavMesh : MonoBehaviour
             {
                 for(int k = 0; k < zAmount; k++)
                 {
+                    if(currentIndex == 6811)
+                    {
+                        Debug.Log("A");
+                    }
                     Node n = new Node(new Vector3(minX + (i * nodeSize), minY + (j * nodeSize), minZ + (k * nodeSize)), nodeSize, currentIndex);
                     Debug.Log(n.WorldPosition);
                     allNodes[currentIndex] = n;

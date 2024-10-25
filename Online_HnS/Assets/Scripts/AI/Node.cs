@@ -83,4 +83,18 @@ public class Node
     {
         originId = id;
     }
+
+/*    public override bool Equals(object obj)
+    {
+        if (obj is Node otherNode)
+        {
+            return id == otherNode.id; // Compare IDs
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return id.GetHashCode(); // Use ID for hash code
+    }*/
 }

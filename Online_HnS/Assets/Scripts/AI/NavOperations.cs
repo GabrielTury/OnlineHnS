@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 
@@ -13,8 +14,8 @@ public class NavOperations
     public static Vector3[] CalculatePath(Node target, Node start, Node[] navMesh, bool use3DMesh)
     {
         checkMesh = NavMesh.allNodes;
-        List<Node> openNodeList = new List<Node>();
-        List<Node> closedNodeList = new List<Node>();
+        SortedSet<Node> openNodeList = new SortedSet<Node>(new NodeComparer());
+        HashSet<Node> closedNodeList = new HashSet<Node>();
 
         openNodeList.Add(start);
         Node checkNode = start;
@@ -24,16 +25,15 @@ public class NavOperations
 
         while (openNodeList.Count > 0)
         {
-            openNodeList.Sort((n1, n2) =>
+            if(iterations > 5000)
             {
-                int ret = (n1.fCost).CompareTo(n2.fCost);
-                return ret != 0 ? ret : n1.gCost.CompareTo(n2.gCost);
-            });
-
+                Debug.LogError("MORE THAN ITERATIONS");
+                break;
+            }
             iterations++;
-            checkNode = openNodeList[0];
+            checkNode = openNodeList.Min;
 
-            if (checkNode == target)
+            if (checkNode.id == target.id)
             {
                 List<Node> finalNodes = ReconstructPath(target);
                 List<Vector3> path = new List<Vector3>();
@@ -58,7 +58,10 @@ public class NavOperations
                 return path.ToArray();
             }
 
-            openNodeList.Remove(checkNode);
+            if(!openNodeList.Remove(checkNode))
+            {
+                Debug.Log("Couldn't Remove");
+            }
             closedNodeList.Add(checkNode);
 
             List<Node> neighbors = new List<Node>();
@@ -66,7 +69,7 @@ public class NavOperations
             {
                 for(int i =0;i < checkNode.neighborsIds.Length;i++)
                 {                    
-                        neighbors.Add(navMesh[checkNode.neighborsIds[i]]);                                  
+                    neighbors.Add(navMesh[checkNode.neighborsIds[i]]);                                  
                 }
             }
             else if (!use3DMesh)
@@ -87,24 +90,29 @@ public class NavOperations
                 if (closedNodeList.Contains(n))
                     continue;
                     // Calculate tentative gCost (cost from start to this tile)
-                    float tentativegCost = checkNode.gCost + 1/*Vector3.Distance(n.WorldPosition, checkNode.WorldPosition)*/;
-
+                    float tentativegCost = checkNode.gCost + Vector3.Distance(n.WorldPosition, checkNode.WorldPosition);
+                
                 if(!openNodeList.Contains(n))
                 {
-                    n.SetGCost(tentativegCost + n.hCost);
+                    n.SetGCost(tentativegCost);
                     n.SetOriginNode(checkNode.id);
-                    openNodeList.Add(n);
                     CalculateListHeuristicCost(target.WorldPosition, n);
                 }
                 else if (checkNode.fCost < n.fCost)
                 {
+                    openNodeList.Remove(n);
                     n.SetGCost(tentativegCost + n.hCost);
                     n.SetOriginNode(checkNode.id);
-                }            
+                }
+
+                if(!openNodeList.Contains(n))
+                    openNodeList.Add(n);
+
             }
         }
         return null;
     }
+
 
     private static List<Node> ReconstructPath(Node current)
     {
@@ -173,5 +181,25 @@ public class NavOperations
             return true;
         }
         return false;
+    }
+}
+public class NodeComparer : IComparer<Node>
+{
+    public int Compare(Node x, Node y)
+    {
+        int result = x.fCost.CompareTo(y.fCost);
+        if (result == 0)
+        {
+            result = x.gCost.CompareTo(y.gCost);
+        }
+        if (result == 0)
+        {
+            result = x.hCost.CompareTo(y.hCost);
+        }
+        if(result == 0)
+        {
+            result = x.id.CompareTo(y.id);
+        }
+        return result;
     }
 }

@@ -32,7 +32,10 @@ public class GroundEnemy : EnemyBase
             if(moveRoutine != null)
                 StopCoroutine(moveRoutine);
 
-            moveRoutine = StartCoroutine(Move(path[1]));
+            if (path.Length > 1)
+                moveRoutine = StartCoroutine(Move(path[1]));
+            else
+                moveRoutine = StartCoroutine(Move(path[0]));
         }
 #if UNITY_EDITOR
         if (debugPath)
@@ -47,7 +50,7 @@ public class GroundEnemy : EnemyBase
 
     protected override IEnumerator Move(Vector3 target)
     {
-        if(goal == null)
+        if(goal == Vector3.zero)
             goal = target;
 
         while (path.Length > 0)
@@ -73,6 +76,6 @@ public class GroundEnemy : EnemyBase
 
     protected override void MoveToGoal()
     {
-        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 2);
+        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 5);
     }
 }

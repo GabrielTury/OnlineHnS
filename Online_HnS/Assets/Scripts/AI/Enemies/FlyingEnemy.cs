@@ -7,7 +7,7 @@ public class FlyingEnemy : EnemyBase
 {
 #if UNITY_EDITOR
     [SerializeField] bool debugPath;
-    List<GameObject> debugObjs;
+    List<GameObject> debugObjs = new List<GameObject>();
 #endif
     public GameObject player;
 
@@ -32,20 +32,23 @@ public class FlyingEnemy : EnemyBase
         {
             if (moveRoutine != null)
                 StopCoroutine(moveRoutine);
-
-            moveRoutine = StartCoroutine(Move(path[1]));
+            if(path.Length > 1 )
+                moveRoutine = StartCoroutine(Move(path[1]));
+            else
+                moveRoutine = StartCoroutine(Move(path[0]));
         }
 #if UNITY_EDITOR
         if(debugPath)
         {
+            if(debugObjs != null)
             foreach (GameObject go in debugObjs)
             {                
                 Destroy(go);
             }
-            debugObjs.Clear();
+            if(debugObjs != null)
+                debugObjs.Clear();
             foreach( Vector3 node in path )
-            {
-                
+            {                
                 debugObjs.Add(Instantiate(debugCube, node, Quaternion.identity));
             }
         }
@@ -54,7 +57,7 @@ public class FlyingEnemy : EnemyBase
 
     protected override IEnumerator Move(Vector3 target)
     {
-        if (goal == null)
+        if (goal == Vector3.zero)
             goal = target;
 
         while (path.Length > 0)

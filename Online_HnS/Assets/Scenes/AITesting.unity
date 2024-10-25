@@ -388,7 +388,7 @@ Camera:
   far clip plane: 1000
   field of view: 73.2
   orthographic: 1
-  orthographic size: 33.7
+  orthographic size: 10.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1485,6 +1485,11 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2740280589841364055, guid: 9286080a1df08c240a8fad40239f8bba,
+        type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 10.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3751900130796577672, guid: 9286080a1df08c240a8fad40239f8bba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1556,7 +1561,7 @@ PrefabInstance:
     - target: {fileID: 7283100261104677257, guid: b09c87453f87faf48b81e172d569aafe,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.33
+      value: -14.25
       objectReference: {fileID: 0}
     - target: {fileID: 7283100261104677257, guid: b09c87453f87faf48b81e172d569aafe,
         type: 3}
@@ -1566,7 +1571,7 @@ PrefabInstance:
     - target: {fileID: 7283100261104677257, guid: b09c87453f87faf48b81e172d569aafe,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.41
+      value: 2.58
       objectReference: {fileID: 0}
     - target: {fileID: 7283100261104677257, guid: b09c87453f87faf48b81e172d569aafe,
         type: 3}
@@ -1644,7 +1649,7 @@ PrefabInstance:
     - target: {fileID: 3752106210968189001, guid: 8397c03574486b041be8a05bbcc53d92,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8540147062637175384, guid: 8397c03574486b041be8a05bbcc53d92,
         type: 3}
@@ -1659,7 +1664,7 @@ PrefabInstance:
     - target: {fileID: 8540147062637175384, guid: 8397c03574486b041be8a05bbcc53d92,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.3
+      value: -1.18
       objectReference: {fileID: 0}
     - target: {fileID: 8540147062637175384, guid: 8397c03574486b041be8a05bbcc53d92,
         type: 3}
