@@ -383,8 +383,8 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     private void ScrollScrollers()
     {
-        scrollers[0].uvRect = new Rect(scrollers[0].uvRect.x - (0.001f * Time.unscaledDeltaTime), 0, 1, 1);
-        scrollers[1].uvRect = new Rect(scrollers[1].uvRect.x - (0.001f * Time.unscaledDeltaTime), 0, 1, 1);
+        scrollers[0].uvRect = new Rect(scrollers[0].uvRect.x - (0.0015f * Time.unscaledDeltaTime), 0, 1, 1);
+        scrollers[1].uvRect = new Rect(scrollers[1].uvRect.x - (0.0015f * Time.unscaledDeltaTime), 0, 1, 1);
     }
 
     /// <summary>
