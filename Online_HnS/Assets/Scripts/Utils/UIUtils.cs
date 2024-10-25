@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class UIUtils : MonoBehaviour
 {

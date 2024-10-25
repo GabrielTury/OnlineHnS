@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     private CharacterController characterController;
     private PlayerControls inputActions;
@@ -84,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return;
+
         HandleCameraRelativeMovement(currentMovement);
         HandleRotation();
     }
