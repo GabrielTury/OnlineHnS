@@ -7,7 +7,6 @@ public class GroundEnemy : EnemyBase
 #if UNITY_EDITOR
     [SerializeField] bool debugPath;
 #endif
-    public GameObject player;
 
     private Vector3[] path;
 
@@ -52,6 +51,7 @@ public class GroundEnemy : EnemyBase
         if(goal == Vector3.zero)
             goal = target;
 
+        anim.SetBool("Walk", true);
         while (path.Length > 0)
         {
             if (Vector3.Distance(transform.position, goal) < .1f)
@@ -76,5 +76,77 @@ public class GroundEnemy : EnemyBase
     protected override void MoveToGoal()
     {
         transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 5);
+
+        Vector3 direction = goal - transform.position;
+
+        // Create the rotation we want to be in
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        // Smoothly rotate towards the target rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
+    }
+
+    protected override void SetAIState(States newState)
+    {
+        StopCoroutine(stateRoutine);
+
+        switch (currentState)
+        {
+            case States.Idle:
+
+                break;
+            case States.Moving:
+                anim.SetBool("Walk", false);
+                break;
+            case States.Attacking:
+
+                break;
+            case States.Hit:
+
+                break;
+            case States.Death:
+
+                break;
+        }
+
+        switch (newState)
+        {
+            case States.Idle:
+
+                break;
+            case States.Moving:
+                StartCoroutine(UpdatePath());
+                break;
+            case States.Attacking:
+
+                break;
+            case States.Hit:
+
+                break;
+            case States.Death:
+
+                break;
+        }
+    }
+
+    protected override IEnumerator Attack()
+    {
+        anim.SetTrigger("Attack");
+        throw new System.NotImplementedException();
+    }
+
+    protected override IEnumerator TakeDamage()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override IEnumerator Die()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override IEnumerator Idle()
+    {
+        throw new System.NotImplementedException();
     }
 }

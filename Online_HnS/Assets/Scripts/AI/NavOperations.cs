@@ -156,6 +156,9 @@ public class NavOperations
             if (node.WorldPosition.y != y)
                 continue;
 
+            if (node.isBlocked)
+                continue;
+
             float currentDistance = Vector3.Distance(pos, node.WorldPosition);
             if (currentDistance < distance)
             {

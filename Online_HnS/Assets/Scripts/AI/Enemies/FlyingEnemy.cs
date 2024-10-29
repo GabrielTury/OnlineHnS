@@ -8,7 +8,6 @@ public class FlyingEnemy : EnemyBase
     [SerializeField] bool debugPath;
     List<GameObject> debugObjs = new List<GameObject>();
 #endif
-    public GameObject player;
 
     private Vector3[] path;
 
@@ -83,5 +82,30 @@ public class FlyingEnemy : EnemyBase
     protected override void MoveToGoal()
     {
         transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 5);
+    }
+
+    protected override void SetAIState(States newState)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override IEnumerator Attack()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override IEnumerator TakeDamage()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override IEnumerator Die()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override IEnumerator Idle()
+    {
+        throw new System.NotImplementedException();
     }
 }

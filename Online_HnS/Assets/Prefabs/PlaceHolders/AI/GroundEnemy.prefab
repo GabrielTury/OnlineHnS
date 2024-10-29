@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6622282438785331215}
   - component: {fileID: 9032197713236374886}
   - component: {fileID: 5557023299930687899}
+  - component: {fileID: 1469355666045987617}
   m_Layer: 0
   m_Name: GroundEnemy
   m_TagString: Untagged
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 08f65dc10821404458430ac03dcdb31c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,3 +108,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1469355666045987617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3752106210968189001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73af1df8805cba54382899459fa863d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugPath: 0
+  debugCube: {fileID: 4538212446667195825, guid: 1ea39f8e4a716f24d941f6090fd95bec,
+    type: 3}
