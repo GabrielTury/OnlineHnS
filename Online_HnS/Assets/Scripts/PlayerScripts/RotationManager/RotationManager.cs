@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class RotationManager : MonoBehaviour
@@ -11,7 +12,7 @@ public class RotationManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_faceNearestDamageable.FindNearestDamageable() != null)
+        if (_faceNearestDamageable.FindNearestDamageable() != null)
         {
             _faceNearestDamageable.enabled = true;
             _faceMouse.enabled = false;
