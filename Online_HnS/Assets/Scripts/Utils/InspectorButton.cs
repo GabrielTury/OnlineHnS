@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
+
 [System.AttributeUsage(System.AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class ButtonAttribute : PropertyAttribute
 {
@@ -15,7 +16,7 @@ public class ButtonAttribute : PropertyAttribute
         ButtonLabel = buttonLabel;
     }
 }
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(MonoBehaviour), true)]
 public class ButtonMethodDrawer : Editor
 {
@@ -51,3 +52,4 @@ public class ButtonMethodDrawer : Editor
         }
     }
 }
+#endif
