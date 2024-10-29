@@ -8,6 +8,7 @@ public class PlayerCombat : MonoBehaviour
     [Tooltip("List of light melee attacks")]
     public List<MeleePlayerAttackSO> lightMeleeCombo;
 
+    [SerializeField]
     private Animator anim;
     private PlayerControls inputActions;
     private float lastClickedTime;
@@ -19,7 +20,6 @@ public class PlayerCombat : MonoBehaviour
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
         inputActions = new PlayerControls();
 
         inputActions.Attack.LightAttack.started += OnLightAttack;
@@ -43,8 +43,7 @@ public class PlayerCombat : MonoBehaviour
         isAttacking = context.ReadValueAsButton();
         if (isAttacking)
         {
-            print("I Attack");
-            // Use Later Attack();
+            Attack();
         }
     }
     private void OnHeavyAttack(InputAction.CallbackContext context)
@@ -54,11 +53,11 @@ public class PlayerCombat : MonoBehaviour
 
     private void Update()
     {
-        //ExitAttack();
+        ExitAttack();
     }
     private void Attack()
     {
-        if(Time.time - lastComboEnd > 0.5f && comboCounter <= lightMeleeCombo.Count)
+        if(Time.time - lastComboEnd > lightMeleeCombo[comboCounter].minTime && comboCounter <= lightMeleeCombo.Count)
         {
             CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= lightMeleeCombo[comboCounter].minTime)

@@ -8,6 +8,8 @@ public class PlayerMovement : NetworkBehaviour
 {
     private CharacterController characterController;
     private PlayerControls inputActions;
+    [SerializeField]
+    private Animator animator;
 
     Vector2 currentMovementInput;
     Vector3 currentMovement;
@@ -83,11 +85,17 @@ public class PlayerMovement : NetworkBehaviour
 
     }
 
+    void HandleAnimatorInteraction()
+    {
+        animator.SetBool("isMoving", isMovementPressed);
+    }
+
     private void Update()
     {
         if (!IsOwner) return;
 
         HandleCameraRelativeMovement(currentMovement);
         HandleRotation();
+        HandleAnimatorInteraction();
     }
 }
