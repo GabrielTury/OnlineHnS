@@ -30,6 +30,34 @@ MonoBehaviour:
     m_Localized: Switch Language
     m_Metadata:
       m_Items: []
+  - m_Id: 2536260900532224
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2538731014238208
+    m_Localized: Window Type
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2538873876426752
+    m_Localized: Max Framerate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2539905708765184
+    m_Localized: Vsync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547405325643776
+    m_Localized: Master Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547494207139840
+    m_Localized: Music Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547555712413696
+    m_Localized: Sound Volume
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

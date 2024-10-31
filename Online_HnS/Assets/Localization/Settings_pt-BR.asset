@@ -30,6 +30,34 @@ MonoBehaviour:
     m_Localized: Trocar Linguagem
     m_Metadata:
       m_Items: []
+  - m_Id: 2536260900532224
+    m_Localized: "Resolu\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2538731014238208
+    m_Localized: Tipo de Janela
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2538873876426752
+    m_Localized: "Taxa de Quadros M\xE1xima"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2539905708765184
+    m_Localized: Vsync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547405325643776
+    m_Localized: "\xC1udio Mestre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547494207139840
+    m_Localized: "Volume de M\xFAsicas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547555712413696
+    m_Localized: Volume de Sons
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

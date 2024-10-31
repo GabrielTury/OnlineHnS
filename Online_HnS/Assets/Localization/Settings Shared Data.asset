@@ -27,6 +27,34 @@ MonoBehaviour:
     m_Key: CHANGELANGUAGE
     m_Metadata:
       m_Items: []
+  - m_Id: 2536260900532224
+    m_Key: RESOLUTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2538731014238208
+    m_Key: WINDOWTYPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2538873876426752
+    m_Key: FRAMERATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2539905708765184
+    m_Key: VSYNC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547405325643776
+    m_Key: MASTERAUDIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547494207139840
+    m_Key: MUSICVOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547555712413696
+    m_Key: SOUNDVOLUME
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
