@@ -58,6 +58,10 @@ MonoBehaviour:
     m_Localized: Volume de Sons
     m_Metadata:
       m_Items: []
+  - m_Id: 2794056712155136
+    m_Localized: Legendas Ocultas (CC)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -55,6 +55,10 @@ MonoBehaviour:
     m_Key: SOUNDVOLUME
     m_Metadata:
       m_Items: []
+  - m_Id: 2794056712155136
+    m_Key: CLOSEDCAPTIONS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

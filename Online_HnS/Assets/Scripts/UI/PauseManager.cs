@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -32,6 +34,36 @@ public class PauseManager : MonoBehaviour
     private List<RectTransform> buttonsRects = new List<RectTransform>(); // RectTransforms of said buttons
     private List<SlicedFilledImage> buttonsHighlight = new List<SlicedFilledImage>(); // Highlights of said buttons
     private List<TextMeshProUGUI> buttonsTexts = new List<TextMeshProUGUI>(); // Texts of said buttons
+
+    [SerializeField]
+    private CanvasGroup mainHolder;
+
+    [SerializeField]
+    private CanvasGroup settingsHolder;
+
+    [SerializeField]
+    private CanvasGroup videoHolder;
+
+    [SerializeField]
+    private CanvasGroup audioHolder;
+
+    [SerializeField]
+    private List<GameObject> buttonsSettings = new List<GameObject>(); // Interactible buttons
+    private List<RectTransform> buttonsRectsSettings = new List<RectTransform>(); // RectTransforms of said buttons
+    private List<SlicedFilledImage> buttonsHighlightSettings = new List<SlicedFilledImage>(); // Highlights of said buttons
+    private List<TextMeshProUGUI> buttonsTextsSettings = new List<TextMeshProUGUI>(); // Texts of said buttons
+
+    [SerializeField]
+    private List<GameObject> buttonsVideo = new List<GameObject>(); // Interactible buttons
+    private List<RectTransform> buttonsRectsVideo = new List<RectTransform>(); // RectTransforms of said buttons
+    private List<SlicedFilledImage> buttonsHighlightVideo = new List<SlicedFilledImage>(); // Highlights of said buttons
+    private List<TextMeshProUGUI> buttonsTextsVideo = new List<TextMeshProUGUI>(); // Texts of said buttons
+
+    [SerializeField]
+    private List<GameObject> buttonsAudio = new List<GameObject>(); // Interactible buttons
+    private List<RectTransform> buttonsRectsAudio = new List<RectTransform>(); // RectTransforms of said buttons
+    private List<SlicedFilledImage> buttonsHighlightAudio = new List<SlicedFilledImage>(); // Highlights of said buttons
+    private List<TextMeshProUGUI> buttonsTextsAudio = new List<TextMeshProUGUI>(); // Texts of said buttons
 
     [SerializeField]
     private RectTransform inputGuideHolder;
@@ -86,6 +118,9 @@ public class PauseManager : MonoBehaviour
     [SerializeField]
     private int currentButtonIndex = 0;
 
+    [SerializeField]
+    private int currentGroupIndex = 0;
+
     private bool isAngleAnimationRunning = true;
     #endregion
 
@@ -97,12 +132,21 @@ public class PauseManager : MonoBehaviour
     private Coroutine pauseTextCoroutine;
     private Coroutine arrowPointerCoroutine;
     private Coroutine[] buttonsCoroutines;
-    private Coroutine[] buttonsOptionsCoroutines;
-    private Coroutine[] buttonsOptionsVideoCoroutines;
-    private Coroutine[] buttonsOptionsAudioCoroutines;
-    private Coroutine[] buttonsOptionsLanguageCoroutines;
+    private Coroutine[] buttonsSettingsCoroutines;
+    private Coroutine[] buttonsVideoCoroutines;
+    private Coroutine[] buttonsAudioCoroutines;
+
     private bool[] buttonsCoroutinesRunning;
     private bool[] buttonsCoroutinesRunningHighlight;
+
+    private bool[] buttonsSettingsCoroutinesRunning;
+    private bool[] buttonsSettingsCoroutinesRunningHighlight;
+
+    private bool[] buttonsVideoCoroutinesRunning;
+    private bool[] buttonsVideoCoroutinesRunningHighlight;
+
+    private bool[] buttonsAudioCoroutinesRunning;
+    private bool[] buttonsAudioCoroutinesRunningHighlight;
     #endregion
 
     private void OnEnable()
@@ -145,9 +189,28 @@ public class PauseManager : MonoBehaviour
         if (inputActions.UI.UpDown.WasPressedThisFrame())
         {
             currentButtonIndex -= (int)inputActions.UI.UpDown.ReadValue<float>();
-            currentButtonIndex = UIUtils.Wrap(currentButtonIndex, -1, buttons.Count - 1);
+
+            switch (currentButtonIndex)
+            {
+                case 0:
+                    
+                    currentButtonIndex = UIUtils.Wrap(currentButtonIndex, -1, buttons.Count - 1);
+                    break;
+
+                case 1:
+
+                    currentButtonIndex = UIUtils.Wrap(currentButtonIndex, -1, buttonsSettings.Count - 1);
+                    break;
+
+            }
+            
             SelectButton(currentButtonIndex);
         }
+    }
+
+    private void ConfirmButton()
+    {
+
     }
 
     /// <summary>
@@ -165,6 +228,10 @@ public class PauseManager : MonoBehaviour
         buttonsCoroutines = new Coroutine[buttons.Count];
         buttonsCoroutinesRunning = new bool[buttons.Count];
         buttonsCoroutinesRunningHighlight = new bool[buttons.Count];
+
+        buttonsSettingsCoroutines = new Coroutine[buttonsSettings.Count];
+        buttonsSettingsCoroutinesRunning = new bool[buttonsSettings.Count];
+        buttonsSettingsCoroutinesRunningHighlight = new bool[buttonsSettings.Count];
 
         int buttonCount = buttons.Count;
         float middleIndex = buttonCount / 2;
@@ -185,6 +252,33 @@ public class PauseManager : MonoBehaviour
             buttonsTexts.Add(buttons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>());
             buttonsCoroutinesRunning[i] = false;
             buttonsCoroutinesRunningHighlight[i] = false;
+        }
+
+        for (int i = 0; i < buttonsSettings.Count; i++)
+        {
+            buttonsRectsSettings.Add(buttonsSettings[i].GetComponent<RectTransform>());
+            buttonsHighlightSettings.Add(buttonsSettings[i].transform.GetChild(0).GetComponent<SlicedFilledImage>());
+            buttonsTextsSettings.Add(buttonsSettings[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>());
+            buttonsSettingsCoroutinesRunning[i] = false;
+            buttonsSettingsCoroutinesRunningHighlight[i] = false;
+        }
+
+        for (int i = 0; i < buttonsVideo.Count; i++)
+        {
+            buttonsRectsVideo.Add(buttonsVideo[i].GetComponent<RectTransform>());
+            buttonsHighlightVideo.Add(buttonsVideo[i].transform.GetChild(0).GetComponent<SlicedFilledImage>());
+            buttonsTextsVideo.Add(buttonsVideo[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>());
+            buttonsVideoCoroutinesRunning[i] = false;
+            buttonsVideoCoroutinesRunningHighlight[i] = false;
+        }
+
+        for (int i = 0; i < buttonsAudio.Count; i++)
+        {
+            buttonsRectsAudio.Add(buttonsAudio[i].GetComponent<RectTransform>());
+            buttonsHighlightAudio.Add(buttonsAudio[i].transform.GetChild(0).GetComponent<SlicedFilledImage>());
+            buttonsTextsAudio.Add(buttonsAudio[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>());
+            buttonsAudioCoroutinesRunning[i] = false;
+            buttonsAudioCoroutinesRunningHighlight[i] = false;
         }
 
         StartCoroutine(ButtonsAngleOffsetAnimation());
@@ -224,45 +318,81 @@ public class PauseManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Selects/highlights the button at the specified index.<br></br>
+    /// Selects/highlights the button at the specified index. Automatically gets the current group index.<br></br>
     /// Used by input devices such as keyboard and gamepads, as well as mouse hovering.
     /// </summary>
     /// <param name="index"></param>
     public void SelectButton(int index)
     {
-        currentButtonIndex = index;
-
-        try { StopCoroutine(arrowPointerCoroutine); } catch { }
-
-        arrowPointerCoroutine = StartCoroutine(UIUtils.RotateOverSecondsRectTransform(arrowPointer, new Vector3(0, 0, buttonsAngle[index]), 0.10f));
-
-        for (int i = 0; i < buttons.Count; i++) // Do for all buttons
+        if (currentGroupIndex == 0)
         {
-            if (i == index) // If the button corresponds to the given index, start a highlighting coroutine
+            currentButtonIndex = index;
+
+            try { StopCoroutine(arrowPointerCoroutine); } catch { }
+
+            arrowPointerCoroutine = StartCoroutine(UIUtils.RotateOverSecondsRectTransform(arrowPointer, new Vector3(0, 0, buttonsAngle[index]), 0.10f));
+
+            for (int i = 0; i < buttons.Count; i++) // Do for all main buttons
             {
-                StopHighlightAnimationAtIndex(i);
-                buttonsCoroutinesRunning[i] = true;
-                buttonsCoroutinesRunningHighlight[i] = true;
-                buttonsCoroutines[i] = StartCoroutine(HighlightButton(i, true));
-            } 
-            else // If not,
-            {
-                if (buttonsCoroutinesRunning[i]) // If any coroutine is already running for this button,
+                if (i == index) // If the button corresponds to the given index, start a highlighting coroutine
                 {
-                    if (buttonsCoroutinesRunningHighlight[i]) // Check if it is a highlight one. If it is, stop it and start a new unhilight one
+                    StopHighlightAnimationAtIndex(i);
+                    buttonsCoroutinesRunning[i] = true;
+                    buttonsCoroutinesRunningHighlight[i] = true;
+                    buttonsCoroutines[i] = StartCoroutine(HighlightButton(i, true));
+                }
+                else // If not,
+                {
+                    if (buttonsCoroutinesRunning[i]) // If any coroutine is already running for this button,
                     {
-                        StopHighlightAnimationAtIndex(i);
-                        buttonsCoroutinesRunningHighlight[i] = false;
+                        if (buttonsCoroutinesRunningHighlight[i]) // Check if it is a highlight one. If it is, stop it and start a new unhilight one
+                        {
+                            StopHighlightAnimationAtIndex(i);
+                            buttonsCoroutinesRunningHighlight[i] = false;
+                            buttonsCoroutines[i] = StartCoroutine(HighlightButton(i, false));
+                        }
+                    }
+                    if (!buttonsCoroutinesRunning[i]) // If no coroutine is running, start a new unhilight one
+                    {
+                        buttonsCoroutinesRunning[i] = true;
                         buttonsCoroutines[i] = StartCoroutine(HighlightButton(i, false));
                     }
                 }
-                if (!buttonsCoroutinesRunning[i]) // If no coroutine is running, start a new unhilight one
+            }
+        }
+        else if (currentGroupIndex == 1)
+        {
+            currentButtonIndex = index;
+
+            for (int i = 0; i < buttonsSettings.Count; i++) // Do for all settings buttons
+            {
+                if (i == index) // If the button corresponds to the given index, start a highlighting coroutine
                 {
-                    buttonsCoroutinesRunning[i] = true;
-                    buttonsCoroutines[i] = StartCoroutine(HighlightButton(i, false));
+                    StopHighlightAnimationAtIndex(i, 1);
+                    buttonsSettingsCoroutinesRunning[i] = true;
+                    buttonsSettingsCoroutinesRunningHighlight[i] = true;
+                    buttonsSettingsCoroutines[i] = StartCoroutine(HighlightButton(i, true, 1));
+                }
+                else // If not,
+                {
+                    if (buttonsSettingsCoroutinesRunning[i]) // If any coroutine is already running for this button,
+                    {
+                        if (buttonsSettingsCoroutinesRunningHighlight[i]) // Check if it is a highlight one. If it is, stop it and start a new unhilight one
+                        {
+                            StopHighlightAnimationAtIndex(i, 1);
+                            buttonsSettingsCoroutinesRunningHighlight[i] = false;
+                            buttonsSettingsCoroutines[i] = StartCoroutine(HighlightButton(i, false, 1));
+                        }
+                    }
+                    if (!buttonsCoroutinesRunning[i]) // If no coroutine is running, start a new unhilight one
+                    {
+                        buttonsSettingsCoroutinesRunning[i] = true;
+                        buttonsSettingsCoroutines[i] = StartCoroutine(HighlightButton(i, false, 1));
+                    }
                 }
             }
         }
+        
         
     }
 
@@ -271,39 +401,99 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     /// <param name="index"></param>
     /// <param name="isHighlighted"></param>
+    /// <param name="group">Selects the group of buttons. 0 is main buttons, 1 is settings, 2 is video, 3 is audio</param>
     /// <returns></returns>
-    private IEnumerator HighlightButton(int index, bool isHighlighted)
+    private IEnumerator HighlightButton(int index, bool isHighlighted, int group = 0)
     {
         float elapsedTime = 0;
-        float startingWidth = buttonsHighlight[index].fillAmount;
-        float startingAlpha = buttonsTexts[index].alpha;
+        SlicedFilledImage bHigh;
+        TextMeshProUGUI bText;
+        float startingWidth;
+        float startingAlpha;
+
+        switch (group)
+        {
+            case 0:
+
+                bHigh = buttonsHighlight[index];
+                bText = buttonsTexts[index];
+                break;
+
+            case 1:
+
+                bHigh = buttonsHighlightSettings[index];
+                bText = buttonsTextsSettings[index];
+                break;
+
+            case 2:
+
+                bHigh = buttonsHighlightVideo[index];
+                bText = buttonsTextsVideo[index];
+                break;
+
+            case 3:
+
+                bHigh = buttonsHighlightAudio[index];
+                bText = buttonsTextsAudio[index];
+                break;
+
+            default:
+
+                throw new Exception("Group does not exist.");
+        }
+
+        startingWidth = bHigh.fillAmount;
+        startingAlpha = bText.alpha;
+
         if (isHighlighted)
         {
             while (elapsedTime < highlightTime)
             {
-                buttonsHighlight[index].fillAmount = Mathf.Lerp(startingWidth, 1, (elapsedTime / highlightTime));
-                buttonsTexts[index].alpha = Mathf.Lerp(startingAlpha, 1, (elapsedTime / highlightTime));
+                bHigh.fillAmount = Mathf.Lerp(startingWidth, 1, (elapsedTime / highlightTime));
+                bText.alpha = Mathf.Lerp(startingAlpha, 1, (elapsedTime / highlightTime));
                 elapsedTime += Time.unscaledDeltaTime;
                 yield return new WaitForEndOfFrame();
             }
 
-            buttonsHighlight[index].fillAmount = 1;
+            bHigh.fillAmount = 1;
         } 
         else
         {
             while (elapsedTime < highlightTime)
             {
-                buttonsHighlight[index].fillAmount = Mathf.Lerp(startingWidth, 0, (elapsedTime / highlightTime));
-                buttonsTexts[index].alpha = Mathf.Lerp(startingAlpha, 0.4f, (elapsedTime / highlightTime));
+                bHigh.fillAmount = Mathf.Lerp(startingWidth, 0, (elapsedTime / highlightTime));
+                bText.alpha = Mathf.Lerp(startingAlpha, 0.4f, (elapsedTime / highlightTime));
                 elapsedTime += Time.unscaledDeltaTime;
                 yield return new WaitForEndOfFrame();
             }
 
-            buttonsHighlight[index].fillAmount = 0;
+            bHigh.fillAmount = 0;
         }
 
-        buttonsCoroutinesRunning[index] = false;
-        
+        switch (group)
+        {
+            case 0:
+
+                buttonsCoroutinesRunning[index] = false;
+                break;
+
+            case 1:
+
+                buttonsSettingsCoroutinesRunning[index] = false;
+                break;
+
+            case 2:
+
+                buttonsVideoCoroutinesRunning[index] = false;
+                break;
+
+            case 3:
+
+                buttonsAudioCoroutinesRunning[index] = false;
+                break;
+
+        }
+                
         yield return null;
     }
 
@@ -457,8 +647,23 @@ public class PauseManager : MonoBehaviour
     /// Attemps to stop a button's highlight animation at the specified index.
     /// </summary>
     /// <param name="index"></param>
-    private void StopHighlightAnimationAtIndex(int index)
+    /// <param name="group">Selects the group of buttons. 0 is main buttons, 1 is settings, 2 is video, 3 is audio</param>
+    private void StopHighlightAnimationAtIndex(int index, int group = 0)
     {
-        try { StopCoroutine(buttonsCoroutines[index]); } catch { }
+        switch (group)
+        {
+            case 0:
+                try { StopCoroutine(buttonsCoroutines[index]); } catch { }
+                break;
+            case 1:
+                try { StopCoroutine(buttonsSettingsCoroutines[index]); } catch { }
+                break;
+            case 2:
+                try { StopCoroutine(buttonsVideoCoroutines[index]); } catch { }
+                break;
+            case 3:
+                try { StopCoroutine(buttonsAudioCoroutines[index]); } catch { }
+                break;
+        }
     }
 }
