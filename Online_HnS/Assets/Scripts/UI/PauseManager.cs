@@ -208,10 +208,38 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    private void ConfirmButton()
+    #region Button Behaviors
+    private void BTResumeGame()
     {
 
     }
+
+    private void BTOptions()
+    {
+
+    }
+
+    private void BTMainMenu()
+    {
+
+    }
+
+    private void BTVideoSettings()
+    {
+
+    }
+
+    private void BTAudioSettings()
+    {
+
+    }
+
+    public void BTLanguageSettings()
+    {
+        GetComponent<LocaleSelector>().ChangeLocale();
+    }
+
+    #endregion
 
     /// <summary>
     /// Calculates the amount of buttons to order and positions them symmetrically in specified angle and offset.<br></br>
@@ -232,6 +260,14 @@ public class PauseManager : MonoBehaviour
         buttonsSettingsCoroutines = new Coroutine[buttonsSettings.Count];
         buttonsSettingsCoroutinesRunning = new bool[buttonsSettings.Count];
         buttonsSettingsCoroutinesRunningHighlight = new bool[buttonsSettings.Count];
+
+        buttonsVideoCoroutines = new Coroutine[buttonsVideo.Count];
+        buttonsVideoCoroutinesRunning = new bool[buttonsVideo.Count];
+        buttonsVideoCoroutinesRunningHighlight = new bool[buttonsVideo.Count];
+
+        buttonsAudioCoroutines = new Coroutine[buttonsAudio.Count];
+        buttonsAudioCoroutinesRunning = new bool[buttonsAudio.Count];
+        buttonsAudioCoroutinesRunningHighlight = new bool[buttonsAudio.Count];
 
         int buttonCount = buttons.Count;
         float middleIndex = buttonCount / 2;

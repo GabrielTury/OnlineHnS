@@ -2971,7 +2971,6 @@ GameObject:
   - component: {fileID: 343492886}
   - component: {fileID: 343492885}
   - component: {fileID: 343492884}
-  - component: {fileID: 343492888}
   m_Layer: 5
   m_Name: ButtonLanguage
   m_TagString: Untagged
@@ -3073,9 +3072,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 343492888}
-        m_TargetAssemblyTypeName: LocaleSelector, Assembly-CSharp
-        m_MethodName: ChangeLocale
+      - m_Target: {fileID: 1749900068}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: BTLanguageSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3123,18 +3122,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343492882}
   m_CullTransparentMesh: 1
---- !u!114 &343492888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343492882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f772914287793f4997ce644e01b59a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &352476961
 GameObject:
   m_ObjectHideFlags: 0
@@ -3377,7 +3364,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1749900067}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &415983793
 GameObject:
   m_ObjectHideFlags: 0
@@ -8650,6 +8649,7 @@ GameObject:
   - component: {fileID: 1749900069}
   - component: {fileID: 1749900068}
   - component: {fileID: 1749900073}
+  - component: {fileID: 1749900074}
   m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
@@ -8680,6 +8680,7 @@ MonoBehaviour:
   - {fileID: 186085476}
   - {fileID: 37552676}
   - {fileID: 138165768}
+  mainHolder: {fileID: 0}
   settingsHolder: {fileID: 989030751}
   videoHolder: {fileID: 1043637900}
   audioHolder: {fileID: 297086389}
@@ -8817,6 +8818,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf3e3765fe7c47c4382818b65003ea3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1749900074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749900067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f772914287793f4997ce644e01b59a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1776158854
