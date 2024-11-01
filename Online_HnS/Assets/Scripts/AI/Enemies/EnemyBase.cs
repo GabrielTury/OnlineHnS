@@ -19,7 +19,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     protected States currentState;
     #endregion
     public int health { get; private set; }
-    
+
+    public float moveSpeed { get; protected set; } = 5f;
+
+    public float rotationSpeed { get; protected set; } = 4;
+
     protected Coroutine stateRoutine;
 
     protected Coroutine moveRoutine;
