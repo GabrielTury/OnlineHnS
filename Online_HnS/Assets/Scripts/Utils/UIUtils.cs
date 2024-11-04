@@ -154,11 +154,25 @@ public class UIUtils : MonoBehaviour
         while (time < duration)
         {
             current = Mathf.Lerp(current, end, time / duration);
-            time += Time.deltaTime;
             variable = current;
+            time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        current = end;
-        variable = current;
+        variable = end;
+    }
+
+    public static IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float end, float duration)
+    {
+        float time = 0;
+        float currentAlpha = canvasGroup.alpha;
+        while (time < duration)
+        {
+            currentAlpha = Mathf.Lerp(currentAlpha, end, time / duration);
+            time += Time.deltaTime;
+            canvasGroup.alpha = currentAlpha;
+            yield return new WaitForEndOfFrame();
+        }
+        currentAlpha = end;
+        canvasGroup.alpha = currentAlpha;
     }
 }

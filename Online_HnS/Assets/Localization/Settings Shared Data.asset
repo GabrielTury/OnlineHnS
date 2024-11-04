@@ -59,6 +59,18 @@ MonoBehaviour:
     m_Key: CLOSEDCAPTIONS
     m_Metadata:
       m_Items: []
+  - m_Id: 3960547003904000
+    m_Key: WINDOWED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3960580428312576
+    m_Key: BORDERLESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3960728604684288
+    m_Key: EXCLUSIVEFULLSCREEN
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

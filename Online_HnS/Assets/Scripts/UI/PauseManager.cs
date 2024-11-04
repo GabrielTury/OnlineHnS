@@ -5,7 +5,9 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
@@ -30,40 +32,64 @@ public class PauseManager : MonoBehaviour
     private RectTransform arrowPointer;
 
     [SerializeField]
-    private List<GameObject> buttons = new List<GameObject>(); // Interactible buttons
-    private List<RectTransform> buttonsRects = new List<RectTransform>(); // RectTransforms of said buttons
-    private List<SlicedFilledImage> buttonsHighlight = new List<SlicedFilledImage>(); // Highlights of said buttons
-    private List<TextMeshProUGUI> buttonsTexts = new List<TextMeshProUGUI>(); // Texts of said buttons
+    private List<GameObject> buttons = new(); // Interactible buttons
+    private List<RectTransform> buttonsRects = new(); // RectTransforms of said buttons
+    private List<SlicedFilledImage> buttonsHighlight = new(); // Highlights of said buttons
+    private List<TextMeshProUGUI> buttonsTexts = new(); // Texts of said buttons
 
     [SerializeField]
-    private CanvasGroup mainHolder;
+    private RectTransform mainHolder;
 
     [SerializeField]
-    private CanvasGroup settingsHolder;
+    private CanvasGroup mainHolderCanvasGroup;
 
     [SerializeField]
-    private CanvasGroup videoHolder;
+    private RectTransform settingsHolder;
 
     [SerializeField]
-    private CanvasGroup audioHolder;
+    private CanvasGroup settingsHolderCanvasGroup;
 
     [SerializeField]
-    private List<GameObject> buttonsSettings = new List<GameObject>(); // Interactible buttons
-    private List<RectTransform> buttonsRectsSettings = new List<RectTransform>(); // RectTransforms of said buttons
-    private List<SlicedFilledImage> buttonsHighlightSettings = new List<SlicedFilledImage>(); // Highlights of said buttons
-    private List<TextMeshProUGUI> buttonsTextsSettings = new List<TextMeshProUGUI>(); // Texts of said buttons
+    private RectTransform videoHolder;
 
     [SerializeField]
-    private List<GameObject> buttonsVideo = new List<GameObject>(); // Interactible buttons
-    private List<RectTransform> buttonsRectsVideo = new List<RectTransform>(); // RectTransforms of said buttons
-    private List<SlicedFilledImage> buttonsHighlightVideo = new List<SlicedFilledImage>(); // Highlights of said buttons
-    private List<TextMeshProUGUI> buttonsTextsVideo = new List<TextMeshProUGUI>(); // Texts of said buttons
+    private CanvasGroup videoHolderCanvasGroup;
 
     [SerializeField]
-    private List<GameObject> buttonsAudio = new List<GameObject>(); // Interactible buttons
-    private List<RectTransform> buttonsRectsAudio = new List<RectTransform>(); // RectTransforms of said buttons
-    private List<SlicedFilledImage> buttonsHighlightAudio = new List<SlicedFilledImage>(); // Highlights of said buttons
-    private List<TextMeshProUGUI> buttonsTextsAudio = new List<TextMeshProUGUI>(); // Texts of said buttons
+    private RectTransform audioHolder;
+
+    [SerializeField]
+    private CanvasGroup audioHolderCanvasGroup;
+
+    [SerializeField]
+    private List<GameObject> buttonsSettings = new(); // Interactible buttons
+    private List<RectTransform> buttonsRectsSettings = new(); // RectTransforms of said buttons
+    private List<SlicedFilledImage> buttonsHighlightSettings = new(); // Highlights of said buttons
+    private List<TextMeshProUGUI> buttonsTextsSettings = new(); // Texts of said buttons
+
+    [SerializeField]
+    private List<GameObject> buttonsVideo = new(); // Interactible buttons
+    private List<RectTransform> buttonsRectsVideo = new(); // RectTransforms of said buttons
+    private List<SlicedFilledImage> buttonsHighlightVideo = new(); // Highlights of said buttons
+    private List<TextMeshProUGUI> buttonsTextsVideo = new(); // Texts of said buttons
+
+    [SerializeField]
+    private List<GameObject> buttonsAudio = new(); // Interactible buttons
+    private List<RectTransform> buttonsRectsAudio = new(); // RectTransforms of said buttons
+    private List<SlicedFilledImage> buttonsHighlightAudio = new(); // Highlights of said buttons
+    private List<TextMeshProUGUI> buttonsTextsAudio = new(); // Texts of said buttons
+
+    [SerializeField]
+    private TextMeshProUGUI resolutionText;
+
+    [SerializeField]
+    private TextMeshProUGUI windowTypeText;
+
+    [SerializeField]
+    private GameObject vsyncIndicator;
+
+    [SerializeField]
+    private GameObject closedCaptionIndicator;
 
     [SerializeField]
     private RectTransform inputGuideHolder;
@@ -81,6 +107,12 @@ public class PauseManager : MonoBehaviour
 
     [SerializeField]
     private InputGuideIcons inputGuideIcons;
+
+    [SerializeField]
+    private AudioMixer mixer;
+
+    [SerializeField]
+    private FullScreenMode[] fullScreenModes;
     #endregion
 
     #region Timelines
@@ -147,6 +179,18 @@ public class PauseManager : MonoBehaviour
 
     private bool[] buttonsAudioCoroutinesRunning;
     private bool[] buttonsAudioCoroutinesRunningHighlight;
+
+    private Coroutine mainHolderRectTransformCoroutine;
+    private Coroutine mainHolderCanvasGroupCoroutine;
+
+    private Coroutine settingsHolderRectTransformCoroutine;
+    private Coroutine settingsHolderCanvasGroupCoroutine;
+
+    private Coroutine videoHolderRectTransformCoroutine;
+    private Coroutine videoHolderCanvasGroupCoroutine;
+
+    private Coroutine audioHolderRectTransformCoroutine;
+    private Coroutine audioHolderCanvasGroupCoroutine;
     #endregion
 
     private void OnEnable()
@@ -206,52 +250,329 @@ public class PauseManager : MonoBehaviour
             
             SelectButton(currentButtonIndex);
         }
+
+        if (inputActions.UI.Confirm.WasPressedThisFrame())
+        {
+            switch (currentGroupIndex)
+            { 
+                case 0: // Main pause menu
+
+                    switch (currentButtonIndex)
+                    {
+                        case 0:
+                            BTResumeGame();
+                            break;
+
+                        case 1:
+                            BTSettings();
+                            break;
+
+                        case 2:
+                            BTMainMenu();
+                            break;
+                    }
+                    break;      
+
+                case 1: // Settings menu
+
+                    switch (currentButtonIndex)
+                    {
+                        case 0:
+                            BTVideoSettings();
+                            break;
+
+                        case 1:
+                            BTAudioSettings();
+                            break;
+
+                        case 2:
+                            BTLanguageSettings();
+                            break;
+                    }
+                    break;
+
+                case 2: // Video menu
+
+                    switch (currentButtonIndex)
+                    {
+                        case 0:
+
+                            BTResolution();
+                            break;
+
+                        case 1:
+                            BTWindowType();
+                            break;
+
+                        case 2:
+                            BTVsync();
+                            break;
+
+                        case 3:
+                            BTFramerate();
+                            break;
+                    }
+                    break;
+
+                case 3: // Audio menu
+
+                    switch (currentButtonIndex)
+                    {
+                        case 0:
+                            BTMasterVolume();
+                            break;
+
+                        case 1:
+                            BTMusicVolume();
+                            break;
+
+                        case 2:
+                            BTSoundVolume();
+                            break;
+
+                        case 3:
+                            BTClosedCaptions();
+                            break;
+                    }
+                    break;
+            }
+        }
     }
 
     #region Button Behaviors
     private void BTResumeGame()
     {
-
+        SetButtonMouseFocus(9);
+        PopOutAnimate();
     }
 
-    private void BTOptions()
+    public void BTSettings()
+    {
+        try { StopCoroutine(mainHolderRectTransformCoroutine); } catch { }
+        try { StopCoroutine(mainHolderCanvasGroupCoroutine); } catch { }
+
+        try { StopCoroutine(settingsHolderRectTransformCoroutine); } catch { }
+        try { StopCoroutine(settingsHolderCanvasGroupCoroutine); } catch { }
+
+        mainHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(mainHolder, new Vector3(-600, 0, 0), 0.35f));
+        mainHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(mainHolderCanvasGroup, 0.35f, 0.35f));
+
+        settingsHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(settingsHolder, new Vector3(-160, 0, 0), 0.35f));
+        settingsHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(settingsHolderCanvasGroup, 1f, 0.35f));
+
+        SetButtonMouseFocus(1);
+
+        currentGroupIndex = 1;
+
+        SelectButton(0);
+    }
+
+    public void BTMainMenu()
     {
 
     }
 
-    private void BTMainMenu()
+    public void BTVideoSettings()
+    {
+        try { StopCoroutine(settingsHolderRectTransformCoroutine); } catch { }
+        try { StopCoroutine(settingsHolderCanvasGroupCoroutine); } catch { }
+
+        try { StopCoroutine(videoHolderRectTransformCoroutine); } catch { }
+        try { StopCoroutine(videoHolderCanvasGroupCoroutine); } catch { }
+
+        try { StopCoroutine(audioHolderRectTransformCoroutine); } catch { }
+        try { StopCoroutine(audioHolderCanvasGroupCoroutine); } catch { }
+
+        settingsHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(settingsHolder, new Vector3(-160, 0, 0), 0.35f));
+        settingsHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(settingsHolderCanvasGroup, 0.4f, 0.35f));
+
+        videoHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(videoHolder, new Vector3(270, 0, 0), 0.35f));
+        videoHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(videoHolderCanvasGroup, 1, 0.35f));
+
+        audioHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(audioHolder, new Vector3(600, 0, 0), 0.35f));
+        audioHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(audioHolderCanvasGroup, 0, 0.35f));
+
+        SetButtonMouseFocus(2);
+
+        currentGroupIndex = 2;
+
+        SelectButton(0);
+    }
+
+    public void BTResolution()
     {
 
     }
 
-    private void BTVideoSettings()
+    public void BTWindowType()
+    {
+        PlayerPrefs.SetInt("WINDOWTYPE", UIUtils.Wrap(PlayerPrefs.GetInt("WINDOWTYPE", 0) + 1, -1, 2));
+
+        //windowTypeText.text = (PlayerPrefs.GetInt("WINDOWTYPE", 0) == 0 ? "Windowed" : (PlayerPrefs.GetInt("WINDOWTYPE", 0) == 1 ? "Borderless" : "Exclusive"));
+
+        int windowType = PlayerPrefs.GetInt("WINDOWTYPE", 0);
+
+        if (windowType == 0)
+        {
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Settings", "WINDOWED");
+            if (op.IsDone)
+            {
+                Debug.Log(op.Result);
+                windowTypeText.text = op.Result;
+            }
+        } else if (windowType == 1)
+        {
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Settings", "BORDERLESS");
+            if (op.IsDone)
+            {
+                Debug.Log(op.Result);
+                windowTypeText.text = op.Result;
+            }
+        }
+        else
+        {
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Settings", "EXCLUSIVEFULLSCREEN");
+            if (op.IsDone)
+            {
+                Debug.Log(op.Result);
+                windowTypeText.text = op.Result;
+            }
+        }
+
+        
+    }
+
+    public void BTVsync()
+    {
+        PlayerPrefs.SetInt("VSYNC", 1 - PlayerPrefs.GetInt("VSYNC", 0));
+
+        vsyncIndicator.SetActive(PlayerPrefs.GetInt("VSYNC", 0) == 1);
+    }
+
+    public void BTFramerate()
     {
 
     }
 
-    private void BTAudioSettings()
+    public void BTAudioSettings()
+    {
+        try { StopCoroutine(settingsHolderRectTransformCoroutine); } catch { }
+        try { StopCoroutine(settingsHolderCanvasGroupCoroutine); } catch { }
+
+        try { StopCoroutine(videoHolderRectTransformCoroutine); } catch { }
+        try { StopCoroutine(videoHolderCanvasGroupCoroutine); } catch { }
+
+        try { StopCoroutine(audioHolderRectTransformCoroutine); } catch { }
+        try { StopCoroutine(audioHolderCanvasGroupCoroutine); } catch { }
+
+        settingsHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(settingsHolder, new Vector3(-160, 0, 0), 0.35f));
+        settingsHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(settingsHolderCanvasGroup, 0.4f, 0.35f));
+
+        videoHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(videoHolder, new Vector3(600, 0, 0), 0.35f));
+        videoHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(videoHolderCanvasGroup, 0, 0.35f));
+
+        audioHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(audioHolder, new Vector3(270, 0, 0), 0.35f));
+        audioHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(audioHolderCanvasGroup, 1, 0.35f));
+
+        SetButtonMouseFocus(3);
+
+        currentGroupIndex = 3;
+    }
+
+    public void BTSetAudioMasterVolume(float volumeNormalized)
+    {
+        mixer.SetFloat("MASTERPARAM", Mathf.Log10(volumeNormalized) * 20);
+        PlayerPrefs.SetFloat("MASTER_VOLUME", volumeNormalized);
+    }
+
+    public void BTSetAudioMusicVolume(float volumeNormalized)
+    {
+        mixer.SetFloat("MUSICPARAM", Mathf.Log10(volumeNormalized) * 20);
+        PlayerPrefs.SetFloat("MUSIC_VOLUME", volumeNormalized);
+    }
+
+    public void BTSetAudioSoundVolume(float volumeNormalized)
+    {
+        mixer.SetFloat("SOUNDPARAM", Mathf.Log10(volumeNormalized) * 20);
+        PlayerPrefs.SetFloat("SOUND_VOLUME", volumeNormalized);
+    }
+
+    public void BTMasterVolume()
     {
 
+    }
+    public void BTMusicVolume()
+    {
+
+    }
+
+    public void BTSoundVolume()
+    {
+
+    }
+
+    public void BTClosedCaptions()
+    {
+        PlayerPrefs.SetInt("CLOSED_CAPTIONS", 1 - PlayerPrefs.GetInt("CLOSED_CAPTIONS", 0));
+
+        closedCaptionIndicator.SetActive(PlayerPrefs.GetInt("CLOSED_CAPTIONS", 0) == 1);
     }
 
     public void BTLanguageSettings()
     {
         GetComponent<LocaleSelector>().ChangeLocale();
     }
+    
+
+    private void SetButtonMouseFocus(int index)
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            buttons[i].GetComponent<Button>().interactable = (index == 0);
+        }
+
+        for (int i = 0; i < buttonsSettings.Count; i++)
+        {
+            buttonsSettings[i].GetComponent<Button>().interactable = (index == 1);
+        }
+
+        for (int i = 0; i < buttonsVideo.Count; i++)
+        {
+            buttonsVideo[i].GetComponent<Button>().interactable = (index == 2);
+        }
+
+        for (int i = 0; i < buttonsAudio.Count; i++)
+        {
+            buttonsAudio[i].GetComponent<Button>().interactable = (index == 3);
+        }
+    }
 
     #endregion
 
     /// <summary>
     /// Calculates the amount of buttons to order and positions them symmetrically in specified angle and offset.<br></br>
-    /// Gets the highlight and text children as well.
-    /// </summary>
-    /// <returns>
+    /// Gets the highlight and text children as well.<br></br>
     /// - Sets the position and angle of each button<br></br>
     /// - Gets the highlight and text children and sets them into buttonsHighlights and buttonsTexts<br></br>
     /// - Sets the buttonsCoroutinesRunning array
-    /// </returns>
+    /// </summary>
     private void InitializeButtons()
     {
+        SetButtonMouseFocus(0);
+
+        mainHolder.anchoredPosition = new Vector2(0, 0);
+        settingsHolder.anchoredPosition = new Vector2(200, 0);
+        videoHolder.anchoredPosition = new Vector2(600, 0);
+        audioHolder.anchoredPosition = new Vector2(600, 0);
+
+        mainHolderCanvasGroup.alpha = 0f;
+        settingsHolderCanvasGroup.alpha = 0f;
+        videoHolderCanvasGroup.alpha = 0f;
+        audioHolderCanvasGroup.alpha = 0f;
+
+        mainHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(mainHolder, mainHolder.anchoredPosition, 0.1f));
+        mainHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(mainHolderCanvasGroup, 1, 0.3f));
+
         buttonsAngle = new float[buttons.Count];
         buttonsCoroutines = new Coroutine[buttons.Count];
         buttonsCoroutinesRunning = new bool[buttons.Count];
@@ -360,10 +681,10 @@ public class PauseManager : MonoBehaviour
     /// <param name="index"></param>
     public void SelectButton(int index)
     {
+        currentButtonIndex = index;
+
         if (currentGroupIndex == 0)
         {
-            currentButtonIndex = index;
-
             try { StopCoroutine(arrowPointerCoroutine); } catch { }
 
             arrowPointerCoroutine = StartCoroutine(UIUtils.RotateOverSecondsRectTransform(arrowPointer, new Vector3(0, 0, buttonsAngle[index]), 0.10f));
@@ -398,8 +719,6 @@ public class PauseManager : MonoBehaviour
         }
         else if (currentGroupIndex == 1)
         {
-            currentButtonIndex = index;
-
             for (int i = 0; i < buttonsSettings.Count; i++) // Do for all settings buttons
             {
                 if (i == index) // If the button corresponds to the given index, start a highlighting coroutine
@@ -420,10 +739,70 @@ public class PauseManager : MonoBehaviour
                             buttonsSettingsCoroutines[i] = StartCoroutine(HighlightButton(i, false, 1));
                         }
                     }
-                    if (!buttonsCoroutinesRunning[i]) // If no coroutine is running, start a new unhilight one
+                    if (!buttonsSettingsCoroutinesRunning[i]) // If no coroutine is running, start a new unhilight one
                     {
                         buttonsSettingsCoroutinesRunning[i] = true;
                         buttonsSettingsCoroutines[i] = StartCoroutine(HighlightButton(i, false, 1));
+                    }
+                }
+            }
+        } 
+        else if (currentGroupIndex == 2)
+        {
+            for (int i = 0; i < buttonsVideo.Count; i++) // Do for all settings buttons
+            {
+                if (i == index) // If the button corresponds to the given index, start a highlighting coroutine
+                {
+                    StopHighlightAnimationAtIndex(i, 2);
+                    buttonsVideoCoroutinesRunning[i] = true;
+                    buttonsVideoCoroutinesRunningHighlight[i] = true;
+                    buttonsVideoCoroutines[i] = StartCoroutine(HighlightButton(i, true, 2));
+                }
+                else // If not,
+                {
+                    if (buttonsVideoCoroutinesRunning[i]) // If any coroutine is already running for this button,
+                    {
+                        if (buttonsVideoCoroutinesRunningHighlight[i]) // Check if it is a highlight one. If it is, stop it and start a new unhilight one
+                        {
+                            StopHighlightAnimationAtIndex(i, 2);
+                            buttonsVideoCoroutinesRunningHighlight[i] = false;
+                            buttonsVideoCoroutines[i] = StartCoroutine(HighlightButton(i, false, 2));
+                        }
+                    }
+                    if (!buttonsVideoCoroutinesRunning[i]) // If no coroutine is running, start a new unhilight one
+                    {
+                        buttonsVideoCoroutinesRunning[i] = true;
+                        buttonsVideoCoroutines[i] = StartCoroutine(HighlightButton(i, false, 2));
+                    }
+                }
+            }
+        }
+        else if (currentGroupIndex == 3)
+        {
+            for (int i = 0; i < buttonsAudio.Count; i++) // Do for all settings buttons
+            {
+                if (i == index) // If the button corresponds to the given index, start a highlighting coroutine
+                {
+                    StopHighlightAnimationAtIndex(i, 3);
+                    buttonsAudioCoroutinesRunning[i] = true;
+                    buttonsAudioCoroutinesRunningHighlight[i] = true;
+                    buttonsAudioCoroutines[i] = StartCoroutine(HighlightButton(i, true, 3));
+                }
+                else // If not,
+                {
+                    if (buttonsAudioCoroutinesRunning[i]) // If any coroutine is already running for this button,
+                    {
+                        if (buttonsAudioCoroutinesRunningHighlight[i]) // Check if it is a highlight one. If it is, stop it and start a new unhilight one
+                        {
+                            StopHighlightAnimationAtIndex(i, 3);
+                            buttonsAudioCoroutinesRunningHighlight[i] = false;
+                            buttonsAudioCoroutines[i] = StartCoroutine(HighlightButton(i, false, 3));
+                        }
+                    }
+                    if (!buttonsAudioCoroutinesRunning[i]) // If no coroutine is running, start a new unhilight one
+                    {
+                        buttonsAudioCoroutinesRunning[i] = true;
+                        buttonsAudioCoroutines[i] = StartCoroutine(HighlightButton(i, false, 3));
                     }
                 }
             }

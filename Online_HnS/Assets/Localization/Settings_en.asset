@@ -62,6 +62,18 @@ MonoBehaviour:
     m_Localized: Closed Captions
     m_Metadata:
       m_Items: []
+  - m_Id: 3960547003904000
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3960580428312576
+    m_Localized: Borderless Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3960728604684288
+    m_Localized: Exclusive Fullscreen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
