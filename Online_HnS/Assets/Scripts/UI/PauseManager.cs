@@ -95,6 +95,24 @@ public class PauseManager : MonoBehaviour
     private RectTransform inputGuideHolder;
 
     [SerializeField]
+    private TextMeshProUGUI masterAudioPercentageText;
+
+    [SerializeField]
+    private TextMeshProUGUI musicAudioPercentageText;
+
+    [SerializeField]
+    private TextMeshProUGUI soundAudioPercentageText;
+
+    [SerializeField]
+    private Slider masterAudioSlider;
+
+    [SerializeField]
+    private Slider musicAudioSlider;
+
+    [SerializeField]
+    private Slider soundAudioSlider;
+
+    [SerializeField]
     private UIControllerIcons[] inputIcons; // The icons for each input type
 
     [System.Serializable]
@@ -215,6 +233,7 @@ public class PauseManager : MonoBehaviour
     {
         ResetPauseMenu();
         InitializeButtons();
+        InitializeSettings();
         PopInAnimate();
         SelectButton(0);
         SelectButton(0);
@@ -253,89 +272,12 @@ public class PauseManager : MonoBehaviour
 
         if (inputActions.UI.Confirm.WasPressedThisFrame())
         {
-            switch (currentGroupIndex)
-            { 
-                case 0: // Main pause menu
+            ConfirmButton();
+        }
 
-                    switch (currentButtonIndex)
-                    {
-                        case 0:
-                            BTResumeGame();
-                            break;
-
-                        case 1:
-                            BTSettings();
-                            break;
-
-                        case 2:
-                            BTMainMenu();
-                            break;
-                    }
-                    break;      
-
-                case 1: // Settings menu
-
-                    switch (currentButtonIndex)
-                    {
-                        case 0:
-                            BTVideoSettings();
-                            break;
-
-                        case 1:
-                            BTAudioSettings();
-                            break;
-
-                        case 2:
-                            BTLanguageSettings();
-                            break;
-                    }
-                    break;
-
-                case 2: // Video menu
-
-                    switch (currentButtonIndex)
-                    {
-                        case 0:
-
-                            BTResolution();
-                            break;
-
-                        case 1:
-                            BTWindowType();
-                            break;
-
-                        case 2:
-                            BTVsync();
-                            break;
-
-                        case 3:
-                            BTFramerate();
-                            break;
-                    }
-                    break;
-
-                case 3: // Audio menu
-
-                    switch (currentButtonIndex)
-                    {
-                        case 0:
-                            BTMasterVolume();
-                            break;
-
-                        case 1:
-                            BTMusicVolume();
-                            break;
-
-                        case 2:
-                            BTSoundVolume();
-                            break;
-
-                        case 3:
-                            BTClosedCaptions();
-                            break;
-                    }
-                    break;
-            }
+        if (inputActions.UI.Return.WasPressedThisFrame())
+        {
+            ReturnButton();
         }
     }
 
@@ -354,7 +296,7 @@ public class PauseManager : MonoBehaviour
         try { StopCoroutine(settingsHolderRectTransformCoroutine); } catch { }
         try { StopCoroutine(settingsHolderCanvasGroupCoroutine); } catch { }
 
-        mainHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(mainHolder, new Vector3(-600, 0, 0), 0.35f));
+        mainHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(mainHolder, new Vector3(-640, 0, 0), 0.35f));
         mainHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(mainHolderCanvasGroup, 0.35f, 0.35f));
 
         settingsHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(settingsHolder, new Vector3(-160, 0, 0), 0.35f));
@@ -641,6 +583,20 @@ public class PauseManager : MonoBehaviour
         StartCoroutine(ButtonsAngleOffsetAnimation());
 
     }
+    
+    /// <summary>
+    /// Gets the current player settings if there are and appropriately shows the correct data in the settings menu.
+    /// </summary>
+    private void InitializeSettings()
+    {
+        masterAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("MASTER_VOLUME", 1) * 100).ToString();
+        musicAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("MUSIC_VOLUME", 1) * 100).ToString();
+        soundAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("SOUND_VOLUME", 1) * 100).ToString();
+
+        masterAudioSlider.value = PlayerPrefs.GetFloat("MASTER_VOLUME", 1);
+        musicAudioSlider.value = PlayerPrefs.GetFloat("MUSIC_VOLUME", 1);
+        soundAudioSlider.value = PlayerPrefs.GetFloat("SOUND_VOLUME", 1);
+    }
 
     /// <summary>
     /// Expands the angle of the buttons from 0 to their specified angle at a set speed.
@@ -809,6 +765,202 @@ public class PauseManager : MonoBehaviour
         }
         
         
+    }
+
+    /// <summary>
+    /// Executes the action corresponding to the current button.
+    /// </summary>
+    public void ConfirmButton()
+    {
+        switch (currentGroupIndex)
+        {
+            case 0: // Main pause menu
+
+                switch (currentButtonIndex)
+                {
+                    case 0:
+                        BTResumeGame();
+                        break;
+
+                    case 1:
+                        BTSettings();
+                        break;
+
+                    case 2:
+                        BTMainMenu();
+                        break;
+                }
+                break;
+
+            case 1: // Settings menu
+
+                switch (currentButtonIndex)
+                {
+                    case 0:
+                        BTVideoSettings();
+                        break;
+
+                    case 1:
+                        BTAudioSettings();
+                        break;
+
+                    case 2:
+                        BTLanguageSettings();
+                        break;
+                }
+                break;
+
+            case 2: // Video menu
+
+                switch (currentButtonIndex)
+                {
+                    case 0:
+
+                        BTResolution();
+                        break;
+
+                    case 1:
+                        BTWindowType();
+                        break;
+
+                    case 2:
+                        BTVsync();
+                        break;
+
+                    case 3:
+                        BTFramerate();
+                        break;
+                }
+                break;
+
+            case 3: // Audio menu
+
+                switch (currentButtonIndex)
+                {
+                    case 0:
+                        BTMasterVolume();
+                        break;
+
+                    case 1:
+                        BTMusicVolume();
+                        break;
+
+                    case 2:
+                        BTSoundVolume();
+                        break;
+
+                    case 3:
+                        BTClosedCaptions();
+                        break;
+                }
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Returns back to the previous menu based on the current menu
+    /// </summary>
+    private void ReturnButton()
+    {
+        switch (currentGroupIndex)
+        {
+            case 0: // Main pause menu
+
+                SetButtonMouseFocus(9);
+                PopOutAnimate();
+                break;
+
+            case 1: // Settings menu
+
+                try { StopCoroutine(mainHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(mainHolderCanvasGroupCoroutine); } catch { }
+
+                try { StopCoroutine(settingsHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(settingsHolderCanvasGroupCoroutine); } catch { }
+
+                try { StopCoroutine(videoHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(videoHolderCanvasGroupCoroutine); } catch { }
+
+                try { StopCoroutine(audioHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(audioHolderCanvasGroupCoroutine); } catch { }
+
+                mainHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(mainHolder, new Vector3(0, 0, 0), 0.35f));
+                mainHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(mainHolderCanvasGroup, 1, 0.35f));
+
+                settingsHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(settingsHolder, new Vector3(200, 0, 0), 0.35f));
+                settingsHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(settingsHolderCanvasGroup, 0, 0.35f));
+
+                videoHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(videoHolder, new Vector3(600, 0, 0), 0.35f));
+                videoHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(videoHolderCanvasGroup, 0, 0.35f));
+
+                audioHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(audioHolder, new Vector3(600, 0, 0), 0.35f));
+                audioHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(audioHolderCanvasGroup, 0, 0.35f));
+
+                SetButtonMouseFocus(0);
+
+                currentGroupIndex = 0;
+
+                SelectButton(1);
+
+                break;
+
+            case 2: // Video menu
+
+                try { StopCoroutine(settingsHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(settingsHolderCanvasGroupCoroutine); } catch { }
+
+                try { StopCoroutine(videoHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(videoHolderCanvasGroupCoroutine); } catch { }
+
+                try { StopCoroutine(audioHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(audioHolderCanvasGroupCoroutine); } catch { }
+
+                settingsHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(settingsHolder, new Vector3(-160, 0, 0), 0.35f));
+                settingsHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(settingsHolderCanvasGroup, 1, 0.35f));
+
+                videoHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(videoHolder, new Vector3(600, 0, 0), 0.35f));
+                videoHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(videoHolderCanvasGroup, 0, 0.35f));
+
+                audioHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(audioHolder, new Vector3(600, 0, 0), 0.35f));
+                audioHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(audioHolderCanvasGroup, 0, 0.35f));
+
+                SetButtonMouseFocus(1);
+
+                currentGroupIndex = 1;
+
+                SelectButton(0);
+
+                break;
+
+
+            case 3: // Audio menu
+
+                try { StopCoroutine(settingsHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(settingsHolderCanvasGroupCoroutine); } catch { }
+
+                try { StopCoroutine(videoHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(videoHolderCanvasGroupCoroutine); } catch { }
+
+                try { StopCoroutine(audioHolderRectTransformCoroutine); } catch { }
+                try { StopCoroutine(audioHolderCanvasGroupCoroutine); } catch { }
+
+                settingsHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(settingsHolder, new Vector3(-160, 0, 0), 0.35f));
+                settingsHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(settingsHolderCanvasGroup, 1, 0.35f));
+
+                videoHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(videoHolder, new Vector3(600, 0, 0), 0.35f));
+                videoHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(videoHolderCanvasGroup, 0, 0.35f));
+
+                audioHolderRectTransformCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(audioHolder, new Vector3(600, 0, 0), 0.35f));
+                audioHolderCanvasGroupCoroutine = StartCoroutine(UIUtils.FadeCanvasGroup(audioHolderCanvasGroup, 0, 0.35f));
+
+                SetButtonMouseFocus(1);
+
+                currentGroupIndex = 1;
+
+                SelectButton(1);
+
+                break;
+        }
     }
 
     /// <summary>
