@@ -465,7 +465,10 @@ public class PauseManager : MonoBehaviour
         GetComponent<LocaleSelector>().ChangeLocale();
     }
     
-
+    /// <summary>
+    /// Locks the interaction of the mouse with the buttons that are not in the current button group.
+    /// </summary>
+    /// <param name="index"></param>
     private void SetButtonMouseFocus(int index)
     {
         for (int i = 0; i < buttons.Count; i++)
@@ -589,9 +592,9 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     private void InitializeSettings()
     {
-        masterAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("MASTER_VOLUME", 1) * 100).ToString();
-        musicAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("MUSIC_VOLUME", 1) * 100).ToString();
-        soundAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("SOUND_VOLUME", 1) * 100).ToString();
+        masterAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("MASTER_VOLUME", 1) * 100).ToString() + "%";
+        musicAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("MUSIC_VOLUME", 1) * 100).ToString() + "%";
+        soundAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("SOUND_VOLUME", 1) * 100).ToString() + "%";
 
         masterAudioSlider.value = PlayerPrefs.GetFloat("MASTER_VOLUME", 1);
         musicAudioSlider.value = PlayerPrefs.GetFloat("MUSIC_VOLUME", 1);
