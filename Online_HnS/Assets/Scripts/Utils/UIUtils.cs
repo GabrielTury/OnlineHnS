@@ -19,6 +19,21 @@ public class UIUtils : MonoBehaviour
     {
         return (((x - x_min) % (x_max - x_min)) + (x_max - x_min)) % (x_max - x_min) + x_min;
     }
+    /// <summary>
+    /// Wraps a given float variable between a min and max. Only includes the max.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="x_max"></param>
+    /// <param name="x_min"></param>
+    /// <returns></returns>
+    public static float Wrap(float x, float x_max, float x_min)
+    {
+        return (((x - x_min) % (x_max - x_min)) + (x_max - x_min)) % (x_max - x_min) + x_min;
+    }
+    public static float WrapFloat(float x, float x_max, float x_min)
+    {
+        return ((x - x_min) % (x_max - x_min) + (x_max - x_min)) % (x_max - x_min) + x_min;
+    }
 
     /// <summary>
     /// Moves a given rect transform from one position to another over a certain amount of time.

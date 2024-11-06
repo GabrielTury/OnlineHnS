@@ -253,7 +253,7 @@ public class PauseManager : MonoBehaviour
         {
             currentButtonIndex -= (int)inputActions.UI.UpDown.ReadValue<float>();
 
-            switch (currentButtonIndex)
+            switch (currentGroupIndex)
             {
                 case 0:
                     
@@ -263,6 +263,16 @@ public class PauseManager : MonoBehaviour
                 case 1:
 
                     currentButtonIndex = UIUtils.Wrap(currentButtonIndex, -1, buttonsSettings.Count - 1);
+                    break;
+
+                case 2:
+
+                    currentButtonIndex = UIUtils.Wrap(currentButtonIndex, -1, buttonsVideo.Count - 1);
+                    break;
+
+                case 3:
+
+                    currentButtonIndex = UIUtils.Wrap(currentButtonIndex, -1, buttonsAudio.Count - 1);
                     break;
 
             }
@@ -441,16 +451,34 @@ public class PauseManager : MonoBehaviour
 
     public void BTMasterVolume()
     {
+        float currentVolume = PlayerPrefs.GetFloat("MASTER_VOLUME", 1);
+        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + 1, 0f, 10f) / 10;
+        mixer.SetFloat("MASTERPARAM", Mathf.Log10(newVolume) * 20);
+        PlayerPrefs.SetFloat("MASTER_VOLUME", newVolume);
 
+        masterAudioPercentageText.text = Mathf.FloorToInt(newVolume * 100).ToString() + "%";
+        masterAudioSlider.value = PlayerPrefs.GetFloat("MASTER_VOLUME", 1);
     }
     public void BTMusicVolume()
     {
+        float currentVolume = PlayerPrefs.GetFloat("MUSIC_VOLUME", 1);
+        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + 1, 0f, 10f) / 10;
+        mixer.SetFloat("MUSICPARAM", Mathf.Log10(newVolume) * 20);
+        PlayerPrefs.SetFloat("MUSIC_VOLUME", newVolume);
 
+        musicAudioPercentageText.text = Mathf.FloorToInt(newVolume * 100).ToString() + "%";
+        musicAudioSlider.value = PlayerPrefs.GetFloat("MUSIC_VOLUME", 1);
     }
 
     public void BTSoundVolume()
     {
+        float currentVolume = PlayerPrefs.GetFloat("SOUND_VOLUME", 1);
+        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + 1, 0f, 10f) / 10;
+        mixer.SetFloat("SOUNDPARAM", Mathf.Log10(newVolume) * 20);
+        PlayerPrefs.SetFloat("SOUND_VOLUME", newVolume);
 
+        soundAudioPercentageText.text = Mathf.FloorToInt(newVolume * 100).ToString() + "%";
+        soundAudioSlider.value = PlayerPrefs.GetFloat("SOUND_VOLUME", 1);
     }
 
     public void BTClosedCaptions()
@@ -775,6 +803,7 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     public void ConfirmButton()
     {
+        SelectButton(currentButtonIndex);
         switch (currentGroupIndex)
         {
             case 0: // Main pause menu
@@ -786,6 +815,7 @@ public class PauseManager : MonoBehaviour
                         break;
 
                     case 1:
+                        currentButtonIndex = 0;
                         BTSettings();
                         break;
 
@@ -800,10 +830,12 @@ public class PauseManager : MonoBehaviour
                 switch (currentButtonIndex)
                 {
                     case 0:
+                        currentButtonIndex = 0;
                         BTVideoSettings();
                         break;
 
                     case 1:
+                        currentButtonIndex = 0;
                         BTAudioSettings();
                         break;
 
@@ -858,6 +890,8 @@ public class PauseManager : MonoBehaviour
                 }
                 break;
         }
+
+        SelectButton(currentButtonIndex);
     }
 
     /// <summary>
