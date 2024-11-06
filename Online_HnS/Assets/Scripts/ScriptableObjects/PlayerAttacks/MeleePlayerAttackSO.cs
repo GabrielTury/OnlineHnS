@@ -6,6 +6,7 @@ using UnityEngine;
 public class MeleePlayerAttackSO : ScriptableObject
 {
     public AnimatorOverrideController animOC;
-    public float damage;
+    public int damage;
+    public float radius;
     public float minTime;
 }

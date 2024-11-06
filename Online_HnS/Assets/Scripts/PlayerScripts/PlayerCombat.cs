@@ -10,10 +10,14 @@ public class PlayerCombat : MonoBehaviour
 
     [SerializeField]
     private Animator anim;
+    [SerializeField]
+    private Transform detectionCenter;
+    [SerializeField]
+    private LayerMask layerMask;
     private PlayerControls inputActions;
     private float lastClickedTime;
     private float lastComboEnd;
-    private int comboCounter;
+    public int comboCounter;
     private float comboCooldownTimer = 0.0f;
     private float maxComboDelay = 0.8f;
 
@@ -46,30 +50,40 @@ public class PlayerCombat : MonoBehaviour
         if (isAttacking)
         {
             Attack();
+            
         }
     }
     private void OnHeavyAttack(InputAction.CallbackContext context)
     {
 
     }
-
-    private void Update()
+    private void DetectDamageables()
     {
-        ExitAttack();
-
-        if (comboCooldownTimer > 0)
+        Collider[] damageableColliders = Physics.OverlapSphere(detectionCenter.position, lightMeleeCombo[comboCounter].radius, layerMask);
+        foreach (Collider collider in damageableColliders)
         {
-            comboCooldownTimer -= Time.deltaTime;
-            if (comboCooldownTimer <= 0)
+            var objectInterface = collider.GetComponent<IDamageable>();
+            if(objectInterface != null)
             {
-                EndCombo();
+                //objectInterface.Damage(lightMeleeCombo[comboCounter].damage);
+                print(collider.name);
             }
         }
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(detectionCenter.position, lightMeleeCombo[comboCounter].radius);
+    }
+    private void Update()
+    {
+        ExitAttack();
+    }
     private void Attack()
     {
-        if (Time.time - lastComboEnd > lightMeleeCombo[comboCounter].minTime && comboCounter < lightMeleeCombo.Count)
+        if (Time.time - lastComboEnd > 0.5f && comboCounter < lightMeleeCombo.Count)
         {
+            CancelInvoke("EndCombo");
             // Start the combo if it's the first attack or we're still within the allowed delay
             if (Time.time - lastClickedTime >= lightMeleeCombo[comboCounter].minTime)
             {
@@ -77,17 +91,18 @@ public class PlayerCombat : MonoBehaviour
                 anim.Play("LightAttack", 0, 0);
                 comboCounter++;
                 lastClickedTime = Time.time;
-
-                // Reset cooldown timer to max delay time for each successful attack
-                comboCooldownTimer = maxComboDelay;
+                DetectDamageables();
 
                 // Reset combo at the end of the sequence
                 if (comboCounter >= lightMeleeCombo.Count)
                 {
                     comboCounter = 0;
-                    comboCooldownTimer = 0.1f; // Short cooldown after last combo hit
                 }
             }
+        }
+        if (comboCounter >= lightMeleeCombo.Count)
+        {
+            comboCounter = 0;
         }
     }
 
@@ -96,11 +111,7 @@ public class PlayerCombat : MonoBehaviour
         // Check if the current attack animation is near the end
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag("LightAttack"))
         {
-            // Start the cooldown timer only if we're finishing the last hit or in an idle period
-            if (comboCounter >= lightMeleeCombo.Count && comboCooldownTimer <= 0)
-            {
-                comboCooldownTimer = 0.1f;
-            }
+            Invoke("EndCombo", 1f);
         }
     }
 
@@ -117,6 +128,5 @@ public class PlayerCombat : MonoBehaviour
         print("EndCombo");
         comboCounter = 0;
         lastComboEnd = Time.time;
-        comboCooldownTimer = 0;
     }
 }
