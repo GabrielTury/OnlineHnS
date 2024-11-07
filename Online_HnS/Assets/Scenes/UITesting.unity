@@ -8828,6 +8828,7 @@ MonoBehaviour:
   - {fileID: 753127501}
   resolutionText: {fileID: 146377050}
   windowTypeText: {fileID: 1706249219}
+  framerateText: {fileID: 416502479}
   vsyncIndicator: {fileID: 51407110}
   closedCaptionIndicator: {fileID: 1569667414}
   inputGuideHolder: {fileID: 747256513}

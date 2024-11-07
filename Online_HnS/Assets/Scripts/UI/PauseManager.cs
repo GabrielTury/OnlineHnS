@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
@@ -86,6 +87,9 @@ public class PauseManager : MonoBehaviour
     private TextMeshProUGUI windowTypeText;
 
     [SerializeField]
+    private TextMeshProUGUI framerateText;
+
+    [SerializeField]
     private GameObject vsyncIndicator;
 
     [SerializeField]
@@ -131,6 +135,16 @@ public class PauseManager : MonoBehaviour
 
     [SerializeField]
     private FullScreenMode[] fullScreenModes;
+
+    private int[,] resolutions = new int[9, 2] { { 854, 480 }, { 1024, 576 }, { 1280, 720 }, { 1366, 768 }, { 1600, 900 }, { 1920, 1080 }, { 2560, 1440 }, { 3840, 2160 }, { 7680, 4320 } };
+
+    List<int[]> availableResolutions = new List<int[]>();
+
+    int resolutionIndex;
+
+    int fullscreenModeIndex;
+
+    int[] maxFramerate = new int[] { 60, 120, 144, 165, 240, 300, 500 };
     #endregion
 
     #region Timelines
@@ -353,18 +367,18 @@ public class PauseManager : MonoBehaviour
 
     public void BTResolution()
     {
+        resolutionIndex = UIUtils.Wrap(resolutionIndex + 1, -1, availableResolutions.Count - 1);
 
+        resolutionText.text = availableResolutions[resolutionIndex][0].ToString() + "x" + availableResolutions[resolutionIndex][1].ToString();
+
+        PlayerPrefs.SetInt("RESOLUTION_INDEX", resolutionIndex);
     }
 
     public void BTWindowType()
     {
-        PlayerPrefs.SetInt("WINDOWTYPE", UIUtils.Wrap(PlayerPrefs.GetInt("WINDOWTYPE", 0) + 1, -1, 2));
+        fullscreenModeIndex = UIUtils.Wrap(fullscreenModeIndex + 1, -1, 2);
 
-        //windowTypeText.text = (PlayerPrefs.GetInt("WINDOWTYPE", 0) == 0 ? "Windowed" : (PlayerPrefs.GetInt("WINDOWTYPE", 0) == 1 ? "Borderless" : "Exclusive"));
-
-        int windowType = PlayerPrefs.GetInt("WINDOWTYPE", 0);
-
-        if (windowType == 0)
+        if (fullscreenModeIndex == 0)
         {
             var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Settings", "WINDOWED");
             if (op.IsDone)
@@ -372,7 +386,7 @@ public class PauseManager : MonoBehaviour
                 Debug.Log(op.Result);
                 windowTypeText.text = op.Result;
             }
-        } else if (windowType == 1)
+        } else if (fullscreenModeIndex == 1)
         {
             var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Settings", "BORDERLESS");
             if (op.IsDone)
@@ -391,7 +405,7 @@ public class PauseManager : MonoBehaviour
             }
         }
 
-        
+        PlayerPrefs.SetInt("WINDOWTYPE", fullscreenModeIndex);
     }
 
     public void BTVsync()
@@ -403,7 +417,9 @@ public class PauseManager : MonoBehaviour
 
     public void BTFramerate()
     {
+        PlayerPrefs.SetInt("MAX_FRAMERATE", UIUtils.Wrap(PlayerPrefs.GetInt("MAX_FRAMERATE", 0) + 1, -1, maxFramerate.Length - 1));
 
+        framerateText.text = maxFramerate[PlayerPrefs.GetInt("MAX_FRAMERATE", 0)].ToString();
     }
 
     public void BTAudioSettings()
@@ -620,6 +636,69 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     private void InitializeSettings()
     {
+        // Resolution
+
+        int[] maxResolution = { Screen.currentResolution.width, Screen.currentResolution.height };
+
+        for (int i = 0; i < 9; i++)
+        {
+            if (resolutions[i, 0] <= maxResolution[0] && resolutions[i, 1] <= maxResolution[1])
+            {
+                availableResolutions.Add(new int[2] { resolutions[i, 0], resolutions[i, 1] });
+            }
+        }
+
+        resolutionIndex = PlayerPrefs.GetInt("RESOLUTION_INDEX", 0);
+
+        if (availableResolutions[resolutionIndex][0] < maxResolution[0] && availableResolutions[resolutionIndex][1] < maxResolution[1])
+        {
+            resolutionIndex = 0;
+        }
+
+        resolutionText.text = availableResolutions[resolutionIndex][0].ToString() + "x" + availableResolutions[resolutionIndex][1].ToString();
+
+        // Fullscreen
+
+        fullscreenModeIndex = PlayerPrefs.GetInt("WINDOWTYPE", 0);
+
+        if (fullscreenModeIndex == 0)
+        {
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Settings", "WINDOWED");
+            if (op.IsDone)
+            {
+                Debug.Log(op.Result);
+                windowTypeText.text = op.Result;
+            }
+        }
+        else if (fullscreenModeIndex == 1)
+        {
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Settings", "BORDERLESS");
+            if (op.IsDone)
+            {
+                Debug.Log(op.Result);
+                windowTypeText.text = op.Result;
+            }
+        }
+        else
+        {
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Settings", "EXCLUSIVEFULLSCREEN");
+            if (op.IsDone)
+            {
+                Debug.Log(op.Result);
+                windowTypeText.text = op.Result;
+            }
+        }
+
+        // Framerate
+
+        framerateText.text = maxFramerate[PlayerPrefs.GetInt("MAX_FRAMERATE", 0)].ToString();
+
+        // Vsync
+
+        vsyncIndicator.SetActive(PlayerPrefs.GetInt("VSYNC", 0) == 1);
+
+        // Audio
+
         masterAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("MASTER_VOLUME", 1) * 100).ToString() + "%";
         musicAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("MUSIC_VOLUME", 1) * 100).ToString() + "%";
         soundAudioPercentageText.text = Mathf.FloorToInt(PlayerPrefs.GetFloat("SOUND_VOLUME", 1) * 100).ToString() + "%";
@@ -966,6 +1045,12 @@ public class PauseManager : MonoBehaviour
                 currentGroupIndex = 1;
 
                 SelectButton(0);
+
+                Screen.SetResolution(availableResolutions[resolutionIndex][0], availableResolutions[resolutionIndex][1], fullScreenModes[fullscreenModeIndex]);
+
+                //Application.targetFrameRate = framerates[framerateIndex];
+
+                QualitySettings.vSyncCount = PlayerPrefs.GetInt("VSYNC", 0);
 
                 break;
 
