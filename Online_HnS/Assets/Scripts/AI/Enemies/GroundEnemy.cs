@@ -30,12 +30,13 @@ public class GroundEnemy : EnemyBase
             if(moveRoutine != null)
                 StopCoroutine(moveRoutine);
 
-            if (path.Length > 1)
+            if (path.Length > 1 && currentState == States.Moving)
                 moveRoutine = StartCoroutine(Move(path[1]));
-            else
+            else if (currentState == States.Moving)
                 moveRoutine = StartCoroutine(Move(path[0]));
 
-            stateRoutine = moveRoutine;
+            if(moveRoutine != null)
+                stateRoutine = moveRoutine;
         }
 #if UNITY_EDITOR
         if (debugPath)
@@ -55,7 +56,13 @@ public class GroundEnemy : EnemyBase
 
         anim.SetBool("Walk", true);
         while (path.Length > 0)
-        {            
+        {
+            if (Vector3.Distance(transform.position, PlayerManager.instance.player.transform.position) < 2f)
+            {
+                SetAIState(States.Attacking);
+                Debug.Log("Close Enough");
+            }
+
             if (Vector3.Distance(transform.position, goal) < .1f)
             {
                 currentPathIndex++;
@@ -79,13 +86,10 @@ public class GroundEnemy : EnemyBase
     {
         transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * moveSpeed);
 
-        Vector3 direction = goal - transform.position;
+        Vector3 lookDir = goal;
+        lookDir.y = transform.position.y;
 
-        // Create the rotation we want to be in
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-        // Smoothly rotate towards the target rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        transform.LookAt(lookDir/**Time.deltaTime*rotationSpeed*/);
     }
 
     protected override void SetAIState(States newState)
@@ -121,7 +125,7 @@ public class GroundEnemy : EnemyBase
                 stateRoutine = StartCoroutine(UpdatePath());
                 break;
             case States.Attacking:
-                StartCoroutine(Attack());
+                stateRoutine = StartCoroutine(Attack());
                 break;
             case States.Hit:
                 anim.SetTrigger("Hit");
@@ -135,7 +139,7 @@ public class GroundEnemy : EnemyBase
     protected override IEnumerator Attack()
     {
         anim.SetTrigger("Attack");
-        
+        Debug.Log("Attacking");
         yield return null;        
     }
 
