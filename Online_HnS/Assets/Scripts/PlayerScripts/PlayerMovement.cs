@@ -10,6 +10,7 @@ public class PlayerMovement : NetworkBehaviour
     private PlayerControls inputActions;
     [SerializeField]
     private Animator animator;
+    
 
     Vector2 currentMovementInput;
     Vector3 currentMovement;
@@ -46,7 +47,8 @@ public class PlayerMovement : NetworkBehaviour
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x * movementSpeed;
         currentMovement.z = currentMovementInput.y * movementSpeed;
-
+        animator.SetFloat("X", currentMovement.x);
+        animator.SetFloat("Y", currentMovement.z);
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
 

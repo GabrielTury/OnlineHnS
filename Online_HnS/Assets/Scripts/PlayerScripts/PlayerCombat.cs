@@ -18,8 +18,7 @@ public class PlayerCombat : MonoBehaviour
     private float lastClickedTime;
     private float lastComboEnd;
     public int comboCounter;
-    private float comboCooldownTimer = 0.0f;
-    private float maxComboDelay = 0.8f;
+
 
     private bool isAttacking = false;
 
@@ -88,10 +87,15 @@ public class PlayerCombat : MonoBehaviour
             if (Time.time - lastClickedTime >= lightMeleeCombo[comboCounter].minTime)
             {
                 anim.runtimeAnimatorController = lightMeleeCombo[comboCounter].animOC;
-                anim.Play("LightAttack", 0, 0);
-                comboCounter++;
+                anim.Play("LightAttack", 1, 0);
+
+                if(comboCounter < lightMeleeCombo.Count)
+                {
+
+                    comboCounter++;
+                }
                 lastClickedTime = Time.time;
-                DetectDamageables();
+                //DetectDamageables();
 
                 // Reset combo at the end of the sequence
                 if (comboCounter >= lightMeleeCombo.Count)
