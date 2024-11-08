@@ -303,6 +303,11 @@ public class PauseManager : MonoBehaviour
         {
             ReturnButton();
         }
+
+        if (inputActions.UI.LeftRight.WasPressedThisFrame())
+        {
+            LeftRightButton(inputActions.UI.LeftRight.ReadValue<float>());
+        }
     }
 
     #region Button Behaviors
@@ -365,18 +370,18 @@ public class PauseManager : MonoBehaviour
         SelectButton(0);
     }
 
-    public void BTResolution()
+    public void BTResolution(int index = 1)
     {
-        resolutionIndex = UIUtils.Wrap(resolutionIndex + 1, -1, availableResolutions.Count - 1);
+        resolutionIndex = UIUtils.Wrap(resolutionIndex + index, -1, availableResolutions.Count - 1);
 
-        resolutionText.text = availableResolutions[resolutionIndex][0].ToString() + "x" + availableResolutions[resolutionIndex][1].ToString();
+        resolutionText.text = availableResolutions[resolutionIndex][0].ToString() + " x " + availableResolutions[resolutionIndex][1].ToString();
 
         PlayerPrefs.SetInt("RESOLUTION_INDEX", resolutionIndex);
     }
 
-    public void BTWindowType()
+    public void BTWindowType(int index = 1)
     {
-        fullscreenModeIndex = UIUtils.Wrap(fullscreenModeIndex + 1, -1, 2);
+        fullscreenModeIndex = UIUtils.Wrap(fullscreenModeIndex + index, -1, 2);
 
         if (fullscreenModeIndex == 0)
         {
@@ -415,9 +420,9 @@ public class PauseManager : MonoBehaviour
         vsyncIndicator.SetActive(PlayerPrefs.GetInt("VSYNC", 0) == 1);
     }
 
-    public void BTFramerate()
+    public void BTFramerate(int index = 1)
     {
-        PlayerPrefs.SetInt("MAX_FRAMERATE", UIUtils.Wrap(PlayerPrefs.GetInt("MAX_FRAMERATE", 0) + 1, -1, maxFramerate.Length - 1));
+        PlayerPrefs.SetInt("MAX_FRAMERATE", UIUtils.Wrap(PlayerPrefs.GetInt("MAX_FRAMERATE", 0) + index, -1, maxFramerate.Length - 1));
 
         framerateText.text = maxFramerate[PlayerPrefs.GetInt("MAX_FRAMERATE", 0)].ToString();
     }
@@ -465,20 +470,20 @@ public class PauseManager : MonoBehaviour
         PlayerPrefs.SetFloat("SOUND_VOLUME", volumeNormalized);
     }
 
-    public void BTMasterVolume()
+    public void BTMasterVolume(int index = 1)
     {
         float currentVolume = PlayerPrefs.GetFloat("MASTER_VOLUME", 1);
-        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + 1, 0f, 10f) / 10;
+        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + index, 0f, 10f) / 10;
         mixer.SetFloat("MASTERPARAM", Mathf.Log10(newVolume) * 20);
         PlayerPrefs.SetFloat("MASTER_VOLUME", newVolume);
 
         masterAudioPercentageText.text = Mathf.FloorToInt(newVolume * 100).ToString() + "%";
         masterAudioSlider.value = PlayerPrefs.GetFloat("MASTER_VOLUME", 1);
     }
-    public void BTMusicVolume()
+    public void BTMusicVolume(int index = 1)
     {
         float currentVolume = PlayerPrefs.GetFloat("MUSIC_VOLUME", 1);
-        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + 1, 0f, 10f) / 10;
+        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + index, 0f, 10f) / 10;
         mixer.SetFloat("MUSICPARAM", Mathf.Log10(newVolume) * 20);
         PlayerPrefs.SetFloat("MUSIC_VOLUME", newVolume);
 
@@ -486,10 +491,10 @@ public class PauseManager : MonoBehaviour
         musicAudioSlider.value = PlayerPrefs.GetFloat("MUSIC_VOLUME", 1);
     }
 
-    public void BTSoundVolume()
+    public void BTSoundVolume(int index = 1)
     {
         float currentVolume = PlayerPrefs.GetFloat("SOUND_VOLUME", 1);
-        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + 1, 0f, 10f) / 10;
+        float newVolume = UIUtils.WrapFloat(currentVolume * 10 + index, 0f, 10f) / 10;
         mixer.SetFloat("SOUNDPARAM", Mathf.Log10(newVolume) * 20);
         PlayerPrefs.SetFloat("SOUND_VOLUME", newVolume);
 
@@ -706,6 +711,8 @@ public class PauseManager : MonoBehaviour
         masterAudioSlider.value = PlayerPrefs.GetFloat("MASTER_VOLUME", 1);
         musicAudioSlider.value = PlayerPrefs.GetFloat("MUSIC_VOLUME", 1);
         soundAudioSlider.value = PlayerPrefs.GetFloat("SOUND_VOLUME", 1);
+
+        closedCaptionIndicator.SetActive(PlayerPrefs.GetInt("CLOSED_CAPTIONS", 0) == 1);
     }
 
     /// <summary>
@@ -973,6 +980,100 @@ public class PauseManager : MonoBehaviour
         SelectButton(currentButtonIndex);
     }
 
+    private void LeftRightButton(float index)
+    {
+        int value = (int)Mathf.Floor(index);
+        SelectButton(currentButtonIndex);
+        switch (currentGroupIndex)
+        {
+            case 0: // Main pause menu
+
+                switch (currentButtonIndex)
+                {
+                    case 0:
+                        //BTResumeGame();
+                        break;
+
+                    case 1:
+                        //currentButtonIndex = 0;
+                        //BTSettings();
+                        break;
+
+                    case 2:
+                        //BTMainMenu();
+                        break;
+                }
+                break;
+
+            case 1: // Settings menu
+
+                switch (currentButtonIndex)
+                {
+                    case 0:
+                        //currentButtonIndex = 0;
+                        //BTVideoSettings();
+                        break;
+
+                    case 1:
+                        //currentButtonIndex = 0;
+                        //BTAudioSettings();
+                        break;
+
+                    case 2:
+                        //BTLanguageSettings();
+                        break;
+                }
+                break;
+
+            case 2: // Video menu
+
+                switch (currentButtonIndex)
+                {
+                    case 0:
+
+                        BTResolution(value);
+                        break;
+
+                    case 1:
+                        BTWindowType(value);
+                        break;
+
+                    case 2:
+                        //BTVsync();
+                        break;
+
+                    case 3:
+                        BTFramerate(value);
+                        break;
+                }
+                break;
+
+            case 3: // Audio menu
+
+                switch (currentButtonIndex)
+                {
+                    case 0:
+                        BTMasterVolume(value);
+                        break;
+
+                    case 1:
+                        BTMusicVolume(value);
+                        break;
+
+                    case 2:
+                        BTSoundVolume(value);
+                        break;
+
+                    case 3:
+                        //BTClosedCaptions();
+                        break;
+                }
+                break;
+        }
+
+        SelectButton(currentButtonIndex);
+    }
+
     /// <summary>
     /// Returns back to the previous menu based on the current menu
     /// </summary>
@@ -1048,7 +1149,7 @@ public class PauseManager : MonoBehaviour
 
                 Screen.SetResolution(availableResolutions[resolutionIndex][0], availableResolutions[resolutionIndex][1], fullScreenModes[fullscreenModeIndex]);
 
-                //Application.targetFrameRate = framerates[framerateIndex];
+                Application.targetFrameRate = maxFramerate[PlayerPrefs.GetInt("MAX_FRAMERATE", 0)];
 
                 QualitySettings.vSyncCount = PlayerPrefs.GetInt("VSYNC", 0);
 
@@ -1230,7 +1331,6 @@ public class PauseManager : MonoBehaviour
             inputGuideIcons.confirm.sprite = inputIcons[2].a;
             inputGuideIcons.cancel.sprite = inputIcons[2].b;
         }
-        Debug.Log(inputDevice.name);
     }
 
     /// <summary>
