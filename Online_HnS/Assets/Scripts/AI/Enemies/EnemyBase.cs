@@ -77,7 +77,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     }
     [Button("Start Enemy Behaviour")]
     public void StartBehaviour()
-    {        
+    {
+        currentState = States.Moving;
         stateRoutine = StartCoroutine(UpdatePath());
     }
     // Update is called once per frame
