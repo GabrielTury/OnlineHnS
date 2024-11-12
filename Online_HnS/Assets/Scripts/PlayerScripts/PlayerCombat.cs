@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : NetworkBehaviour
 {
     [Tooltip("List of light melee attacks")]
     public List<MeleePlayerAttackSO> lightMeleeCombo;
 
     [SerializeField]
     private Animator anim;
+    [SerializeField]
+    private FaceMouse faceMouse;
+    [SerializeField]
+    private PlayerMovement playerMovement;
     [SerializeField]
     private Transform detectionCenter;
     [SerializeField]
@@ -46,7 +51,7 @@ public class PlayerCombat : MonoBehaviour
     private void OnLightAttack(InputAction.CallbackContext context)
     {
         isAttacking = context.ReadValueAsButton();
-        if (isAttacking)
+        if (isAttacking && IsOwner)
         {
             Attack();
             
@@ -86,8 +91,11 @@ public class PlayerCombat : MonoBehaviour
             // Start the combo if it's the first attack or we're still within the allowed delay
             if (Time.time - lastClickedTime >= lightMeleeCombo[comboCounter].minTime)
             {
+                playerMovement.canRotate = false;
+                faceMouse.FaceMouse3D();
                 anim.runtimeAnimatorController = lightMeleeCombo[comboCounter].animOC;
-                anim.Play("LightAttack", 1, 0);
+                anim.Play("LightAttack", 0, 0);
+                Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
 
                 if(comboCounter < lightMeleeCombo.Count)
                 {
@@ -115,6 +123,8 @@ public class PlayerCombat : MonoBehaviour
         // Check if the current attack animation is near the end
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag("LightAttack"))
         {
+            Debug.Log("HasExited");
+            playerMovement.canRotate = true;
             Invoke("EndCombo", 1f);
         }
     }

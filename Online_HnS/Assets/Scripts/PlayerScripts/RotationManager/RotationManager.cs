@@ -15,12 +15,14 @@ public class RotationManager : MonoBehaviour
         if (_faceNearestDamageable.FindNearestDamageable() != null)
         {
             _faceNearestDamageable.enabled = true;
-            _faceMouse.enabled = false;
+            //_faceMouse.enabled = false;
         }
         else
         {
             _faceNearestDamageable.enabled = false;
-            _faceMouse.enabled = true;
+            //_faceMouse.enabled = true;
         }
     }
+
+
 }

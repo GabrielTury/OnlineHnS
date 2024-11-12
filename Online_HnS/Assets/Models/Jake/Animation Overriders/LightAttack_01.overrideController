@@ -9,7 +9,7 @@ AnimatorOverrideController:
   m_Name: LightAttack_01
   m_Controller: {fileID: 9100000, guid: 21c953385d5562343bb39f42f8bf083c, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 8730203804484990420, guid: 2b0961b5671efea458e60e0b60ef8062,
+  - m_OriginalClip: {fileID: 8730203804484990420, guid: d8a8fd138fb5fc1458b03ed55ce41fa8,
       type: 3}
-    m_OverrideClip: {fileID: 8730203804484990420, guid: 2b0961b5671efea458e60e0b60ef8062,
+    m_OverrideClip: {fileID: 8730203804484990420, guid: d8a8fd138fb5fc1458b03ed55ce41fa8,
       type: 3}

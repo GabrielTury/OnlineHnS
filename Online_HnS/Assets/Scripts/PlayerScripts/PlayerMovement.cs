@@ -15,6 +15,7 @@ public class PlayerMovement : NetworkBehaviour
     Vector2 currentMovementInput;
     Vector3 currentMovement;
     private bool isMovementPressed;
+    public bool canRotate = true;
 
     public float movementSpeed;
     private Vector3 forward;
@@ -79,7 +80,7 @@ public class PlayerMovement : NetworkBehaviour
         positionToLookAt.y = 0;
         positionToLookAt.z = cameraRelativeMovement.z;
         Quaternion currentRotation = transform.rotation;
-        if (isMovementPressed)
+        if (isMovementPressed && canRotate)
         {
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
