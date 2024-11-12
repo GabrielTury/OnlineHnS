@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour, IDamageable
+public abstract class EnemyBase : NetworkBehaviour, IDamageable
 {
     #region Enums
     protected enum States
@@ -34,6 +35,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected Node lastPlayerNode;
 
+    protected NetworkObject closestPlayer;
+
     protected Vector3 goal;
     #region Components
     protected Animator anim;
@@ -47,13 +50,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         }
         else
         {
-            anim.SetTrigger("Hit");
+            SetAIState(States.Hit);            
         }
     }
     protected IEnumerator Death()
     {
-        anim.SetTrigger("Death");
-        yield return new WaitForSeconds(1);
+        SetAIState(States.Death);
+        yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }
 
@@ -78,8 +81,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [Button("Start Enemy Behaviour")]
     public void StartBehaviour()
     {
-        currentState = States.Moving;
-        stateRoutine = StartCoroutine(UpdatePath());
+        SetAIState(States.Moving);
     }
     // Update is called once per frame
     void Update()
@@ -87,6 +89,21 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         if (bIsMoving)
         {
             MoveToGoal();
+        }
+        if(PlayerManager.instance.players.Count != 0)
+        {
+            //Updates closest player
+            foreach(NetworkObject n in PlayerManager.instance.players)
+            {
+                if(closestPlayer == null)
+                {
+                    closestPlayer = n;
+                }
+                else if (Vector3.Distance(transform.position, n.transform.position) < Vector3.Distance(transform.position, closestPlayer.transform.position))
+                {
+                    closestPlayer = n;
+                }
+            }
         }
     }
 
@@ -97,7 +114,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         bIsMoving = true;
         while (true)
         {
-            Vector3 playerPos = PlayerManager.instance.player.transform.position;
+            Vector3 playerPos = closestPlayer.transform.position;
             ownNode = NavOperations.GetNearestNode(transform.position, NavMesh.allNodes);
             Node playerNode = NavOperations.GetNearestNodeInPlane(playerPos, NavMesh.allNodes, ownNode.WorldPosition.y);
 

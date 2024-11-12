@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -15,7 +16,7 @@ public class GameEvents
     public static UnityAction<Transform> Damageable_Spawn;
     public static void OnDamageableSpawned(Transform objectTransform) => Damageable_Spawn?.Invoke(objectTransform);
 
-    public static UnityAction<Vector3> Player_Move;
-    public static void OnPlayerMoved(Vector3 position) => Player_Move?.Invoke(position);
+    public static UnityAction<NetworkObject> Player_Spawn;
+    public static void OnPlayerSpawn(NetworkObject playerObj) => Player_Spawn?.Invoke(playerObj);
 
 }

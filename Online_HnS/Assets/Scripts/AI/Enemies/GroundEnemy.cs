@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class GroundEnemy : EnemyBase
@@ -57,7 +58,7 @@ public class GroundEnemy : EnemyBase
         anim.SetBool("Walk", true);
         while (path.Length > 0)
         {
-            if (Vector3.Distance(transform.position, PlayerManager.instance.player.transform.position) < 2f)
+            if (Vector3.Distance(transform.position, closestPlayer.transform.position) < 2f)
             {
                 SetAIState(States.Attacking);
                 Debug.Log("Close Enough");
@@ -83,18 +84,20 @@ public class GroundEnemy : EnemyBase
     }
 
     protected override void MoveToGoal()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * moveSpeed);
+    {        
+        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * moveSpeed);                
 
         Vector3 lookDir = goal;
         lookDir.y = transform.position.y;
-
+        //@todo: Must rotate Smoothly instead of instantly
         transform.LookAt(lookDir/**Time.deltaTime*rotationSpeed*/);
     }
 
     protected override void SetAIState(States newState)
     {
-        StopCoroutine(stateRoutine);
+        if(stateRoutine != null)
+            StopCoroutine(stateRoutine);
+
         //Stop Switch State
         switch (currentState)
         {
@@ -112,10 +115,11 @@ public class GroundEnemy : EnemyBase
                 
                 break;
             case States.Death:
-
+                break;
+            default:
                 break;
         }
-
+        currentState = newState;
         switch (newState)
         {
             case States.Idle:
@@ -138,11 +142,47 @@ public class GroundEnemy : EnemyBase
 
     protected override IEnumerator Attack()
     {
-        anim.SetTrigger("Attack");
-        Debug.Log("Attacking");
+        anim.SetTrigger("Attack");        
         yield return null;        
     }
-
+    #region AttackBehaviour
+    /// <summary>
+    /// Contain logic for attack, called from animation event handler
+    /// </summary>
+    public void AttackBehaviour()
+    {
+        Collider[] hitObjs = Physics.OverlapBox((transform.position + new Vector3(0, 2, 0)) + (transform.forward * 1.5f), new Vector3(1.5f, 1.5f, 1.5f));
+        if(hitObjs.Length > 0 )
+        {
+            foreach(Collider collider in hitObjs)
+            {
+                if (collider.CompareTag("Player"))
+                {
+                    //@todo: remove GetComponent to improve cpu performance
+                    collider.GetComponent<IDamageable>().Damage(10);
+                }
+            }
+        }
+    }
+    /// <summary>
+    /// Logic for end of attack, called from animation event handler
+    /// </summary>
+    public void AttackEnd()
+    {
+        if (Vector3.Distance(transform.position, closestPlayer.transform.position) < 2f)
+        {
+            SetAIState(States.Attacking);
+            Vector3 lookDir = goal;
+            lookDir.y = transform.position.y;            
+            transform.LookAt(lookDir);
+            Debug.Log("Close Enough");
+        }
+        else
+        {
+            SetAIState(States.Moving);
+        }
+    }
+    #endregion
     protected override IEnumerator TakeDamage()
     {
         throw new System.NotImplementedException();
@@ -157,4 +197,10 @@ public class GroundEnemy : EnemyBase
     {
         throw new System.NotImplementedException();
     }
+
+    /*private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube((transform.position + new Vector3(0,2,0)) + (transform.forward * 1.5f), new Vector3(1.5f, 1.5f, 1.5f));
+    }*/
 }
