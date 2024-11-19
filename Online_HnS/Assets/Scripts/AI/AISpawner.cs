@@ -13,9 +13,14 @@ public class AISpawner : NetworkBehaviour
 
     private void Start()
     {
+        
+    }    
+    [Button("Spawn Enemy in Server")]    
+    public void SpawnEnemyFunc()
+    {
         SpawnEnemyServerRpc();
     }
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void SpawnEnemyServerRpc()
     {
         GameObject spawned = Instantiate(SpawnEnemy, transform.position, Quaternion.identity);

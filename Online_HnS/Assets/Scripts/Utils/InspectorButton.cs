@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using Unity.Netcode;
 
 
 [System.AttributeUsage(System.AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
@@ -17,7 +18,7 @@ public class ButtonAttribute : PropertyAttribute
     }
 }
 #if UNITY_EDITOR
-[CustomEditor(typeof(MonoBehaviour), true)]
+[CustomEditor(typeof(NetworkBehaviour), true)]
 public class ButtonMethodDrawer : Editor
 {
     public override void OnInspectorGUI()
