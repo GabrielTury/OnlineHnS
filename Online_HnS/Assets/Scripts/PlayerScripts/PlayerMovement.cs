@@ -15,6 +15,7 @@ public class PlayerMovement : NetworkBehaviour
     Vector2 currentMovementInput;
     Vector3 currentMovement;
     private bool isMovementPressed;
+    public bool canMove = true;
     public bool canRotate = true;
 
     public float movementSpeed;
@@ -22,6 +23,8 @@ public class PlayerMovement : NetworkBehaviour
     private Vector3 right;
     private Vector3 cameraRelativeMovement;
     public float rotationFactorPerFrame = 15f;
+    public float dashTime;
+    public float dashSpeed;
 
     private void Awake()
     {
@@ -31,6 +34,9 @@ public class PlayerMovement : NetworkBehaviour
         inputActions.Movement.Move.started += OnMovement;
         inputActions.Movement.Move.canceled += OnMovement;
         inputActions.Movement.Move.performed += OnMovement;
+
+        inputActions.Movement.Dash.started += OnDash;
+        inputActions.Movement.Dash.performed += OnDash;
     }
 
     private void OnEnable()
@@ -48,10 +54,19 @@ public class PlayerMovement : NetworkBehaviour
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x * movementSpeed;
         currentMovement.z = currentMovementInput.y * movementSpeed;
-        animator.SetFloat("X", currentMovement.x);
-        animator.SetFloat("Y", currentMovement.z);
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
+
+    void OnDash(InputAction.CallbackContext context)
+    {
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsTag("LightAttack"))
+        {
+            animator.SetTrigger("dash");
+            StartCoroutine(Dash());
+        }
+        
+    }
+
 
     void HandleCameraRelativeMovement(Vector3 moveVector)
     {
@@ -97,8 +112,27 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        HandleCameraRelativeMovement(currentMovement);
-        HandleRotation();
+        if(canMove)
+        {
+            HandleCameraRelativeMovement(currentMovement);
+            HandleRotation();
+        }
+        else
+        {
+            HandleCameraRelativeMovement(Vector3.zero);
+            //isMovementPressed = false;
+        }
+        
         HandleAnimatorInteraction();
+    }
+
+    IEnumerator Dash()
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + dashTime)
+        {
+            characterController.Move(transform.forward * dashSpeed * Time.deltaTime);
+            yield return null;
+        }
     }
 }

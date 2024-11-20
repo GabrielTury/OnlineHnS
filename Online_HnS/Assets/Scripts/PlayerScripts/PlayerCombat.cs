@@ -18,11 +18,14 @@ public class PlayerCombat : NetworkBehaviour
     [SerializeField]
     private Transform detectionCenter;
     [SerializeField]
+    private GameObject bulletPrefab;
+    [SerializeField]
     private LayerMask layerMask;
     private PlayerControls inputActions;
     private float lastClickedTime;
     private float lastComboEnd;
     public int comboCounter;
+    public bool isMelee = true;
 
 
     private bool isAttacking = false;
@@ -51,7 +54,7 @@ public class PlayerCombat : NetworkBehaviour
     private void OnLightAttack(InputAction.CallbackContext context)
     {
         isAttacking = context.ReadValueAsButton();
-        if (isAttacking && IsOwner)
+        if (isAttacking && IsOwner && !anim.GetCurrentAnimatorStateInfo(0).IsTag("Damage"))
         {
             Attack();
             
@@ -82,40 +85,57 @@ public class PlayerCombat : NetworkBehaviour
     private void Update()
     {
         ExitAttack();
+        ExitDamage();
     }
     private void Attack()
     {
-        if (Time.time - lastComboEnd > 0.5f && comboCounter < lightMeleeCombo.Count)
+        if(isMelee)
         {
-            CancelInvoke("EndCombo");
-            // Start the combo if it's the first attack or we're still within the allowed delay
-            if (Time.time - lastClickedTime >= lightMeleeCombo[comboCounter].minTime)
+            if (Time.time - lastComboEnd > 0.5f && comboCounter < lightMeleeCombo.Count)
             {
-                playerMovement.canRotate = false;
-                faceMouse.FaceMouse3D();
-                anim.runtimeAnimatorController = lightMeleeCombo[comboCounter].animOC;
-                anim.Play("LightAttack", 0, 0);
-                Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
-
-                if(comboCounter < lightMeleeCombo.Count)
+                CancelInvoke("EndCombo");
+                // Start the combo if it's the first attack or we're still within the allowed delay
+                if (Time.time - lastClickedTime >= lightMeleeCombo[comboCounter].minTime)
                 {
+                    playerMovement.canRotate = false;
+                    faceMouse.FaceMouse3D();
+                    anim.runtimeAnimatorController = lightMeleeCombo[comboCounter].animOC;
+                    anim.Play("LightAttack", 0, 0);
 
-                    comboCounter++;
-                }
-                lastClickedTime = Time.time;
-                //DetectDamageables();
+                    if (comboCounter < lightMeleeCombo.Count)
+                    {
 
-                // Reset combo at the end of the sequence
-                if (comboCounter >= lightMeleeCombo.Count)
-                {
-                    comboCounter = 0;
+                        comboCounter++;
+                    }
+                    lastClickedTime = Time.time;
+                    //DetectDamageables();
+
+                    // Reset combo at the end of the sequence
+                    if (comboCounter >= lightMeleeCombo.Count)
+                    {
+                        comboCounter = 0;
+                    }
                 }
             }
+            if (comboCounter >= lightMeleeCombo.Count)
+            {
+                comboCounter = 0;
+            }
         }
-        if (comboCounter >= lightMeleeCombo.Count)
+        else
         {
-            comboCounter = 0;
+            if(!anim.GetCurrentAnimatorStateInfo(0).IsTag("LightAttack"))
+            {
+                anim.Play("Idle", 0, 0);
+                playerMovement.canMove = false;
+                faceMouse.FaceMouse3D();
+                anim.SetTrigger("attack");
+                HandleShoot();
+            }
+            
         }
+
+        
     }
 
     private void ExitAttack()
@@ -123,9 +143,23 @@ public class PlayerCombat : NetworkBehaviour
         // Check if the current attack animation is near the end
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag("LightAttack"))
         {
-            Debug.Log("HasExited");
+            playerMovement.canMove = true;
             playerMovement.canRotate = true;
             Invoke("EndCombo", 1f);
+        }
+        else if(isMelee && !anim.GetCurrentAnimatorStateInfo(0).IsTag("LightAttack"))
+        {
+            playerMovement.canMove = true;
+            playerMovement.canRotate = true;
+        }
+    }
+
+    private void ExitDamage()
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag("Damage"))
+        {
+            playerMovement.canMove = true;
+            playerMovement.canRotate = true;
         }
     }
 
@@ -142,5 +176,30 @@ public class PlayerCombat : NetworkBehaviour
         print("EndCombo");
         comboCounter = 0;
         lastComboEnd = Time.time;
+    }
+
+    public void HandleDamage()
+    {
+        anim.Play("Idle", 0, 0);
+        playerMovement.canMove = false;
+        anim.SetTrigger("damage");
+    }
+    private void HandleShoot()
+    {
+        if (!IsOwner) return;
+
+        ShootBulletServerRpc();
+    }
+    [ServerRpc]
+    private void ShootBulletServerRpc()
+    {
+        GameObject bulletInstance = Instantiate(bulletPrefab, detectionCenter.position, detectionCenter.rotation);
+        NetworkObject networkObject = bulletInstance.GetComponent<NetworkObject>();
+
+        //if (networkObject != null)
+        {
+            bulletInstance.GetComponent<Bullet>().playerGameObject = gameObject;
+            networkObject.Spawn();  // Spawn bullet across the network
+        }
     }
 }
