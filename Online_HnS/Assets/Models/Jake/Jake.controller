@@ -202,13 +202,13 @@ AnimatorStateMachine:
     m_Position: {x: 440, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4385876462004981522}
-    m_Position: {x: 860, y: 120, z: 0}
+    m_Position: {x: 810, y: 50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1119155701561661245}
     m_Position: {x: 440, y: -100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7882943321291869840}
-    m_Position: {x: 760, y: -10, z: 0}
+    m_Position: {x: 730, y: -100, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 4729169875217229802}
@@ -416,13 +416,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: dash
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer

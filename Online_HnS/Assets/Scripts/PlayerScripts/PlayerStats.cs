@@ -11,12 +11,12 @@ public class PlayerStats : NetworkBehaviour, IDamageable
     private PlayerCombat playerCombat;
 
 
-    
 
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
         playerCombat = gameObject.GetComponent<PlayerCombat>();
     }
+
     void Start()
     {
         playerCurrentHealth = playerMaxHealth;

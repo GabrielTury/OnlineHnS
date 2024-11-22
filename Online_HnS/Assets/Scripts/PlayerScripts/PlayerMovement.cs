@@ -9,7 +9,7 @@ public class PlayerMovement : NetworkBehaviour
     private CharacterController characterController;
     private PlayerControls inputActions;
     [SerializeField]
-    private Animator animator;
+    private Animator anim;
     
 
     Vector2 currentMovementInput;
@@ -59,9 +59,9 @@ public class PlayerMovement : NetworkBehaviour
 
     void OnDash(InputAction.CallbackContext context)
     {
-        if(!animator.GetCurrentAnimatorStateInfo(0).IsTag("LightAttack"))
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsTag("LightAttack"))
         {
-            animator.SetTrigger("dash");
+            anim.SetTrigger("dash");
             StartCoroutine(Dash());
         }
         
@@ -105,7 +105,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void HandleAnimatorInteraction()
     {
-        animator.SetBool("isMoving", isMovementPressed);
+        anim.SetBool("isMoving", isMovementPressed);
     }
 
     private void Update()
@@ -126,6 +126,11 @@ public class PlayerMovement : NetworkBehaviour
         HandleAnimatorInteraction();
     }
 
+
+    public void ChangeAnimator(Animator animator)
+    {
+        anim = animator;
+    }
     IEnumerator Dash()
     {
         float startTime = Time.time;

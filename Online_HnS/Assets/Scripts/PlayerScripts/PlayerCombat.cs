@@ -25,9 +25,9 @@ public class PlayerCombat : NetworkBehaviour
     private float lastClickedTime;
     private float lastComboEnd;
     public int comboCounter;
-    public bool isMelee = true;
+    public bool isMelee = false;
 
-
+    private bool isDead = false;
     private bool isAttacking = false;
 
 
@@ -77,6 +77,11 @@ public class PlayerCombat : NetworkBehaviour
             }
         }
     }
+
+    public void ChangeAnimator(Animator animator)
+    {
+        anim = animator;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
@@ -84,6 +89,9 @@ public class PlayerCombat : NetworkBehaviour
     }
     private void Update()
     {
+        if(isDead)
+        { return; }
+
         ExitAttack();
         ExitDamage();
     }
@@ -183,6 +191,14 @@ public class PlayerCombat : NetworkBehaviour
         anim.Play("Idle", 0, 0);
         playerMovement.canMove = false;
         anim.SetTrigger("damage");
+    }
+
+    public void HandleDeath()
+    {
+        anim.Play("Idle", 0, 0);
+        playerMovement.canMove = false;
+        isDead = true;
+        anim.SetTrigger("death");
     }
     private void HandleShoot()
     {
