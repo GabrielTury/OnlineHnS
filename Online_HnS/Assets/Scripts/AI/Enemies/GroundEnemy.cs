@@ -159,7 +159,9 @@ public class GroundEnemy : EnemyBase
                 if (collider.CompareTag("Player"))
                 {
                     //@todo: remove GetComponent to improve cpu performance
-                    collider.GetComponent<IDamageable>().Damage(10);
+                    ulong id = collider.GetComponent<NetworkBehaviour>().OwnerClientId;
+                    AIManager.instance.SendDamageToServerRpc(id);
+                    //collider.GetComponent<IDamageable>().Damage(10);
                 }
             }
         }
