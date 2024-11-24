@@ -32,5 +32,6 @@ public class PlayerManager : MonoBehaviour
     private void PlayerSpawned(NetworkObject p)
     {
         players.Add(p);
+        Debug.Log(players.Count);
     }
 }

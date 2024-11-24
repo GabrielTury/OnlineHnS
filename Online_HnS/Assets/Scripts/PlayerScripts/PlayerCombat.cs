@@ -107,8 +107,10 @@ public class PlayerCombat : NetworkBehaviour
                 {
                     playerMovement.canRotate = false;
                     faceMouse.FaceMouse3D();
-                    anim.runtimeAnimatorController = lightMeleeCombo[comboCounter].animOC;
-                    anim.Play("LightAttack", 0, 0);
+                    anim.Play("Idle", 0, 0);
+                    anim.SetFloat("attackIndex", comboCounter);
+                    anim.SetTrigger("attack");
+
 
                     if (comboCounter < lightMeleeCombo.Count)
                     {
@@ -138,7 +140,9 @@ public class PlayerCombat : NetworkBehaviour
                 playerMovement.canMove = false;
                 faceMouse.FaceMouse3D();
                 anim.SetTrigger("attack");
+                
                 HandleShoot();
+                
             }
             
         }
