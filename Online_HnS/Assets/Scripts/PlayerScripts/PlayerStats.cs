@@ -11,11 +11,26 @@ public class PlayerStats : NetworkBehaviour, IDamageable
     private PlayerCombat playerCombat;
 
 
+    [SerializeField] private Vector3 hostSpawnPosition = new Vector3(2.5f, 1.58f, 0);
+    [SerializeField] private Vector3 clientSpawnPosition = new Vector3(-2.5f, 1.58f, 0);
+
 
     public override void OnNetworkSpawn()
     {
         GameEvents.OnPlayerSpawn(gameObject.GetComponentInParent<NetworkObject>());
         playerCombat = gameObject.GetComponent<PlayerCombat>();
+
+        if (IsOwner)
+        {
+            if (IsServer)
+            {
+                transform.position = hostSpawnPosition;
+            }
+            else if (IsClient)
+            {
+                transform.position = clientSpawnPosition;
+            }
+        }
     }
 
     void Start()

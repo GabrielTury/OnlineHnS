@@ -111,8 +111,9 @@ public class PlayerMovement : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
+        
 
-        if(canMove)
+        if (canMove)
         {
             HandleCameraRelativeMovement(currentMovement);
             HandleRotation();
@@ -122,7 +123,7 @@ public class PlayerMovement : NetworkBehaviour
             HandleCameraRelativeMovement(Vector3.zero);
             //isMovementPressed = false;
         }
-        
+        transform.position = new Vector3(transform.position.x, 1.58f, transform.position.z);
         HandleAnimatorInteraction();
     }
 
