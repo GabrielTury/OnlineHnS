@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
+using Unity.Networking.Transport;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -64,7 +66,17 @@ public class NetworkUIManager : NetworkBehaviour
         {
             if (NetworkManager.Singleton.StartClient())
             {
-                print("Client started...");
+                print("UI Client Pass ...");
+                var transport = NetworkManager.Singleton.NetworkConfig.NetworkTransport;
+                if (transport is UnityTransport unityTrasnport)
+                {
+                    Debug.LogWarning(unityTrasnport.ConnectionData.Address);
+
+                }
+                else
+                {
+                    Debug.LogError("Transport is not Unity Transport");
+                }
                 StartCoroutine(CheckPlayers());
             }
             else

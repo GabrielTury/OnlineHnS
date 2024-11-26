@@ -31,7 +31,27 @@ public class PlayerManager : MonoBehaviour
 
     private void PlayerSpawned(NetworkObject p)
     {
-        players.Add(p);
+        UpdatePlayerListServerRpc(p);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdatePlayerListServerRpc(NetworkObject p)
+    {
+        if(NetworkManager.Singleton.IsHost)
+        {
+            players.Add(p);
+        }
+        else
+        {
+            NetworkObject[] objs = FindObjectsOfType<NetworkObject>();
+            foreach(var obj in objs)
+            {
+                if (obj.CompareTag("Player"))
+                {
+                    players.Add(p);
+                }
+            }
+        }
         Debug.Log(players.Count);
     }
 }

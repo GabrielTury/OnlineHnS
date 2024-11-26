@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 5971815340290586994}
   m_Layer: 0
   m_Name: Player_Two
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3007197219
+  GlobalObjectIdHash: 2659336906
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -296,6 +296,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3460911292457903000}
     m_Modifications:
+    - target: {fileID: 5122323510797611440, guid: eeb8ffe06488fcd49a5515c93be5f9a6,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3370089418
+      objectReference: {fileID: 0}
     - target: {fileID: 5860647934254876319, guid: eeb8ffe06488fcd49a5515c93be5f9a6,
         type: 3}
       propertyPath: m_Name

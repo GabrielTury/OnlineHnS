@@ -17,7 +17,7 @@ public class PlayerStats : NetworkBehaviour, IDamageable
 
     public override void OnNetworkSpawn()
     {
-        GameEvents.OnPlayerSpawn(gameObject.GetComponentInParent<NetworkObject>());
+        
         playerCombat = gameObject.GetComponent<PlayerCombat>();
 
         if (IsOwner)
