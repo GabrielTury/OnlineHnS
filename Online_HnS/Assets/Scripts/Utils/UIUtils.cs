@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
@@ -134,6 +135,29 @@ public class UIUtils : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         imageToMove.rectTransform.anchoredPosition = end;
+    }
+
+    /// <summary>
+    /// Fills a given image from one value to another over a certain amount of time.<br></br>
+    /// This method is tailored for skill cooldown processing.
+    /// </summary>
+    /// <param name="imageToFill"></param>
+    /// <param name="end"></param>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
+    public static IEnumerator FillOverSecondsImage(Image imageToFill, float end, float seconds, TextMeshProUGUI textCallback)
+    {
+        textCallback.enabled = true;
+        float startAmount = imageToFill.fillAmount;
+        for (float t = 0f; t < seconds; t += Time.unscaledDeltaTime)
+        {
+            float tl = Mathf.SmoothStep(0, 1, t / seconds);
+            imageToFill.fillAmount = Mathf.Lerp(startAmount, end, tl);
+            textCallback.text = (seconds - imageToFill.fillAmount).ToString();
+            yield return new WaitForEndOfFrame();
+        }
+        imageToFill.fillAmount = end;
+        textCallback.enabled = false;
     }
 
     /// <summary>

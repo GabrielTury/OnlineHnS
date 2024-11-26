@@ -32,6 +32,12 @@ public class PauseManager : MonoBehaviour
     private RectTransform arrowPointer;
 
     [SerializeField]
+    private Image clockImage;
+
+    [SerializeField]
+    private RectTransform clockRect;
+
+    [SerializeField]
     private List<GameObject> buttons = new(); // Interactible buttons
     private List<RectTransform> buttonsRects = new(); // RectTransforms of said buttons
     private List<SlicedFilledImage> buttonsHighlight = new(); // Highlights of said buttons
@@ -258,6 +264,8 @@ public class PauseManager : MonoBehaviour
         ScrollScrollers();
         WaveButtons();
         CheckInput();
+
+        clockRect.eulerAngles += new Vector3(0, 0, -3) * Time.deltaTime;
     }
 
     private void CheckInput()
@@ -1353,6 +1361,8 @@ public class PauseManager : MonoBehaviour
         scrollers[1].color = mainColors[currentTimeline];
         scrollers[0].uvRect = new Rect(0, 0, 1, 1);
         scrollers[1].uvRect = new Rect(0, 0, 1, 1);
+
+        clockImage.color = mainColors[currentTimeline];
     }
 
     /// <summary>

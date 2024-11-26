@@ -41,6 +41,7 @@ public class PlayerStats : NetworkBehaviour, IDamageable
     [ContextMenu("Damage")]
     public void Damage(int damage)
     {
+        GameEvents.Player_Damaged(damage);
         playerCurrentHealth -= damage;
         if (playerCurrentHealth > 0)
         {

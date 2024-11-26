@@ -13,6 +13,9 @@ public class GameEvents
     public static UnityAction Room_Start;
     public static void OnRoomStarted() => Room_Start?.Invoke();
 
+    public static UnityAction<float> Player_Damaged;
+    public static void OnPlayerDamaged(float damage) => Player_Damaged?.Invoke(damage);
+
     public static UnityAction<Transform> Damageable_Spawn;
     public static void OnDamageableSpawned(Transform objectTransform) => Damageable_Spawn?.Invoke(objectTransform);
 
