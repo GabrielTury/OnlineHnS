@@ -44,9 +44,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: 2462
-    y: -255
-    width: 966
-    height: 1888
+    y: -254
+    width: 964
+    height: 1906
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -802,7 +802,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 2977, y: 760}
+  m_UIPosition: {x: 2977, y: 780}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -841,7 +841,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615202}
   - {fileID: 8926484042661615246}
   - {fileID: 8926484042661615205}
-  m_UIPosition: {x: 2977, y: 912}
+  m_UIPosition: {x: 2977, y: 932}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -855,7 +855,7 @@ MonoBehaviour:
       slotIndex: 0
   m_OutputFlowSlot:
   - link: []
-  blendMode: 0
+  blendMode: 1
   cullMode: 0
   zWriteMode: 0
   zTestMode: 0
@@ -1224,7 +1224,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 20
+      m_SerializableObject: 15
     m_Space: 2147483647
   m_Property:
     name: Count
@@ -1440,7 +1440,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 2700, y: 1348}
+  m_UIPosition: {x: 2700, y: 1350}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -1473,7 +1473,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":107.57369232177735,"g":42.656776428222659,"b":1.4536958932876588,"a":1.0},"time":0.34235140681266787},{"color":{"r":92.55216979980469,"g":1.9521222114562989,"b":1.2231541872024537,"a":1.0},"time":0.6623483896255493},{"color":{"r":2.6361942291259767,"g":0.05520820617675781,"b":0.15323056280612946,"a":1.0},"time":0.885877788066864}],"alphaKeys":[{"alpha":0.30980393290519717,"time":0.0},{"alpha":0.7568627595901489,"time":0.994125247001648}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":107.57369995117188,"g":23.448392868041993,"b":1.68963623046875,"a":1.0},"time":0.0},{"color":{"r":2.1886792182922365,"g":0.08021337538957596,"b":0.0,"a":1.0},"time":0.3205920457839966}],"alphaKeys":[{"alpha":0.30980393290519717,"time":0.0},{"alpha":0.7568627595901489,"time":0.994125247001648}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: gradient
@@ -1909,7 +1909,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.20000000298023225,"y":1.0,"z":1.0}'
+      m_SerializableObject: '{"x":0.10000000149011612,"y":2.0,"z":1.0}'
     m_Space: 2147483647
   m_Property:
     name: Scale
@@ -2042,7 +2042,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.15
+      m_SerializableObject: 0.2
     m_Space: 2147483647
   m_Property:
     name: Lifetime
