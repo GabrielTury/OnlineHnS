@@ -120,7 +120,7 @@ public class HUDManager : MonoBehaviour
         
     }
 
-    void UpdateHP(float damage)
+    void UpdateHP(float damage, int playerIndex)
     {
         // Change to actual player
         playerSlots[0].hp -= damage;

@@ -41,7 +41,18 @@ public class PlayerStats : NetworkBehaviour, IDamageable
     [ContextMenu("Damage")]
     public void Damage(int damage)
     {
-        GameEvents.Player_Damaged(damage);
+        if (!IsOwner) { return; }
+
+        if(IsServer)
+        {
+            GameEvents.Player_Damaged(damage, 0);
+        }
+        else
+        {
+            GameEvents.Player_Damaged(damage, 1);
+
+        }
+
         playerCurrentHealth -= damage;
         if (playerCurrentHealth > 0)
         {
