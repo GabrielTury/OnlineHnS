@@ -82,11 +82,58 @@ public class FlyingEnemy : EnemyBase
     protected override void MoveToGoal()
     {
         transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 5);
+
+        Vector3 lookDir = goal;
+        lookDir.y = transform.position.y;
+        //@todo: Must rotate Smoothly instead of instantly
+        transform.LookAt(lookDir/**Time.deltaTime*rotationSpeed*/);
     }
 
     protected override void SetAIState(States newState)
     {
-        throw new System.NotImplementedException();
+        if (stateRoutine != null)
+            StopCoroutine(stateRoutine);
+
+        //Stop Switch State
+        switch (currentState)
+        {
+            case States.Idle:
+
+                break;
+            case States.Moving:
+                StopCoroutine(moveRoutine);
+                anim.SetBool("Walk", false);
+                break;
+            case States.Attacking:
+
+                break;
+            case States.Hit:
+
+                break;
+            case States.Death:
+                break;
+            default:
+                break;
+        }
+        currentState = newState;
+        switch (newState)
+        {
+            case States.Idle:
+
+                break;
+            case States.Moving:
+                stateRoutine = StartCoroutine(UpdatePath());
+                break;
+            case States.Attacking:
+                stateRoutine = StartCoroutine(Attack());
+                break;
+            case States.Hit:
+                anim.SetTrigger("Hit");
+                break;
+            case States.Death:
+                anim.SetTrigger("Death");
+                break;
+        }
     }
 
     protected override IEnumerator Attack()
