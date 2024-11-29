@@ -190,13 +190,13 @@ public class HUDManager : NetworkBehaviour
             {
                 try { StopCoroutine(skillP1Coroutines[skillNum]); } catch { }
                 player1Slot.skillHUD[skillNum].fillAmount = 0;
-                skillP1Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player1Slot.skillHUD[skillNum], 1, 1, player1Slot.skillCooldownHUD[skillNum]));
+                skillP1Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player1Slot.skillHUD[skillNum], 1, 0.3f, player1Slot.skillCooldownHUD[skillNum]));
             } 
             else
             {
                 try { StopCoroutine(skillP2Coroutines[skillNum]); } catch { }
                 player2Slot.skillHUD[skillNum].fillAmount = 0;
-                skillP2Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player2Slot.skillHUD[skillNum], 1, 1, player2Slot.skillCooldownHUD[skillNum]));
+                skillP2Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player2Slot.skillHUD[skillNum], 1, 0.3f, player2Slot.skillCooldownHUD[skillNum]));
             }
         }
         else if (playerNum == 1)
@@ -205,13 +205,13 @@ public class HUDManager : NetworkBehaviour
             {
                 try { StopCoroutine(skillP2Coroutines[skillNum]); } catch { }
                 player2Slot.skillHUD[skillNum].fillAmount = 0;
-                skillP2Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player2Slot.skillHUD[skillNum], 1, 1, player2Slot.skillCooldownHUD[skillNum]));
+                skillP2Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player2Slot.skillHUD[skillNum], 1, 0.3f, player2Slot.skillCooldownHUD[skillNum]));
             } 
             else
             {
                 try { StopCoroutine(skillP1Coroutines[skillNum]); } catch { }
                 player1Slot.skillHUD[skillNum].fillAmount = 0;
-                skillP1Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player1Slot.skillHUD[skillNum], 1, 1, player1Slot.skillCooldownHUD[skillNum]));
+                skillP1Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player1Slot.skillHUD[skillNum], 1, 0.3f, player1Slot.skillCooldownHUD[skillNum]));
             }
         }
         
