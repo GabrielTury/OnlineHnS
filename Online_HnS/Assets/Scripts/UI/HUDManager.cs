@@ -52,11 +52,13 @@ public class HUDManager : NetworkBehaviour
     private void OnEnable()
     {
         GameEvents.Player_Damaged += UpdateHP;
+        GameEvents.Player_Skill_Used += UpdateSkill;
     }
 
     private void OnDisable()
     {
         GameEvents.Player_Damaged -= UpdateHP;
+        GameEvents.Player_Skill_Used -= UpdateSkill;
     }
 
     // Start is called before the first frame update
@@ -180,19 +182,37 @@ public class HUDManager : NetworkBehaviour
         }
     }
 
-    private void UpdateSkill(int playerNum, int skillNum)
+    private void UpdateSkill(int skillNum, int playerNum)
     {
-        if (playerNum == 1)
+        if (playerNum == 0)
         {
-            try { StopCoroutine(skillP1Coroutines[skillNum]); } catch { }
-            player1Slot.skillHUD[skillNum].fillAmount = 0;
-            skillP1Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player1Slot.skillHUD[skillNum], 1, 1, player1Slot.skillCooldownHUD[skillNum]));
+            if (IsServer)
+            {
+                try { StopCoroutine(skillP1Coroutines[skillNum]); } catch { }
+                player1Slot.skillHUD[skillNum].fillAmount = 0;
+                skillP1Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player1Slot.skillHUD[skillNum], 1, 1, player1Slot.skillCooldownHUD[skillNum]));
+            } 
+            else
+            {
+                try { StopCoroutine(skillP2Coroutines[skillNum]); } catch { }
+                player2Slot.skillHUD[skillNum].fillAmount = 0;
+                skillP2Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player2Slot.skillHUD[skillNum], 1, 1, player2Slot.skillCooldownHUD[skillNum]));
+            }
         }
-        else if (playerNum == 2)
+        else if (playerNum == 1)
         {
-            try { StopCoroutine(skillP2Coroutines[skillNum]); } catch { }
-            player2Slot.skillHUD[skillNum].fillAmount = 0;
-            skillP2Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player2Slot.skillHUD[skillNum], 1, 1, player2Slot.skillCooldownHUD[skillNum]));
+            if (IsServer)
+            {
+                try { StopCoroutine(skillP2Coroutines[skillNum]); } catch { }
+                player2Slot.skillHUD[skillNum].fillAmount = 0;
+                skillP2Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player2Slot.skillHUD[skillNum], 1, 1, player2Slot.skillCooldownHUD[skillNum]));
+            } 
+            else
+            {
+                try { StopCoroutine(skillP1Coroutines[skillNum]); } catch { }
+                player1Slot.skillHUD[skillNum].fillAmount = 0;
+                skillP1Coroutines[skillNum] = StartCoroutine(UIUtils.FillOverSecondsImage(player1Slot.skillHUD[skillNum], 1, 1, player1Slot.skillCooldownHUD[skillNum]));
+            }
         }
         
     }
