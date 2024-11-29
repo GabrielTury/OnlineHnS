@@ -216,13 +216,13 @@ public class HUDManager : NetworkBehaviour
         {
             if (playerIndex == 0)
             {
-                playerSlots[1].hp -= damage;
-                player1Slot.hpHUD.fillAmount = playerSlots[1].hp / 100;
+                playerSlots[0].hp -= damage;
+                player2Slot.hpHUD.fillAmount = playerSlots[0].hp / 100;
             }
             else if (playerIndex == 1)
             {
-                playerSlots[0].hp -= damage;
-                player2Slot.hpHUD.fillAmount = playerSlots[0].hp / 100;
+                playerSlots[1].hp -= damage;
+                player1Slot.hpHUD.fillAmount = playerSlots[1].hp / 100;
             }
         }
         
