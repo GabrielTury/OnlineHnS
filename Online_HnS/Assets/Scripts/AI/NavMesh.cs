@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class NavMesh : MonoBehaviour
 {
     [Header("When creating the NavMesh,\nincrease its size by changing\nthe size field at the Box Collider,\ndo not change scale")]
@@ -43,7 +44,7 @@ public class NavMesh : MonoBehaviour
         zAmount = Mathf.Abs((maxZ - minZ) / nodeSize);
     }
 
-    [Button("Create Nav Mesh")]
+    [ButtonMono("Create Nav Mesh")]
     private void CreateNavMesh()
     {
         SetLimits();
