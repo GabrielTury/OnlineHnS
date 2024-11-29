@@ -318,7 +318,7 @@ public class PauseManager : MonoBehaviour
     }
 
     #region Button Behaviors
-    private void BTResumeGame()
+    public void BTResumeGame()
     {
         SetButtonMouseFocus(9);
         PopOutAnimate();
@@ -463,18 +463,21 @@ public class PauseManager : MonoBehaviour
     {
         mixer.SetFloat("MASTERPARAM", Mathf.Log10(volumeNormalized) * 20);
         PlayerPrefs.SetFloat("MASTER_VOLUME", volumeNormalized);
+        masterAudioPercentageText.text = Mathf.FloorToInt(volumeNormalized * 100).ToString() + "%";
     }
 
     public void BTSetAudioMusicVolume(float volumeNormalized)
     {
         mixer.SetFloat("MUSICPARAM", Mathf.Log10(volumeNormalized) * 20);
         PlayerPrefs.SetFloat("MUSIC_VOLUME", volumeNormalized);
+        musicAudioPercentageText.text = Mathf.FloorToInt(volumeNormalized * 100).ToString() + "%";
     }
 
     public void BTSetAudioSoundVolume(float volumeNormalized)
     {
         mixer.SetFloat("SOUNDPARAM", Mathf.Log10(volumeNormalized) * 20);
         PlayerPrefs.SetFloat("SOUND_VOLUME", volumeNormalized);
+        soundAudioPercentageText.text = Mathf.FloorToInt(volumeNormalized * 100).ToString() + "%";
     }
 
     public void BTMasterVolume(int index = 1)

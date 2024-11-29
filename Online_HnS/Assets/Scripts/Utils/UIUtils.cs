@@ -194,7 +194,7 @@ public class UIUtils : MonoBehaviour
         {
             current = Mathf.Lerp(current, end, time / duration);
             variable = current;
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             yield return new WaitForEndOfFrame();
         }
         variable = end;
@@ -207,7 +207,7 @@ public class UIUtils : MonoBehaviour
         while (time < duration)
         {
             currentAlpha = Mathf.Lerp(currentAlpha, end, time / duration);
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             canvasGroup.alpha = currentAlpha;
             yield return new WaitForEndOfFrame();
         }
