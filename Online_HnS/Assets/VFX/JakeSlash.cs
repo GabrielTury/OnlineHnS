@@ -7,38 +7,24 @@ public class JakeSlash : MonoBehaviour
 
     public Animator anim;
     public List<Slash> slashes;
-
-    private bool attacking;
-
     void Start()
     {
         DisableSlashes();
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void BeginVFXSequence(int comboCount)
     {
-        if (Input.GetMouseButtonDown(0) && !attacking){
-
-            attacking = true;
-            anim.SetTrigger("attack");
-            StartCoroutine(SlashAttack());
-        }
-        
+        StartCoroutine(SlashAttack(comboCount));
     }
-
-    IEnumerator SlashAttack()
+    IEnumerator SlashAttack(int slashToHandle)
     {
-        for (int i = 0; i < slashes.Count; i++)
-        {
-            yield return new WaitForSeconds(slashes[i].delay);
-            slashes[i].slashObj.SetActive(true);
-        }
+       
+        yield return new WaitForSeconds(slashes[slashToHandle].delay);
+        slashes[slashToHandle].slashObj.SetActive(true);
 
         yield return new WaitForSeconds(1);
         DisableSlashes();
-        attacking = false;
     }
 
      void DisableSlashes()
