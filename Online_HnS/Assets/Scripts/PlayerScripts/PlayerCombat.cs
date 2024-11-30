@@ -21,6 +21,9 @@ public class PlayerCombat : NetworkBehaviour
     private GameObject bulletPrefab;
     [SerializeField]
     private LayerMask layerMask;
+    [SerializeField]
+    private JakeSlash slashVFX;
+
     private PlayerControls inputActions;
     private float lastClickedTime;
     private float lastComboEnd;
@@ -111,6 +114,7 @@ public class PlayerCombat : NetworkBehaviour
                     faceMouse.FaceMouse3D();
                     anim.Play("Idle", 0, 0);
                     anim.SetFloat("attackIndex", comboCounter);
+                    slashVFX.BeginVFXSequence(comboCounter);
                     anim.SetTrigger("attack");
 
 

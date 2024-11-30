@@ -97,7 +97,7 @@ public class NetworkUIManager : NetworkBehaviour
         //playersInGameText.text = $"Players in game: {PlayersManager.Instance.PlayersInGame}";
     }
 
-    private IEnumerator CheckPlayers()
+    public IEnumerator CheckPlayers()
     {
         while (IsServer)
         {
