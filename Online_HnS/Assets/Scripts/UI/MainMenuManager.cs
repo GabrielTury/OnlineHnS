@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
@@ -27,6 +28,9 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField]
     private RectTransform clockMenuHolder;
+
+    [SerializeField]
+    private RectTransform lobbyHolder;
 
     [SerializeField]
     private RectTransform arrowPointer;
@@ -145,11 +149,17 @@ public class MainMenuManager : MonoBehaviour
 
     List<int[]> availableResolutions = new List<int[]>();
 
-    int resolutionIndex;
+    private int resolutionIndex;
 
-    int fullscreenModeIndex;
+    private int fullscreenModeIndex;
 
-    int[] maxFramerate = new int[] { 60, 120, 144, 165, 240, 300, 500 };
+    private int[] maxFramerate = new int[] { 60, 120, 144, 165, 240, 300, 500 };
+
+    [SerializeField]
+    private TMP_InputField ipField;
+
+    [SerializeField]
+    private TMP_InputField portField;
     #endregion
 
     #region Timelines
@@ -197,6 +207,8 @@ public class MainMenuManager : MonoBehaviour
     private Coroutine[] scrollersCoroutines = new Coroutine[2];
     private Coroutine backdropCoroutine;
     private Coroutine clockMenuCoroutine;
+    private Coroutine clockMenuPositionCoroutine;
+    private Coroutine lobbyHolderCoroutine;
     private Coroutine inputGuideCoroutine;
     private Coroutine pauseTextCoroutine;
     private Coroutine arrowPointerCoroutine;
@@ -252,6 +264,7 @@ public class MainMenuManager : MonoBehaviour
     {
         ResetPauseMenu();
         InitializeButtons();
+        ResetPauseMenu();
         InitializeSettings();
         PopInAnimate();
         SelectButton(0);
@@ -318,10 +331,16 @@ public class MainMenuManager : MonoBehaviour
     }
 
     #region Button Behaviors
-    public void BTResumeGame()
+    public void BTStartGame()
     {
-        SetButtonMouseFocus(9);
-        PopOutAnimate();
+        //SetButtonMouseFocus(9);
+        //PopOutAnimate();
+        try { StopCoroutine(clockMenuPositionCoroutine); } catch { }
+        try { StopCoroutine(lobbyHolderCoroutine); } catch { }
+        clockMenuPositionCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(clockMenuHolder, new Vector3(-187-2000, -61, 0), 0.35f));
+        lobbyHolderCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(lobbyHolder, new Vector3(0, 0, 0), 0.35f));
+
+        currentGroupIndex = 4;
     }
 
     public void BTSettings()
@@ -345,9 +364,9 @@ public class MainMenuManager : MonoBehaviour
         SelectButton(0);
     }
 
-    public void BTMainMenu()
+    public void BTQuitGame()
     {
-
+        Application.Quit();
     }
 
     public void BTVideoSettings()
@@ -522,6 +541,17 @@ public class MainMenuManager : MonoBehaviour
     public void BTLanguageSettings()
     {
         GetComponent<LocaleSelector>().ChangeLocale();
+    }
+
+    public void BTStartHost()
+    {
+        SceneManager.LoadScene("MainMap");
+    }
+
+    public void BTStartClient()
+    {
+        string ipAddress = ipField.text;
+        string port = portField.text;
     }
     
     /// <summary>
@@ -907,7 +937,7 @@ public class MainMenuManager : MonoBehaviour
                 switch (currentButtonIndex)
                 {
                     case 0:
-                        BTResumeGame();
+                        BTStartGame();
                         break;
 
                     case 1:
@@ -916,7 +946,7 @@ public class MainMenuManager : MonoBehaviour
                         break;
 
                     case 2:
-                        BTMainMenu();
+                        BTQuitGame();
                         break;
                 }
                 break;
@@ -1093,8 +1123,8 @@ public class MainMenuManager : MonoBehaviour
         {
             case 0: // Main pause menu
 
-                SetButtonMouseFocus(9);
-                PopOutAnimate();
+                //SetButtonMouseFocus(9);
+                //PopOutAnimate();
                 break;
 
             case 1: // Settings menu
@@ -1192,6 +1222,16 @@ public class MainMenuManager : MonoBehaviour
 
                 SelectButton(1);
 
+                break;
+
+            case 4: // Lobby menu
+
+                try { StopCoroutine(clockMenuPositionCoroutine); } catch { }
+                try { StopCoroutine(lobbyHolderCoroutine); } catch { }
+                clockMenuPositionCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(clockMenuHolder, new Vector3(-187, -61, 0), 0.35f));
+                lobbyHolderCoroutine = StartCoroutine(UIUtils.MoveOverSecondsRectTransform(lobbyHolder, new Vector3(2000, 0, 0), 0.35f));
+
+                currentGroupIndex = 0;
                 break;
         }
     }
@@ -1348,11 +1388,13 @@ public class MainMenuManager : MonoBehaviour
     /// </summary>
     private void ResetPauseMenu()
     {
-        currentTimeline = 1;
+        currentTimeline = 2;
 
         backdrop.color = new Color(0, 0, 0, 0);
 
         clockMenuHolder.localScale = new Vector3(0, 0, 0);
+
+        lobbyHolder.anchoredPosition = new Vector3(2000, 0, 0);
 
         inputGuideHolder.anchoredPosition = new Vector3(0, -150, 0);
 
@@ -1366,6 +1408,47 @@ public class MainMenuManager : MonoBehaviour
         scrollers[1].uvRect = new Rect(0, 0, 1, 1);
 
         clockImage.color = mainColors[currentTimeline];
+
+        Color32 unhoveredColor = new Color32(100, 100, 100, 50);
+
+        for (int i = 0; i < buttonsHighlight.Count; i++)
+        {
+            buttonsHighlight[i].color = mainColors[currentTimeline];
+            buttons[i].GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+        }
+
+        for (int i = 0; i < buttonsHighlightSettings.Count; i++)
+        {
+            buttonsHighlightSettings[i].color = mainColors[currentTimeline];
+            buttonsSettings[i].GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+        }
+
+        for (int i = 0; i < buttonsHighlightVideo.Count; i++)
+        {
+            buttonsHighlightVideo[i].color = mainColors[currentTimeline];
+            buttonsVideo[i].GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+        }
+
+        for (int i = 0; i < buttonsHighlightAudio.Count; i++)
+        {
+            buttonsHighlightAudio[i].color = mainColors[currentTimeline];
+            buttonsAudio[i].GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+        }
+
+        closedCaptionIndicator.GetComponent<Image>().color = mainColors[currentTimeline];
+        closedCaptionIndicator.transform.parent.GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+
+        vsyncIndicator.GetComponent<Image>().color = mainColors[currentTimeline];
+        vsyncIndicator.transform.parent.GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+
+        masterAudioSlider.transform.GetChild(0).GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+        masterAudioSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = mainColors[currentTimeline];
+
+        musicAudioSlider.transform.GetChild(0).GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+        musicAudioSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = mainColors[currentTimeline];
+
+        soundAudioSlider.transform.GetChild(0).GetComponent<Image>().color = mainColors[currentTimeline] - unhoveredColor;
+        soundAudioSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = mainColors[currentTimeline];  
     }
 
     /// <summary>

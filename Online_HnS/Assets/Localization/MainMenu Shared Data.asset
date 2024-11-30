@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Key: ENTERPORT
     m_Metadata:
       m_Items: []
+  - m_Id: 284781259042816
+    m_Key: QUITGAME
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

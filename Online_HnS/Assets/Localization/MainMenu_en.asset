@@ -46,6 +46,10 @@ MonoBehaviour:
     m_Localized: Enter Port...
     m_Metadata:
       m_Items: []
+  - m_Id: 284781259042816
+    m_Localized: Quit Game
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
