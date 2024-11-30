@@ -40,6 +40,8 @@ public class PlayerCombat : NetworkBehaviour
 
         inputActions.Attack.HeavyAttack.started += OnHeavyAttack;
         inputActions.Attack.HeavyAttack.canceled += OnHeavyAttack;
+
+        //GameEvents.OnPlayerSpawn(gameObject.GetComponent<NetworkObject>());
     }
 
     private void OnEnable()

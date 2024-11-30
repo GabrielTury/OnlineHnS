@@ -47,8 +47,8 @@ public class PlayerManager : MonoBehaviour
             foreach(var obj in objs)
             {
                 if (obj.CompareTag("Player"))
-                {
-                    players.Add(p);
+                {                    
+                    players.Add(obj);
                 }
             }
         }

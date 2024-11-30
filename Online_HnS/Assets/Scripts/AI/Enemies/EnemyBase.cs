@@ -35,7 +35,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
 
     protected Node lastPlayerNode;
 
-    protected NetworkObject closestPlayer;
+    protected Transform closestPlayer;
 
     protected Vector3 goal;
     #region Components
@@ -97,11 +97,11 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
             {
                 if(closestPlayer == null)
                 {
-                    closestPlayer = n;
+                    closestPlayer = n.GetComponentInChildren<Transform>();
                 }
                 else if (Vector3.Distance(transform.position, n.transform.position) < Vector3.Distance(transform.position, closestPlayer.transform.position))
                 {
-                    closestPlayer = n;
+                    closestPlayer = n.GetComponentInChildren<Transform>();
                 }
             }
         }
@@ -114,7 +114,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
         bIsMoving = true;
         while (true)
         {
-            Vector3 playerPos = closestPlayer.transform.position;
+            Vector3 playerPos = closestPlayer.position;
             ownNode = NavOperations.GetNearestNode(transform.position, NavMesh.allNodes);
             Node playerNode = NavOperations.GetNearestNodeInPlane(playerPos, NavMesh.allNodes, ownNode.WorldPosition.y);
 

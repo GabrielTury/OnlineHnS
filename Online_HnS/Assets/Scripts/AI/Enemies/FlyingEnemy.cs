@@ -14,6 +14,7 @@ public class FlyingEnemy : EnemyBase
     public GameObject debugCube;
 
     private int currentPathIndex;
+    
 
     [Button("CheckNavMesh")]
     protected override void CalculatePath(Node playerNode)
@@ -60,6 +61,12 @@ public class FlyingEnemy : EnemyBase
 
         while (path.Length > 0)
         {
+            if (Vector3.Distance(transform.position, closestPlayer.position) < 6)
+            {
+                SetAIState(States.Attacking); 
+                break;
+            }
+
             if (Vector3.Distance(transform.position, goal) < .1f)
             {
                 currentPathIndex++;
@@ -102,10 +109,10 @@ public class FlyingEnemy : EnemyBase
                 break;
             case States.Moving:
                 StopCoroutine(moveRoutine);
-                anim.SetBool("Walk", false);
+                
                 break;
             case States.Attacking:
-
+                
                 break;
             case States.Hit:
 
@@ -138,7 +145,21 @@ public class FlyingEnemy : EnemyBase
 
     protected override IEnumerator Attack()
     {
-        throw new System.NotImplementedException();
+        anim.SetTrigger("Attack");
+        GameObject bullet = AIManager.instance.GetBullet();
+        bullet.SetActive(true);
+        bullet.transform.position = transform.position;
+        bullet.transform.LookAt(closestPlayer.position);
+        yield return new WaitForSeconds(3);
+
+        if (Vector3.Distance(transform.position, closestPlayer.position) < 6)
+        {
+            SetAIState(States.Attacking);
+        }
+        else
+        {
+            SetAIState(States.Moving);
+        }
     }
 
     protected override IEnumerator TakeDamage()

@@ -26,6 +26,8 @@ public class PlayerMovement : NetworkBehaviour
     public float dashTime;
     public float dashSpeed;
 
+    private Transform parent;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -37,6 +39,8 @@ public class PlayerMovement : NetworkBehaviour
 
         inputActions.Movement.Dash.started += OnDash;
         inputActions.Movement.Dash.performed += OnDash;
+
+        parent = transform.parent;
     }
 
     private void OnEnable()
@@ -84,6 +88,7 @@ public class PlayerMovement : NetworkBehaviour
         if (characterController != null)
         {
             characterController.Move(cameraRelativeMovement * Time.deltaTime);
+            
         }
 
     }
@@ -111,8 +116,8 @@ public class PlayerMovement : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
-        
 
+        parent.position = transform.position;
         if (canMove)
         {
             HandleCameraRelativeMovement(currentMovement);

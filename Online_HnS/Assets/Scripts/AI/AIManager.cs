@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class AIManager : MonoBehaviour
+public class AIManager : NetworkBehaviour
 {
     public static AIManager instance;
 
+    public List<GameObject> bullets;
+    public GameObject bullet;
+
     AISpawner[] spawners;
     // Start is called before the first frame update
+
     void Start()
     {
         if(instance == null)
@@ -20,6 +24,35 @@ public class AIManager : MonoBehaviour
             Destroy(this);
         }
         spawners = FindObjectsOfType<AISpawner>();
+
+        if(NetworkManager.Singleton.StartHost())
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                GameObject g = Instantiate(bullet);
+                g.GetComponent<NetworkObject>().Spawn(true);
+                bullets.Add(g);
+                g.SetActive(false);
+            }
+        }
+
+    }
+
+    public GameObject GetBullet()
+    {
+        foreach(GameObject b in bullets)
+        {
+            if(!b.activeInHierarchy)
+            {
+                return b;                
+            }
+        }
+
+        GameObject g = Instantiate(bullet);
+        g.GetComponent<NetworkObject>().Spawn(true);
+        bullets.Add(g);
+        g.SetActive(false);
+        return g;
     }
 
     [Button("Use all Spawners")]
@@ -37,7 +70,13 @@ public class AIManager : MonoBehaviour
         {
             if(p.OwnerClientId == id)
             {
-                p.GetComponent<IDamageable>().Damage(10);
+                Debug.Log(p.name);
+                IDamageable Iface = p.GetComponentInChildren<IDamageable>();
+                if(Iface != null)
+                {
+                    Iface.Damage(10);
+                    Debug.Log(p.name + "TookDamage");
+                }
             }
         }
     }
