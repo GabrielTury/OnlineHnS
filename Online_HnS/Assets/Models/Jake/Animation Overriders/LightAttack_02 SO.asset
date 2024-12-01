@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LightAttack_02 SO
   m_EditorClassIdentifier: 
   animOC: {fileID: 22100000, guid: 473afa302e2281b4b805dbdd8d5630a6, type: 2}
-  damage: 0
+  damage: 12
   radius: 1.3
   minTime: 0.7
