@@ -20,11 +20,10 @@ public class Bullet : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!IsHost) return;
-        if (other.CompareTag("Player") && other.gameObject != playerGameObject)
+        
+        if (!other.CompareTag("Player") && other.GetComponent<IDamageable>() != null)
         {
-            Debug.Log("Shot");
-            //playerGameObject.GetComponent<PlayerController>().PontuarClientRpc();
+            other.GetComponent<IDamageable>().Damage(10);
             Destroy(gameObject);
 
         }
