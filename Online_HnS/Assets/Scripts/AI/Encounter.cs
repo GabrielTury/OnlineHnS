@@ -21,10 +21,6 @@ public class Encounter : NetworkBehaviour
     private void Awake()
     {
         spawnedEnemies = new List<GameObject>();
-        foreach(var spawner in spawners)
-        {
-            spawner.gameObject.SetActive(false);
-        }
     }
     private void OnEnable()
     {
@@ -39,7 +35,7 @@ public class Encounter : NetworkBehaviour
     {
         foreach (AISpawner s in spawners)
         {
-            s.gameObject.SetActive(true);
+            s.isInEncounter = true;
             spawnedEnemies.Add(s.SpawnEnemyFunc());
         }
 

@@ -133,6 +133,7 @@ public class FlyingEnemy : EnemyBase
 
                 break;
             case States.Moving:
+                anim.SetBool("Walk", true);
                 stateRoutine = StartCoroutine(UpdatePath());
                 break;
             case States.Attacking:

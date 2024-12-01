@@ -14,7 +14,8 @@ public class AISpawner : NetworkBehaviour
     private int spawnAmount = 1;
 
     private GameObject enemy;
-
+    [HideInInspector]
+    public bool isInEncounter;
     private void Start()
     {
         
@@ -28,6 +29,8 @@ public class AISpawner : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SpawnEnemyServerRpc()
     {
+        if (!isInEncounter) return;
+
         GameObject spawned = Instantiate(SpawnEnemy, transform.position, Quaternion.identity);
         spawned.GetComponent<NetworkObject>().Spawn(true);
         spawned.GetComponent<EnemyBase>().StartBehaviour();
