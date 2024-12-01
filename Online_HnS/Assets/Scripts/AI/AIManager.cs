@@ -25,7 +25,22 @@ public class AIManager : NetworkBehaviour
         }
         spawners = FindObjectsOfType<AISpawner>();
 
-        if(NetworkManager.Singleton.IsHost)
+
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.Player_Spawn += Bullets;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.Player_Spawn -= Bullets;
+    }
+    public void Bullets(NetworkObject n)
+    {
+
+        if (NetworkManager.Singleton.IsHost)
         {
             for (int i = 0; i < 10; i++)
             {
@@ -35,7 +50,6 @@ public class AIManager : NetworkBehaviour
                 g.SetActive(false);
             }
         }
-
     }
 
     public GameObject GetBullet()
