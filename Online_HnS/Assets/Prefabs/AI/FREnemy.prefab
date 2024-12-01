@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 826239149310132884}
   - component: {fileID: 8190682803963306915}
   - component: {fileID: 2445007720788016647}
+  - component: {fileID: 237096518363656858}
   m_Layer: 0
   m_Name: FREnemy
   m_TagString: Untagged
@@ -100,6 +101,29 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!136 &237096518363656858
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6731138398146835577}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.7
+  m_Height: 8.8
+  m_Direction: 1
+  m_Center: {x: 0, y: -1.95, z: 0}
 --- !u!1001 &4083942385728382187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -219,7 +243,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b62db364f2ca79a4eac760a905a99dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 1645405606
+    DestinationState: 1080829965
+    TransitionDuration: 0
+    TriggerNameHash: 1080829965
+    TransitionIndex: 0
   m_Animator: {fileID: 2617804588427028445}
 --- !u!114 &8633727949959671531
 MonoBehaviour:

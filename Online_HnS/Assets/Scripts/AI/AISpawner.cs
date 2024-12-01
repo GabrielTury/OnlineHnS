@@ -25,5 +25,6 @@ public class AISpawner : NetworkBehaviour
     {
         GameObject spawned = Instantiate(SpawnEnemy, transform.position, Quaternion.identity);
         spawned.GetComponent<NetworkObject>().Spawn(true);
+        spawned.GetComponent<EnemyBase>().StartBehaviour();
     }
 }

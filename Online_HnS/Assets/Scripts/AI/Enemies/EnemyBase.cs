@@ -43,6 +43,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
     #endregion
     public void Damage(int damage)
     {
+        anim.SetTrigger("Hit");
         health -= damage;
         if (health <= 0)
         {
@@ -56,6 +57,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
     protected IEnumerator Death()
     {
         SetAIState(States.Death);
+        anim.SetTrigger("Death");
         yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }
@@ -81,6 +83,18 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
     [Button("Start Enemy Behaviour")]
     public void StartBehaviour()
     {
+        foreach (NetworkObject n in PlayerManager.instance.players)
+        {
+            if (closestPlayer == null)
+            {
+                closestPlayer = n.GetComponentInChildren<Transform>();
+            }
+            else if (Vector3.Distance(transform.position, n.transform.position) < Vector3.Distance(transform.position, closestPlayer.transform.position))
+            {
+                closestPlayer = n.GetComponentInChildren<Transform>();
+            }
+        }
+
         SetAIState(States.Moving);
     }
     // Update is called once per frame

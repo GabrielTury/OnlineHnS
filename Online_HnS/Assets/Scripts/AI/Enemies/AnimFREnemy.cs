@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class AnimFREnemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private FlyingEnemy eScript;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        eScript = GetComponentInParent<FlyingEnemy>();
+    }
+    public void AttackTiming()
+    {
+        eScript.ShootBulet();
     }
 }

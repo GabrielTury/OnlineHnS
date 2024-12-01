@@ -31,10 +31,14 @@ public class FlyingEnemy : EnemyBase
         {
             if (moveRoutine != null)
                 StopCoroutine(moveRoutine);
-            if(path.Length > 1 )
+
+            if (path.Length > 1 && currentState == States.Moving)
                 moveRoutine = StartCoroutine(Move(path[1]));
-            else
+            else if (currentState == States.Moving)
                 moveRoutine = StartCoroutine(Move(path[0]));
+
+            if (moveRoutine != null)
+                stateRoutine = moveRoutine;
         }
 #if UNITY_EDITOR
         if(debugPath)
@@ -145,11 +149,7 @@ public class FlyingEnemy : EnemyBase
 
     protected override IEnumerator Attack()
     {
-        anim.SetTrigger("Attack");
-        GameObject bullet = AIManager.instance.GetBullet();
-        bullet.SetActive(true);
-        bullet.transform.position = transform.position;
-        bullet.transform.LookAt(closestPlayer.position);
+        anim.SetTrigger("Attack");        
         yield return new WaitForSeconds(3);
 
         if (Vector3.Distance(transform.position, closestPlayer.position) < 6)
@@ -160,6 +160,14 @@ public class FlyingEnemy : EnemyBase
         {
             SetAIState(States.Moving);
         }
+    }
+
+    public void ShootBulet()
+    {
+        GameObject bullet = AIManager.instance.GetBullet();
+        bullet.SetActive(true);
+        bullet.transform.position = transform.position;
+        bullet.transform.LookAt(closestPlayer.position);
     }
 
     protected override IEnumerator TakeDamage()
