@@ -69,8 +69,12 @@ public class Encounter : NetworkBehaviour
     { 
         if(other.CompareTag("Player"))
         {
-            used = true;
-            SpawnEnemies();
+            if(!used)
+            {
+                used = true;
+                SpawnEnemies();
+
+            }
         }
     }
 }

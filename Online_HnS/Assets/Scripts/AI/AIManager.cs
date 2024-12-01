@@ -25,7 +25,7 @@ public class AIManager : NetworkBehaviour
         }
         spawners = FindObjectsOfType<AISpawner>();
 
-        if(NetworkManager.Singleton.StartHost())
+        if(NetworkManager.Singleton.IsHost)
         {
             for (int i = 0; i < 10; i++)
             {
