@@ -75,7 +75,7 @@ public class HUDManager : NetworkBehaviour
 
     void SetupPlayerSlots()
     {
-        if (IsServer)
+        if (NetworkUIManager.instance.playerType == "Host")
         {
             player1Slot.nameHUD.text = playerSlots[0].name;
             player1Slot.avatarHUD.sprite = playerSlots[0].avatar;
@@ -110,6 +110,7 @@ public class HUDManager : NetworkBehaviour
                     player2Slot.skillCooldownHUD[i].enabled = false;
                 }
             }
+            Debug.LogWarning("Player 1 is HOST (JAKE) and Player 2 is CLIENT (SHERIFF)");
         }
         else
         {
@@ -146,6 +147,7 @@ public class HUDManager : NetworkBehaviour
                     player2Slot.skillCooldownHUD[i].enabled = false;
                 }
             }
+            Debug.LogWarning("Player 1 is CLIENT (SHERIFF) and Player 2 is HOST (JAKE)");
         }
     }
 

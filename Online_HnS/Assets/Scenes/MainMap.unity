@@ -1875,9 +1875,26 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 371721107546627748, guid: f8665e1ed148b054697eb206ca6abadf,
         type: 3}
-      propertyPath: playerSlots.Array.data[1].skills.Array.size
-      value: 1
+      propertyPath: playerSlots.Array.data[0].skills.Array.size
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 371721107546627748, guid: f8665e1ed148b054697eb206ca6abadf,
+        type: 3}
+      propertyPath: playerSlots.Array.data[1].skills.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 371721107546627748, guid: f8665e1ed148b054697eb206ca6abadf,
+        type: 3}
+      propertyPath: playerSlots.Array.data[0].skills.Array.data[1].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 35d5953f45403654bbe24e623be72f1b,
+        type: 3}
+    - target: {fileID: 371721107546627748, guid: f8665e1ed148b054697eb206ca6abadf,
+        type: 3}
+      propertyPath: playerSlots.Array.data[1].skills.Array.data[1].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 35d5953f45403654bbe24e623be72f1b,
+        type: 3}
     - target: {fileID: 815184867046669770, guid: f8665e1ed148b054697eb206ca6abadf,
         type: 3}
       propertyPath: m_Name
