@@ -200,7 +200,7 @@ public class UIUtils : MonoBehaviour
         variable = end;
     }
 
-    public static IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float end, float duration)
+    public static IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float end, float duration, bool deleteObj = false)
     {
         float time = 0;
         float currentAlpha = canvasGroup.alpha;
@@ -213,5 +213,7 @@ public class UIUtils : MonoBehaviour
         }
         currentAlpha = end;
         canvasGroup.alpha = currentAlpha;
+        if (deleteObj)
+            Destroy(canvasGroup.gameObject);
     }
 }

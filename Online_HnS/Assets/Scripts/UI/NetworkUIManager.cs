@@ -22,6 +22,9 @@ public class NetworkUIManager : NetworkBehaviour
     private TextMeshProUGUI playersInGameText;
     public TMP_Text idText;
 
+    [SerializeField]
+    public string playerType;
+
     private NetworkVariable<int> playerID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
 
     private void Awake()
@@ -33,6 +36,8 @@ public class NetworkUIManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

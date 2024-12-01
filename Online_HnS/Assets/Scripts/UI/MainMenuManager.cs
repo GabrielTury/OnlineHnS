@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Netcode.Transports.UTP;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -160,6 +162,18 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField]
     private TMP_InputField portField;
+
+    [SerializeField]
+    private RectTransform logoText;
+
+    [SerializeField]
+    private CanvasGroup logoImage;
+
+    [SerializeField]
+    private CanvasGroup logoBackdrop;
+
+    [SerializeField]
+    private GameObject skipSplashButton;
     #endregion
 
     #region Timelines
@@ -545,6 +559,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void BTStartHost()
     {
+        NetworkUIManager.instance.playerType = "Host";
         SceneManager.LoadScene("MainMap");
     }
 
@@ -552,6 +567,42 @@ public class MainMenuManager : MonoBehaviour
     {
         string ipAddress = ipField.text;
         string port = portField.text;
+        ushort portNum;
+
+        //NetworkManager.Singleton.GetComponent<UnityTransport>().
+
+        UnityTransport unityTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+
+        try
+        {
+            if (UInt16.TryParse(port, out portNum))
+            {
+                unityTransport.SetConnectionData(ipAddress, portNum);
+                NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Port = portNum;
+            }
+            else
+            {
+                // Parsing failed
+            }
+        }
+        catch
+        {
+            Debug.LogWarning("CONNECTION FAILED");
+        }
+
+        NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = ipAddress;
+
+        NetworkUIManager.instance.playerType = "Client";
+
+        SceneManager.LoadScene("MainMap");
+    }
+
+    public void BTSkipSplash()
+    {
+        StartCoroutine(UIUtils.MoveOverSecondsRectTransform(logoText, new Vector3(0, 310, 0), 1f));
+        StartCoroutine(UIUtils.FadeCanvasGroup(logoImage, 0, 1f, true));
+        StartCoroutine(UIUtils.FadeCanvasGroup(logoBackdrop, 0, 1f, true));
+        Destroy(skipSplashButton);
     }
     
     /// <summary>
