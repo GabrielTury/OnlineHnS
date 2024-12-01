@@ -22,12 +22,15 @@ public class MainMapManager : NetworkBehaviour
         if (NetworkUIManager.instance.playerType == "Host")
         {
             NetworkManager.Singleton.StartHost();
+            Debug.LogWarning("Host started");
         }
         else
         {
             NetworkManager.Singleton.StartClient();
+            Debug.Log("Client started");
         }
         StartCoroutine(NetworkUIManager.instance.CheckPlayers());
+        Debug.LogWarning("Coroutine start");
     }
 
 }
