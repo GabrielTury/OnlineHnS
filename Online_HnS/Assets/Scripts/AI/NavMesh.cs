@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -54,20 +55,19 @@ public class NavMesh : MonoBehaviour
         int currentIndex = 0;
         for(int i = 0; i < xAmount; i++)
         {
+        //Parallel.For(0, xAmount, i =>
+        //{
             for (int j = 0; j < yAmount; j++)
             {
-                for(int k = 0; k < zAmount; k++)
+                for (int k = 0; k < zAmount; k++)
                 {
-                    if(currentIndex == 6811)
-                    {
-                        Debug.Log("A");
-                    }
                     Node n = new Node(new Vector3(minX + (i * nodeSize), minY + (j * nodeSize), minZ + (k * nodeSize)), nodeSize, currentIndex);
-                    Debug.Log(n.WorldPosition);
+                    //Debug.Log(n.WorldPosition);
                     allNodes[currentIndex] = n;
                     currentIndex++;
                 }
             }
+        //});
         }
 
         foreach (Node n in allNodes)
@@ -112,33 +112,99 @@ public class NavMesh : MonoBehaviour
 
     private Node[] GetNeighbors(Node checkNode)
     {
-        List<Node> neighbors = new List<Node>();
-        int xNeighbors = 0;
-        int yNeighbors = 0;
-        int zNeighbors = 0;
-        foreach (Node t in allNodes)
+        if (checkNode == null)
         {
-            float dx = Mathf.Abs(t.WorldPosition.x - checkNode.WorldPosition.x);
-            float dz = Mathf.Abs(t.WorldPosition.z - checkNode.WorldPosition.z);
-            float dy = Mathf.Abs(t.WorldPosition.y - checkNode.WorldPosition.y);
-            if ((dx <= nodeSize + 0.01f || dz <= nodeSize + 0.01f || dy <= nodeSize + 0.01f) && (dx < 2 && dz < 2 && dy < 2))
-            {
-                if (t != checkNode) // Exclude the Node itself
-                {
-                    neighbors.Add(t);
-                }
+            Debug.Log("CheckNodeNull");
+            return new Node[0];
+        }
 
-                if (dx < nodeSize) xNeighbors++;
-                if (dy < nodeSize) yNeighbors++;
-                if (dz < nodeSize) zNeighbors++;
+        List<Node> neighbors = new List<Node>();
+
+        // Calculate the grid position of the checkNode
+        int nodeX = Mathf.RoundToInt((checkNode.WorldPosition.x - minX) / nodeSize);
+        int nodeY = Mathf.RoundToInt((checkNode.WorldPosition.y - minY) / nodeSize);
+        int nodeZ = Mathf.RoundToInt((checkNode.WorldPosition.z - minZ) / nodeSize);
+
+        // Iterate through potential neighbors in a 3x3x3 grid
+        for (int xOffset = -1; xOffset <= 1; xOffset++)
+        {
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                for (int zOffset = -1; zOffset <= 1; zOffset++)
+                {
+                    // Skip the node itself
+                    if (xOffset == 0 && yOffset == 0 && zOffset == 0)
+                        continue;
+
+                    int neighborX = nodeX + xOffset;
+                    int neighborY = nodeY + yOffset;
+                    int neighborZ = nodeZ + zOffset;
+
+                    // Check if the neighbor is within bounds
+                    if (neighborX >= 0 && neighborX < xAmount &&
+                        neighborY >= 0 && neighborY < yAmount &&
+                        neighborZ >= 0 && neighborZ < zAmount)
+                    {
+                        // Calculate the index of the neighbor in the flat array
+                        int neighborIndex = neighborX * yAmount * zAmount + neighborY * zAmount + neighborZ;
+
+                        Node neighborNode = allNodes[neighborIndex];
+                        if (neighborNode != null)
+                        {
+                            float dx = Mathf.Abs(neighborNode.WorldPosition.x - checkNode.WorldPosition.x);
+                            float dz = Mathf.Abs(neighborNode.WorldPosition.z - checkNode.WorldPosition.z);
+                            float dy = Mathf.Abs(neighborNode.WorldPosition.y - checkNode.WorldPosition.y);
+
+                            // Check distance constraints
+                            if ((dx <= nodeSize + 0.01f || dz <= nodeSize + 0.01f || dy <= nodeSize + 0.01f) &&
+                                (dx < 2 && dz < 2 && dy < 2))
+                            {
+                                neighbors.Add(neighborNode);
+                            }
+                        }
+                    }
+                }
             }
         }
 
         return neighbors.ToArray();
     }
+    /*private Node[] GetNeighbors(Node checkNode)
+    {
+        List<Node> neighbors = new List<Node>();
+        int xNeighbors = 0;
+        int yNeighbors = 0;
+        int zNeighbors = 0;
+        if (checkNode != null)
+        {
+            foreach (Node t in allNodes)
+            {
+                float dx = Mathf.Abs(t.WorldPosition.x - checkNode.WorldPosition.x);
+                float dz = Mathf.Abs(t.WorldPosition.z - checkNode.WorldPosition.z);
+                float dy = Mathf.Abs(t.WorldPosition.y - checkNode.WorldPosition.y);
+                if ((dx <= nodeSize + 0.01f || dz <= nodeSize + 0.01f || dy <= nodeSize + 0.01f) && (dx < 2 && dz < 2 && dy < 2))
+                {
+                    if (t != checkNode) // Exclude the Node itself
+                    {
+                        neighbors.Add(t);
+                    }
+
+                    if (dx < nodeSize) xNeighbors++;
+                    if (dy < nodeSize) yNeighbors++;
+                    if (dz < nodeSize) zNeighbors++;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("CheckNodeNull");
+        }
+
+            return neighbors.ToArray();
+    }*/
 
 #if UNITY_EDITOR
-   // bool once = false;
+    // bool once = false;
 #endif
     private void OnDrawGizmosSelected()
     {
@@ -147,13 +213,13 @@ public class NavMesh : MonoBehaviour
         if (allNodes == null && data.mesh != null)
         {
             allNodes = data.mesh;
-            Debug.Log("NavMeshSet");
-            Debug.Log(allNodes.Length);
-            Debug.Log(data.mesh.Length);
+            //Debug.Log("NavMeshSet");
+            //Debug.Log(allNodes.Length);
+            //Debug.Log(data.mesh.Length);
         }
         else if (allNodes == null)
         {
-            Debug.Log("Return");
+            //Debug.Log("Return");
             return;
         }
         

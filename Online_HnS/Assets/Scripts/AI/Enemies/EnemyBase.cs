@@ -43,8 +43,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
     protected Animator anim;
     #endregion
     public void Damage(int damage)
-    {
-        anim.SetTrigger("Hit");
+    {        
         health -= damage;
         if (health <= 0)
         {
@@ -60,7 +59,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
         SetAIState(States.Death);
         anim.SetTrigger("Death");
         GameEvents.OnEnemyKilled(gameObject);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         Destroy(gameObject);
     }
 

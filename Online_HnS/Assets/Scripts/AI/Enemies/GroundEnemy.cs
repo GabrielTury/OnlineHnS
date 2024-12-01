@@ -133,6 +133,7 @@ public class GroundEnemy : EnemyBase
                 break;
             case States.Hit:
                 anim.SetTrigger("Hit");
+                stateRoutine = StartCoroutine(TakeDamage());
                 break;
             case States.Death:
                 anim.SetTrigger("Death");
@@ -187,7 +188,8 @@ public class GroundEnemy : EnemyBase
     #endregion
     protected override IEnumerator TakeDamage()
     {
-        throw new System.NotImplementedException();
+        yield return new WaitForSeconds(2);
+        SetAIState(States.Moving);
     }
 
     protected override IEnumerator Die()

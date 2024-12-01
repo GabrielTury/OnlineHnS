@@ -508,6 +508,7 @@ MonoBehaviour:
   startClientButton: {fileID: 1729485139}
   playersInGameText: {fileID: 0}
   idText: {fileID: 817621674}
+  playerType: 
 --- !u!114 &653541818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2486,7 +2487,7 @@ PrefabInstance:
     - target: {fileID: 8947638620995964221, guid: ad52c7415860c7e4aac24b8cc5a9bcd1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.67
+      value: 4.16
       objectReference: {fileID: 0}
     - target: {fileID: 8947638620995964221, guid: ad52c7415860c7e4aac24b8cc5a9bcd1,
         type: 3}

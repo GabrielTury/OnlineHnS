@@ -118,8 +118,8 @@ public class FlyingEnemy : EnemyBase
             case States.Attacking:
                 
                 break;
-            case States.Hit:
-
+            case States.Hit:                
+                
                 break;
             case States.Death:
                 break;
@@ -140,6 +140,7 @@ public class FlyingEnemy : EnemyBase
                 break;
             case States.Hit:
                 anim.SetTrigger("Hit");
+                stateRoutine = StartCoroutine(TakeDamage());
                 break;
             case States.Death:
                 anim.SetTrigger("Death");
@@ -172,7 +173,8 @@ public class FlyingEnemy : EnemyBase
 
     protected override IEnumerator TakeDamage()
     {
-        throw new System.NotImplementedException();
+        yield return new WaitForSeconds(2);
+        SetAIState(States.Moving);
     }
 
     protected override IEnumerator Die()
