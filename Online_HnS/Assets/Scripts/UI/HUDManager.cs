@@ -64,40 +64,7 @@ public class HUDManager : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Change the index 0 to actual desired player selection
-        player1Slot.nameHUD.text = playerSlots[0].name;
-        player1Slot.avatarHUD.sprite = playerSlots[0].avatar;
-        player1Slot.hpHUD.fillAmount = playerSlots[0].hp / 100;
-        for (int i = 0; i <= 4; i++)
-        {
-            if (i < playerSlots[0].skills.Count)
-            {
-                player1Slot.skillHUD[i].sprite = playerSlots[0].skills[i].icon;
-                player1Slot.skillCooldownHUD[i].enabled = false;
-            }
-            else
-            {
-                player1Slot.skillHUD[i].enabled = false;
-                player1Slot.skillCooldownHUD[i].enabled = false;
-            }
-        }
-
-        player2Slot.nameHUD.text = playerSlots[1].name;
-        player2Slot.avatarHUD.sprite = playerSlots[1].avatar;
-        player2Slot.hpHUD.fillAmount = playerSlots[1].hp / 100;
-        for (int i = 0; i <= 4; i++)
-        {
-            if (i < playerSlots[1].skills.Count)
-            {
-                player2Slot.skillHUD[i].sprite = playerSlots[1].skills[i].icon;
-                player2Slot.skillCooldownHUD[i].enabled = false;
-            }
-            else
-            {
-                player2Slot.skillHUD[i].enabled = false;
-                player2Slot.skillCooldownHUD[i].enabled = false;
-            }
-        }
+        SetupPlayerSlots();
     }
 
     // Update is called once per frame
