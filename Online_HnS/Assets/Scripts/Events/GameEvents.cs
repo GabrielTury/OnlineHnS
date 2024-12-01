@@ -25,4 +25,7 @@ public class GameEvents
     public static UnityAction<NetworkObject> Player_Spawn;
     public static void OnPlayerSpawn(NetworkObject playerObj) => Player_Spawn?.Invoke(playerObj);
 
+    public static UnityAction<GameObject> EnemyKilled;
+    public static void OnEnemyKilled(GameObject enemy) => EnemyKilled ? .Invoke(enemy);
+
 }

@@ -9,16 +9,21 @@ public class AISpawner : NetworkBehaviour
     private GameObject SpawnEnemy;
 
     [SerializeField]
-    private int spawnAmount;
+    private int type;
+    
+    private int spawnAmount = 1;
+
+    private GameObject enemy;
 
     private void Start()
     {
         
     }    
     [Button("Spawn Enemy in Server")]    
-    public void SpawnEnemyFunc()
+    public GameObject SpawnEnemyFunc()
     {
         SpawnEnemyServerRpc();
+        return enemy;
     }
     [ServerRpc(RequireOwnership = false)]
     private void SpawnEnemyServerRpc()
@@ -26,5 +31,16 @@ public class AISpawner : NetworkBehaviour
         GameObject spawned = Instantiate(SpawnEnemy, transform.position, Quaternion.identity);
         spawned.GetComponent<NetworkObject>().Spawn(true);
         spawned.GetComponent<EnemyBase>().StartBehaviour();
+        enemy = spawned;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(type == 0)
+            Gizmos.color = Color.red;
+        else
+            Gizmos.color = Color.green;
+
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
     }
 }

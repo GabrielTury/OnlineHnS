@@ -19,7 +19,8 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
 
     protected States currentState;
     #endregion
-    public int health { get; private set; }
+    [SerializeField]
+    protected int health;
 
     public float moveSpeed { get; protected set; } = 5f;
 
@@ -58,6 +59,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
     {
         SetAIState(States.Death);
         anim.SetTrigger("Death");
+        GameEvents.OnEnemyKilled(gameObject);
         yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }
