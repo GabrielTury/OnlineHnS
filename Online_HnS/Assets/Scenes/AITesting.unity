@@ -2813,6 +2813,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0.000013619088
       objectReference: {fileID: 0}
+    - target: {fileID: 57354193368884059, guid: f8e9cab314b297d479f555dcfff5a718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 708196746505634836, guid: f8e9cab314b297d479f555dcfff5a718,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -2822,6 +2827,21 @@ PrefabInstance:
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2120891526
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821373257745265117, guid: f8e9cab314b297d479f555dcfff5a718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3684349640880313999, guid: f8e9cab314b297d479f555dcfff5a718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3777528498408479162, guid: f8e9cab314b297d479f555dcfff5a718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4550793463234102016, guid: f8e9cab314b297d479f555dcfff5a718,
         type: 3}
@@ -2853,10 +2873,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 4980291466352066353, guid: f8e9cab314b297d479f555dcfff5a718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6154308122628340723, guid: f8e9cab314b297d479f555dcfff5a718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415577279436528084, guid: f8e9cab314b297d479f555dcfff5a718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6731138398146835577, guid: f8e9cab314b297d479f555dcfff5a718,
         type: 3}
       propertyPath: m_Name
       value: FREnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731138398146835577, guid: f8e9cab314b297d479f555dcfff5a718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6739926212059874408, guid: f8e9cab314b297d479f555dcfff5a718,
         type: 3}

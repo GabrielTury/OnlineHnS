@@ -17,6 +17,6 @@ public class VisualEffectTimeScale : MonoBehaviour
 
     private void Update()
     {
-        Graph.playRate = SimulationTimeScale;
+        //Graph.playRate = SimulationTimeScale;
     }
 }

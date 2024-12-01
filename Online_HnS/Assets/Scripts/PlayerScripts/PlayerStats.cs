@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStats : NetworkBehaviour, IDamageable
 {
-    private int playerMaxHealth = 100;
+    private int playerMaxHealth = 30;
     public int playerCurrentHealth;
     [SerializeField]
     private PlayerCombat playerCombat;
@@ -43,7 +43,25 @@ public class PlayerStats : NetworkBehaviour, IDamageable
     {
         if (!IsOwner) { return; }
 
-        if(IsServer)
+
+        playerCurrentHealth -= damage;
+        Debug.Log(playerCurrentHealth);
+
+        if(!playerCombat.isDead)
+        {
+            if (playerCurrentHealth > 0)
+            {
+                playerCombat.HandleDamage();
+            }
+            else
+            {
+                playerCombat.HandleDeath();
+            }
+        }
+        
+
+
+        if (IsServer)
         {
             GameEvents.Player_Damaged(damage, 0);
         }
@@ -53,15 +71,7 @@ public class PlayerStats : NetworkBehaviour, IDamageable
 
         }
 
-        playerCurrentHealth -= damage;
-        if (playerCurrentHealth > 0)
-        {
-            playerCombat.HandleDamage();
-        }
-        else
-        {
-            playerCombat.HandleDeath();
-        }
+        
     }
 
 }

@@ -30,7 +30,7 @@ public class PlayerCombat : NetworkBehaviour
     public int comboCounter;
     public bool isMelee = false;
 
-    private bool isDead = false;
+    public bool isDead = false;
     private bool isAttacking = false;
 
 
@@ -77,7 +77,7 @@ public class PlayerCombat : NetworkBehaviour
             var objectInterface = collider.GetComponent<IDamageable>();
             if(objectInterface != null)
             {
-                //objectInterface.Damage(lightMeleeCombo[comboCounter].damage);
+                objectInterface.Damage(lightMeleeCombo[comboCounter].damage);
                 print(collider.name);
             }
         }
@@ -124,13 +124,15 @@ public class PlayerCombat : NetworkBehaviour
                         comboCounter++;
                     }
                     lastClickedTime = Time.time;
-                    //DetectDamageables();
+                    
 
                     // Reset combo at the end of the sequence
                     if (comboCounter >= lightMeleeCombo.Count)
                     {
                         comboCounter = 0;
                     }
+
+                    DetectDamageables();
                 }
             }
             if (comboCounter >= lightMeleeCombo.Count)
@@ -200,15 +202,21 @@ public class PlayerCombat : NetworkBehaviour
     {
         anim.Play("Idle", 0, 0);
         playerMovement.canMove = false;
-        anim.SetTrigger("damage");
+        if(!isDead)
+        {
+            anim.SetTrigger("damage");
+        }
     }
 
     public void HandleDeath()
     {
         anim.Play("Idle", 0, 0);
         playerMovement.canMove = false;
+        if(!isDead)
+        {
+            anim.SetTrigger("death");
+        }
         isDead = true;
-        anim.SetTrigger("death");
     }
     private void HandleShoot()
     {
