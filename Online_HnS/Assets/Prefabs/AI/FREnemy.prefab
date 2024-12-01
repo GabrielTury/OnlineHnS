@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b654ff19b54d43c4f9c70221f5e9eb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 10
   debugPath: 0
   debugCube: {fileID: 4538212446667195825, guid: 1ea39f8e4a716f24d941f6090fd95bec,
     type: 3}

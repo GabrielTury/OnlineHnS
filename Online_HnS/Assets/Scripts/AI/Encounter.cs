@@ -21,10 +21,14 @@ public class Encounter : NetworkBehaviour
     private void Awake()
     {
         spawnedEnemies = new List<GameObject>();
+        foreach(var spawner in spawners)
+        {
+            spawner.gameObject.SetActive(false);
+        }
     }
     private void OnEnable()
     {
-        GameEvents.EnemyKilled += RemoveEnemy;
+        
     }
 
     private void OnDisable()
@@ -35,7 +39,7 @@ public class Encounter : NetworkBehaviour
     {
         foreach (AISpawner s in spawners)
         {
-            Debug.Log(s.name);
+            s.gameObject.SetActive(true);
             spawnedEnemies.Add(s.SpawnEnemyFunc());
         }
 
@@ -71,6 +75,7 @@ public class Encounter : NetworkBehaviour
         {
             if(!used)
             {
+                GameEvents.EnemyKilled += RemoveEnemy;
                 used = true;
                 SpawnEnemies();
 
