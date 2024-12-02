@@ -2042,7 +2042,7 @@ PrefabInstance:
     - target: {fileID: 1772163750010753191, guid: 3bc6733b0245c95469a17f7fe9eea932,
         type: 3}
       propertyPath: cicles
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1772163750010753191, guid: 3bc6733b0245c95469a17f7fe9eea932,
         type: 3}
@@ -4175,7 +4175,7 @@ PrefabInstance:
     - target: {fileID: 1772163750010753191, guid: 3bc6733b0245c95469a17f7fe9eea932,
         type: 3}
       propertyPath: cicles
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1772163750010753191, guid: 3bc6733b0245c95469a17f7fe9eea932,
         type: 3}
@@ -15022,7 +15022,7 @@ PrefabInstance:
     - target: {fileID: 1772163750010753191, guid: 3bc6733b0245c95469a17f7fe9eea932,
         type: 3}
       propertyPath: cicles
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1772163750010753191, guid: 3bc6733b0245c95469a17f7fe9eea932,
         type: 3}
@@ -20283,7 +20283,7 @@ PrefabInstance:
     - target: {fileID: 1772163750010753191, guid: 3bc6733b0245c95469a17f7fe9eea932,
         type: 3}
       propertyPath: cicles
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1772163750010753191, guid: 3bc6733b0245c95469a17f7fe9eea932,
         type: 3}
