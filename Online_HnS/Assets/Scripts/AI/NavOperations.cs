@@ -69,7 +69,7 @@ public class NavOperations
             {
                 for(int i =0;i < checkNode.neighborsIds.Length;i++)
                 {                    
-                    neighbors.Add(navMesh[checkNode.neighborsIds[i]]);
+                    //neighbors.Add(navMesh[checkNode.neighborsIds[i]]);
                     neighbors.Add(NavMesh.allNodes[checkNode.neighborsIds[i]]);
                 }
             }
