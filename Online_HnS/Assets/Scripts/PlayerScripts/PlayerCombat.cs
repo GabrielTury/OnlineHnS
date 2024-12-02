@@ -78,9 +78,11 @@ public class PlayerCombat : NetworkBehaviour
             if(objectInterface != null)
             {
                 objectInterface.Damage(lightMeleeCombo[comboCounter].damage);
+                SubmitHitServerRpc(collider.gameObject.GetComponent<NetworkObject>().NetworkObjectId, lightMeleeCombo[comboCounter].damage);
                 print(collider.name);
             }
         }
+        
     }
 
     public void ChangeAnimator(Animator animator)
@@ -221,6 +223,12 @@ public class PlayerCombat : NetworkBehaviour
     private void HandleShoot()
     {
         if (!IsOwner) return;
+        if (Physics.Raycast(detectionCenter.position, transform.forward, out RaycastHit hit, 40f, layerMask))
+        {
+            hit.collider.gameObject.GetComponent<IDamageable>().Damage(10);
+            SubmitHitServerRpc(hit.collider.gameObject.GetComponent<NetworkObject>().NetworkObjectId, 10);
+
+        }
 
         ShootBulletServerRpc();
     }
@@ -234,6 +242,17 @@ public class PlayerCombat : NetworkBehaviour
         {
             bulletInstance.GetComponent<Bullet>().playerGameObject = gameObject;
             networkObject.Spawn();  // Spawn bullet across the network
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SubmitHitServerRpc(ulong networkObjectId, int damage)
+    {
+        var networkObject = NetworkManager.Singleton.SpawnManager.SpawnedObjects[networkObjectId];
+        if (networkObject != null)
+        {
+            var damageable = networkObject.GetComponent<IDamageable>();
+            damageable?.Damage(damage);
         }
     }
 }

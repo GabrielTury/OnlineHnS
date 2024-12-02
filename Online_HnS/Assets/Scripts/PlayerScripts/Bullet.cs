@@ -23,7 +23,7 @@ public class Bullet : NetworkBehaviour
         
         if (!other.CompareTag("Player") && other.GetComponent<IDamageable>() != null)
         {
-            other.GetComponent<IDamageable>().Damage(10);
+            //other.GetComponent<IDamageable>().Damage(10);
             Destroy(gameObject);
 
         }

@@ -39,10 +39,10 @@ public class Encounter : NetworkBehaviour
             spawnedEnemies.Add(s.SpawnEnemyFunc());
         }
 
-        foreach (GameObject s in wallLimits)
+        /*foreach (GameObject s in wallLimits)
         {
             s.SetActive(true);
-        }
+        }*/
     }
 
     private void RemoveEnemy(GameObject enemy)
@@ -59,10 +59,17 @@ public class Encounter : NetworkBehaviour
         }
         else if(cicles <= 0)
         {
-            foreach (GameObject s in wallLimits)
-            {
-                s.SetActive(false);
-            }
+            //DespawnServerRpc();
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnServerRpc()
+    {
+        foreach (GameObject s in wallLimits)
+        {
+            s.SetActive(false);
+            s.GetComponent<NetworkObject>().Despawn();
+            Destroy(s);
         }
     }
     private void OnTriggerEnter(Collider other)
