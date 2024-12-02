@@ -62,6 +62,15 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""7c85a2c9-a6d4-4a62-9473-9d1d463645b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -383,6 +392,28 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
                     ""action"": ""LeftRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9f76705-e823-4b56-841d-42dac12bfee0"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4ef60e9-0124-4b6c-8d07-e73ebd707319"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -395,6 +426,7 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
         m_UI_LeftRight = m_UI.FindAction("LeftRight", throwIfNotFound: true);
         m_UI_Confirm = m_UI.FindAction("Confirm", throwIfNotFound: true);
         m_UI_Return = m_UI.FindAction("Return", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -460,6 +492,7 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_LeftRight;
     private readonly InputAction m_UI_Confirm;
     private readonly InputAction m_UI_Return;
+    private readonly InputAction m_UI_Pause;
     public struct UIActions
     {
         private @UIControls m_Wrapper;
@@ -468,6 +501,7 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
         public InputAction @LeftRight => m_Wrapper.m_UI_LeftRight;
         public InputAction @Confirm => m_Wrapper.m_UI_Confirm;
         public InputAction @Return => m_Wrapper.m_UI_Return;
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -489,6 +523,9 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
             @Return.started += instance.OnReturn;
             @Return.performed += instance.OnReturn;
             @Return.canceled += instance.OnReturn;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -505,6 +542,9 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
             @Return.started -= instance.OnReturn;
             @Return.performed -= instance.OnReturn;
             @Return.canceled -= instance.OnReturn;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -528,5 +568,6 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
         void OnLeftRight(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

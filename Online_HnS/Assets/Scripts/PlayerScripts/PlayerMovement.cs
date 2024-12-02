@@ -8,6 +8,7 @@ public class PlayerMovement : NetworkBehaviour
 {
     private CharacterController characterController;
     private PlayerControls inputActions;
+    private UIControls uiActions;
     [SerializeField]
     private Animator anim;
     
@@ -46,11 +47,13 @@ public class PlayerMovement : NetworkBehaviour
     private void OnEnable()
     {
         inputActions.Enable();
+        uiActions.Enable();
     }
 
     private void OnDisable()
     {
         inputActions.Disable();
+        uiActions.Disable();
     }
 
     void OnMovement(InputAction.CallbackContext context)
