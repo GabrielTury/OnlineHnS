@@ -133,8 +133,12 @@ public class FlyingEnemy : EnemyBase
 
                 break;
             case States.Moving:
-                anim.SetBool("Walk", true);
                 stateRoutine = StartCoroutine(UpdatePath());
+                Node playerNode = NavOperations.GetNearestNodeInPlane(closestPlayer.position, NavMesh.allNodes, ownNode.WorldPosition.y);
+                if (playerNode == lastPlayerNode)
+                {
+                    CalculatePath(playerNode);
+                }
                 break;
             case States.Attacking:
                 stateRoutine = StartCoroutine(Attack());
@@ -153,6 +157,7 @@ public class FlyingEnemy : EnemyBase
     {
         anim.SetTrigger("Attack");        
         yield return new WaitForSeconds(3);
+        if (currentState != States.Attacking) yield return null;
 
         if (Vector3.Distance(transform.position, closestPlayer.position) < 6)
         {
@@ -174,8 +179,9 @@ public class FlyingEnemy : EnemyBase
 
     protected override IEnumerator TakeDamage()
     {
-        yield return new WaitForSeconds(2);
-        SetAIState(States.Moving);
+        yield return new WaitForSeconds(1);
+        if (currentState == States.Hit)
+            SetAIState(States.Moving);
     }
 
     protected override IEnumerator Die()
