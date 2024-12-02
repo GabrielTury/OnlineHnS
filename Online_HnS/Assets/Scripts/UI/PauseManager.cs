@@ -250,6 +250,7 @@ public class PauseManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 0f;
         ResetPauseMenu();
         InitializeButtons();
         InitializeSettings();
@@ -323,6 +324,7 @@ public class PauseManager : MonoBehaviour
         SetButtonMouseFocus(9);
         PopOutAnimate();
         Time.timeScale = 1f;
+        Destroy(gameObject);
     }
 
     public void BTSettings()
@@ -1096,6 +1098,8 @@ public class PauseManager : MonoBehaviour
 
                 SetButtonMouseFocus(9);
                 PopOutAnimate();
+                Time.timeScale = 1f;
+                Destroy(gameObject);
                 break;
 
             case 1: // Settings menu

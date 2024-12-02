@@ -8,6 +8,7 @@ public class PlayerMovement : NetworkBehaviour
 {
     private CharacterController characterController;
     private PlayerControls inputActions;
+    private UIControls uiActions;
     [SerializeField]
     private Animator anim;
     
@@ -28,10 +29,13 @@ public class PlayerMovement : NetworkBehaviour
 
     private Transform parent;
 
+    [SerializeField] private GameObject pauseCanvas;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         inputActions = new PlayerControls();
+        uiActions = new UIControls();
 
         inputActions.Movement.Move.started += OnMovement;
         inputActions.Movement.Move.canceled += OnMovement;
@@ -46,11 +50,13 @@ public class PlayerMovement : NetworkBehaviour
     private void OnEnable()
     {
         inputActions.Enable();
+        uiActions.Enable();
     }
 
     private void OnDisable()
     {
         inputActions.Disable();
+        uiActions.Disable();
     }
 
     void OnMovement(InputAction.CallbackContext context)
@@ -130,6 +136,11 @@ public class PlayerMovement : NetworkBehaviour
         }
         transform.position = new Vector3(transform.position.x, 1.58f, transform.position.z);
         HandleAnimatorInteraction();
+
+        if (Time.timeScale == 1f && uiActions.UI.Pause.WasPressedThisFrame())
+        {
+            Instantiate(pauseCanvas);
+        }
     }
 
 
