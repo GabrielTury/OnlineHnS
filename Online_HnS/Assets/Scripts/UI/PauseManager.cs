@@ -1098,6 +1098,8 @@ public class PauseManager : MonoBehaviour
 
                 SetButtonMouseFocus(9);
                 PopOutAnimate();
+                Time.timeScale = 1f;
+                Destroy(gameObject);
                 break;
 
             case 1: // Settings menu
