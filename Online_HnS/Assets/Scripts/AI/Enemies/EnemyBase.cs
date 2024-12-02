@@ -16,7 +16,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
 
 
     }
-
+    [SerializeField]
     protected States currentState;
     #endregion
     [SerializeField]
@@ -49,7 +49,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
         {
             StartCoroutine(Death());
         }
-        else
+        else if(currentState != States.Hit)
         {
             SetAIState(States.Hit);            
         }
@@ -147,6 +147,7 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
                 lastPlayerNode = playerNode;
                 CalculatePath(playerNode);
             }
+
             for (int i = 0; i < 3; i++)
             {
                 yield return null;

@@ -61,7 +61,7 @@ public class GroundEnemy : EnemyBase
             if (Vector3.Distance(transform.position, closestPlayer.transform.position) < 2f)
             {
                 SetAIState(States.Attacking);
-                Debug.Log("Close Enough");
+                //Debug.Log("Close Enough");
             }
 
             if (Vector3.Distance(transform.position, goal) < .1f)
@@ -127,6 +127,12 @@ public class GroundEnemy : EnemyBase
                 break;
             case States.Moving:
                 stateRoutine = StartCoroutine(UpdatePath());
+                Node playerNode = NavOperations.GetNearestNodeInPlane(closestPlayer.position, NavMesh.allNodes, ownNode.WorldPosition.y);
+                if (playerNode == lastPlayerNode)
+                {
+                    CalculatePath(playerNode);
+                }
+                                        
                 break;
             case States.Attacking:
                 stateRoutine = StartCoroutine(Attack());
@@ -172,6 +178,8 @@ public class GroundEnemy : EnemyBase
     /// </summary>
     public void AttackEnd()
     {
+        if (currentState != States.Attacking) return;
+
         if (Vector3.Distance(transform.position, closestPlayer.transform.position) < 2f)
         {
             SetAIState(States.Attacking);
@@ -188,8 +196,9 @@ public class GroundEnemy : EnemyBase
     #endregion
     protected override IEnumerator TakeDamage()
     {
-        yield return new WaitForSeconds(2);
-        SetAIState(States.Moving);
+        yield return new WaitForSeconds(1);
+        if(currentState == States.Hit)
+            SetAIState(States.Moving);
     }
 
     protected override IEnumerator Die()
