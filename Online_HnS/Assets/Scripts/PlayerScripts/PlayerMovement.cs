@@ -29,6 +29,8 @@ public class PlayerMovement : NetworkBehaviour
 
     private Transform parent;
 
+    [SerializeField] private GameObject pauseCanvas;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -133,6 +135,11 @@ public class PlayerMovement : NetworkBehaviour
         }
         transform.position = new Vector3(transform.position.x, 1.58f, transform.position.z);
         HandleAnimatorInteraction();
+
+        if (Time.timeScale == 1f && uiActions.UI.Pause.WasPressedThisFrame())
+        {
+            Instantiate(pauseCanvas);
+        }
     }
 
 

@@ -324,6 +324,7 @@ public class PauseManager : MonoBehaviour
         SetButtonMouseFocus(9);
         PopOutAnimate();
         Time.timeScale = 1f;
+        Destroy(gameObject);
     }
 
     public void BTSettings()
