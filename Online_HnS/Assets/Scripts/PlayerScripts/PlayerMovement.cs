@@ -35,6 +35,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         characterController = GetComponent<CharacterController>();
         inputActions = new PlayerControls();
+        uiActions = new UIControls();
 
         inputActions.Movement.Move.started += OnMovement;
         inputActions.Movement.Move.canceled += OnMovement;
