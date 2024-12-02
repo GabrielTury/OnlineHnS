@@ -13,7 +13,7 @@ public class NavOperations
     public static Node[] checkMesh;
     public static Vector3[] CalculatePath(Node target, Node start, Node[] navMesh, bool use3DMesh)
     {
-        checkMesh = NavMesh.allNodes;
+        checkMesh = navMesh/*NavMesh.allNodes*/;
         SortedSet<Node> openNodeList = new SortedSet<Node>(new NodeComparer());
         HashSet<Node> closedNodeList = new HashSet<Node>();
 
@@ -69,14 +69,15 @@ public class NavOperations
             {
                 for(int i =0;i < checkNode.neighborsIds.Length;i++)
                 {                    
-                    neighbors.Add(navMesh[checkNode.neighborsIds[i]]);                                  
+                    neighbors.Add(navMesh[checkNode.neighborsIds[i]]);
+                    neighbors.Add(NavMesh.allNodes[checkNode.neighborsIds[i]]);
                 }
             }
             else if (!use3DMesh)
             {
                 for (int i = 0; i < checkNode.planarNeighborsIds.Length; i++)
                 {
-                    neighbors.Add(navMesh[checkNode.planarNeighborsIds[i]]);
+                    neighbors.Add(NavMesh.allNodes[checkNode.planarNeighborsIds[i]]);
                 }
             }
             
@@ -121,7 +122,7 @@ public class NavOperations
         {            
             path.Add(current);
             if (current.originId == 0) break;
-            current = checkMesh[current.originId];
+            current = NavMesh.allNodes[current.originId];
         }
         path.Reverse(); // Reverse the path to get it from start to end
         //Debug.Log("Reconstructed path size: " + path.Count);
@@ -134,13 +135,14 @@ public class NavOperations
     public static Node GetNearestNode(Vector3 pos, Node[] mesh)
     {
         Node nearest = null;
-        float distance = 100;
+        float minSqrDistance = float.MaxValue; // Using squared distances for efficiency
+
         foreach (Node node in mesh)
         {
-            float currentDistance = Vector3.Distance(pos, node.WorldPosition);
-            if (currentDistance < distance)
+            float sqrDistance = (pos - node.WorldPosition).sqrMagnitude;
+            if (sqrDistance < minSqrDistance)
             {
-                distance = currentDistance;
+                minSqrDistance = sqrDistance;
                 nearest = node;
             }
         }
@@ -150,7 +152,8 @@ public class NavOperations
     public static Node GetNearestNodeInPlane(Vector3 pos, Node[] mesh, float y)
     {
         Node nearest = null;
-        float distance = 100;
+        float minSqrDistance = float.MaxValue;
+
         foreach (Node node in mesh)
         {
             if (node.WorldPosition.y != y)
@@ -159,14 +162,29 @@ public class NavOperations
             if (node.isBlocked)
                 continue;
 
-            float currentDistance = Vector3.Distance(pos, node.WorldPosition);
-            if (currentDistance < distance)
+            float sqrDistance = (pos - node.WorldPosition).sqrMagnitude;
+            if (sqrDistance < minSqrDistance)
             {
-                distance = currentDistance;
+                minSqrDistance = sqrDistance;
                 nearest = node;
             }
         }
         return nearest;
+    }
+
+    public static Node[] CreateChunk(Vector3 pos, Node[] mesh)
+    {
+        List<Node> nodes = new List<Node>();
+        foreach (Node node in mesh)
+        {
+            float sqrDistance = (pos - node.WorldPosition).sqrMagnitude;
+            if (sqrDistance < 600)
+            {
+                nodes.Add(node);
+            }
+        }
+
+        return nodes.ToArray();
     }
 
     private static void CalculateListHeuristicCost(Vector3 target, Node node)

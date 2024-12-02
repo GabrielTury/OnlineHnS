@@ -36,6 +36,8 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
 
     protected Node lastPlayerNode;
 
+    protected Node[] chunk;
+
     protected Transform closestPlayer;
 
     protected Vector3 goal;
@@ -80,6 +82,8 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
     void Start()
     {        
         GameEvents.OnDamageableSpawned(transform);
+        if(chunk == null)
+            chunk = NavOperations.CreateChunk(transform.position, NavMesh.allNodes);
     }
     [Button("Start Enemy Behaviour")]
     public void StartBehaviour()
@@ -127,11 +131,13 @@ public abstract class EnemyBase : NetworkBehaviour, IDamageable
     protected IEnumerator UpdatePath()
     {
         bIsMoving = true;
+        if (chunk == null)
+            chunk = NavOperations.CreateChunk(transform.position, NavMesh.allNodes);
         while (true)
         {
             Vector3 playerPos = closestPlayer.position;
-            ownNode = NavOperations.GetNearestNode(transform.position, NavMesh.allNodes);
-            Node playerNode = NavOperations.GetNearestNodeInPlane(playerPos, NavMesh.allNodes, ownNode.WorldPosition.y);
+            ownNode = NavOperations.GetNearestNode(transform.position, chunk);
+            Node playerNode = NavOperations.GetNearestNodeInPlane(playerPos, chunk, ownNode.WorldPosition.y);
 
             ownNode.SetObstacle(true);
             if (lastNode == null)

@@ -22,7 +22,7 @@ public class GroundEnemy : EnemyBase
         currentPathIndex = 0;
         newPath = NavOperations.CalculatePath(playerNode,
                                     ownNode,
-                                    NavMesh.allNodes, false);
+                                    chunk, false);
 
         path = newPath;
 
@@ -127,7 +127,7 @@ public class GroundEnemy : EnemyBase
                 break;
             case States.Moving:
                 stateRoutine = StartCoroutine(UpdatePath());
-                Node playerNode = NavOperations.GetNearestNodeInPlane(closestPlayer.position, NavMesh.allNodes, ownNode.WorldPosition.y);
+                Node playerNode = NavOperations.GetNearestNodeInPlane(closestPlayer.position, chunk, ownNode.WorldPosition.y);
                 if (playerNode == lastPlayerNode)
                 {
                     CalculatePath(playerNode);
